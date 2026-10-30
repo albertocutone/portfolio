@@ -1,0 +1,117 @@
+:root {
+  --ink: #e9eee5;
+  --muted: #9bac9f;
+  --gold: #d7b66f;
+  --cyan: #7ed6bf;
+  --line: #d8e9d32b;
+  --surface: #0b1b15;
+  font-family: 'Manrope', sans-serif;
+  color: var(--ink);
+  background: #071912;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 6px; }
+.experience { height: 100dvh; min-height: 550px; overflow: hidden; position: relative; }
+.canvas-layer { position: fixed; inset: 0; z-index: 1; }
+.scene-shade { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, transparent 32%, #07191235 53%, #071912ed 74%, #071912 100%), linear-gradient(0deg, #071912d9, transparent 19%, transparent 81%, #071912b0); }
+.overlay { position: relative; z-index: 10; height: 100%; pointer-events: none; }
+.overlay a, .overlay button, .station-card, dialog { pointer-events: auto; }
+.masthead { position: absolute; top: 0; left: 0; width: 100%; padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; }
+.identity { display: flex; gap: 17px; align-items: center; font-weight: 600; font-size: 14px; }
+.monogram { font-family: 'Baskerville', 'Palatino', serif; font-size: 40px; font-weight: 400; }
+.monogram > span { color: var(--gold); }
+.identity small, .scroll-cue small, .scene-caption small { display: block; font-family: 'DM Mono', monospace; font-size: 8px; margin-top: 7px; color: var(--muted); }
+.edition { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); display: flex; gap: 15px; align-items: center; }
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px #7ed6bf70; }
+.narrative { position: absolute; right: 6%; top: 50%; width: 410px; transform: translateY(-50%); }
+.station-card { padding: 12px 0; }
+.eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin: 0 0 28px; }
+.affiliation { font-size: 11px; color: var(--gold); display: flex; align-items: center; gap: 8px; margin: 0 0 18px; }
+.affiliation > span { width: 4px; height: 4px; background: var(--gold); }
+h1 { font-family: 'Baskerville', 'Palatino', serif; font-size: 54px; line-height: 1.06; font-weight: 400; margin: 0 0 27px; }
+h1 > span { display: block; }
+.title-accent { font-style: italic; color: var(--gold); }
+.role { font-size: 11px; color: var(--ink); margin: 0 0 13px; font-weight: 600; }
+.description { color: var(--muted); font-size: 13px; line-height: 1.9; max-width: 350px; margin: 0 0 24px; }
+.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 29px; }
+.tags > span { font-family: 'DM Mono', monospace; font-size: 8px; color: #b7c8b9; padding: 7px 9px; border: 1px solid var(--line); }
+.details-button { background: transparent; color: var(--ink); border: 0; border-bottom: 1px solid var(--gold); padding: 9px 0 11px; font-size: 11px; display: flex; gap: 47px; align-items: center; }
+.details-button > span { font-size: 19px; color: var(--gold); }
+.details-button:hover { color: var(--gold); }
+.optional-actions { display: flex; gap: 20px; margin-top: 20px; font-size: 12px; }
+.scene-caption { position: absolute; left: 16%; bottom: 24%; display: flex; gap: 12px; align-items: center; font-family: 'DM Mono', monospace; font-size: 9px; color: #c3d9c5; }
+.caption-cross { color: var(--gold); font-size: 25px; font-weight: 400; }
+.flight-footer { position: absolute; left: 48px; right: 48px; bottom: 30px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 24px; gap: 35px; }
+.scroll-cue { display: flex; align-items: center; gap: 14px; font-size: 11px; white-space: nowrap; }
+.scroll-cue > span { font-size: 22px; color: var(--gold); animation: scroll-cue 3s ease-in-out infinite; }
+nav { display: flex; gap: 25px; flex: 1; max-width: 665px; }
+nav button { color: var(--muted); background: none; padding: 10px 0 0; border: 0; text-align: left; flex: 1; display: grid; grid-template-columns: 20px 1fr; gap: 7px; }
+.nav-number { font-family: 'DM Mono', monospace; font-size: 9px; color: #6d8677; }
+.nav-label { font-size: 9px; white-space: nowrap; }
+.nav-line { height: 1px; background: #d8e9d329; grid-column: 1 / -1; margin-top: 8px; }
+nav button[aria-current] { color: var(--ink); }
+nav button[aria-current] .nav-number { color: var(--gold); }
+nav button[aria-current] .nav-line { background: var(--gold); }
+nav button:hover { color: var(--gold); }
+.flight-position { font-family: 'DM Mono', monospace; font-size: 18px; min-width: 87px; text-align: right; }
+.flight-position small { color: var(--muted); font-size: 10px; }
+.progress-track { position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: #102e20; }
+.progress-track > div { height: 100%; background: var(--gold); transform-origin: left; }
+dialog { width: min(600px, calc(100vw - 36px)); max-height: min(650px, calc(100dvh - 60px)); overflow-y: auto; overscroll-behavior: contain; border: 1px solid #55715f; padding: 35px; background: var(--surface); color: var(--ink); box-shadow: 0 25px 100px #0007; }
+dialog::backdrop { background: #020b08bf; backdrop-filter: blur(9px); }
+.dialog-heading { display: flex; justify-content: space-between; align-items: start; gap: 25px; }
+.dialog-heading .eyebrow { margin-bottom: 22px; }
+.close-button { background: none; border: 0; color: var(--muted); font-size: 10px; display: flex; gap: 15px; align-items: center; }
+.close-button span { font-size: 20px; color: var(--gold); line-height: 0.8; }
+h2 { font-family: 'Baskerville', 'Palatino', serif; font-size: 38px; line-height: 1.1; font-weight: 400; margin: 0 0 15px; }
+.dialog-role { font-size: 12px; color: var(--gold); margin-bottom: 30px; }
+.project { display: flex; gap: 22px; border-top: 1px solid var(--line); padding: 25px 0; }
+.project-number { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); padding-top: 4px; }
+h3 { font-size: 15px; font-weight: 500; margin: 0 0 12px; }
+.project p { font-size: 13px; line-height: 1.9; color: var(--muted); margin: 0; }
+.dialog-note { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 22px; margin-bottom: 0; }
+@keyframes scroll-cue { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+@media (max-width: 1150px) and (min-width: 900px) {
+  .narrative { width: 355px; right: 4%; }
+  h1 { font-size: 46px; }
+  .scroll-cue small { display: none; }
+  nav { gap: 15px; }
+  .flight-footer { gap: 24px; }
+}
+@media (max-width: 899px) {
+  .experience { min-height: 0; }
+  .masthead { padding: 20px 24px; }
+  .edition { display: none; }
+  .identity small { font-size: 7px; }
+  .scene-shade { background: linear-gradient(0deg, #071912 8%, #071912f5 33%, #07191280 58%, transparent 78%), linear-gradient(180deg, #071912a0, transparent 20%); }
+  .narrative { top: auto; bottom: 122px; right: 24px; left: 24px; width: auto; transform: none; }
+  .station-card { max-width: 460px; }
+  .eyebrow { margin-bottom: 12px; font-size: 9px; }
+  .affiliation { margin-bottom: 10px; }
+  h1 { font-size: 38px; margin-bottom: 15px; }
+  .role { margin-bottom: 8px; font-size: 10px; }
+  .description { font-size: 12px; line-height: 1.65; margin-bottom: 14px; max-width: 420px; }
+  .tags { margin-bottom: 12px; }
+  .scene-caption, .scroll-cue, .flight-position { display: none; }
+  .flight-footer { left: 24px; right: 24px; bottom: 27px; padding-top: 13px; }
+  nav { gap: 12px; max-width: none; }
+  nav button { display: flex; flex-direction: column; gap: 6px; }
+  .nav-label { font-size: 8px; white-space: normal; min-height: 22px; }
+  .nav-line { width: 100%; margin-top: 0; }
+  dialog { padding: 24px; }
+}
+@media (max-height: 700px) and (min-width: 900px) {
+  .masthead { padding-top: 20px; }
+  .narrative { top: 48%; }
+  h1 { font-size: 42px; margin-bottom: 16px; }
+  .eyebrow { margin-bottom: 16px; }
+  .tags { margin-bottom: 15px; }
+}
+@media (prefers-reduced-motion: reduce) { .scroll-cue > span { animation: none; } }
