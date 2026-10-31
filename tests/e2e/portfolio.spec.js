@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { stations } from '../../src/config/stations.js';
+import { stationLanding } from '../../src/config/motion.js';
 
-const names = ['Sensing', 'Instrumentation', 'Edge Intelligence', 'Architecture'];
-const ids = ['sensor', 'instrumentation', 'edge', 'architecture'];
+const names = stations.map(station => station.label);
+const ids = stations.map(station => station.id);
 
 async function ready(page) {
   await page.goto('./');
@@ -13,12 +15,12 @@ async function station(page, index) {
   await page.getByRole('button', { name: names[index], exact: true }).click();
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', ids[index]);
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
-  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo([0, 0.2875, 0.5375, 0.7875][index], 3);
+  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(stationLanding(stations, index), 3);
   const nativeOffset = await page.getByLabel('Portfolio flight scroll area').evaluate((element) => element.scrollTop / (element.scrollHeight - element.clientHeight));
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', nativeOffset.toFixed(5));
 }
 
-for (const [index, direction] of [[0, 'initial'], [1, 'forward'], [2, 'forward'], [3, 'forward'], [2, 'reverse'], [1, 'reverse'], [0, 'reverse']]) {
+for (const [index, direction] of [[0, 'initial'], [1, 'forward'], [2, 'forward'], [3, 'forward'], [4, 'forward'], [3, 'reverse'], [2, 'reverse'], [1, 'reverse'], [0, 'reverse']]) {
  test(`production WebGL renders station ${index} during ${direction} navigation without asset or runtime errors`, async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -31,7 +33,8 @@ for (const [index, direction] of [[0, 'initial'], [1, 'forward'], [2, 'forward']
   {
     await station(page, index);
     await expect(page.getByRole('button', { name: 'View details' })).toBeVisible();
-    if (index === 0) await expect(page.locator('h1')).toContainText('From photons');
+    if (index === 0) await expect(page.locator('h1')).toContainText('Making the invisible');
+    if (index === 1) await expect(page.locator('h1')).toContainText('From photons');
     await page.screenshot({ path: testInfo.outputPath(`station-${index}.png`) });
   }
   // Capture the scene-only region without element scrolling/stability checks.
@@ -72,7 +75,7 @@ test('wheel over scene and card, keyboard, and exact endpoints control the same 
 
 test('details isolate scrolling, retain station, close with Escape and restore focus', async ({ page }) => {
   await ready(page);
-  await station(page, 2);
+  await station(page, 3);
   const before = await page.locator('.experience').getAttribute('data-offset');
   const trigger = page.getByRole('button', { name: 'View details' });
   await trigger.click();
@@ -97,7 +100,10 @@ test('details isolate scrolling, retain station, close with Escape and restore f
 test('narrow viewport preserves readable controls and the full 3D scene', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await ready(page);
-  await station(page, 3);
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'atlas');
+  await expect(page.getByRole('link', { name: /ATLAS model: physics.atlas.vr/ })).toBeInViewport();
+  await page.screenshot({ path: testInfo.outputPath('atlas-narrow.png') });
+  await station(page, 4);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await expect(page.getByRole('button', { name: 'View details' })).toBeInViewport();
   await page.screenshot({ path: testInfo.outputPath('narrow.png') });
@@ -106,7 +112,7 @@ test('narrow viewport preserves readable controls and the full 3D scene', async 
 test('records steady-state animation-frame performance', async ({ page }, testInfo) => {
   if (process.env.CI) test.setTimeout(1200000);
   await ready(page);
-  await station(page, 3);
+  await station(page, 4);
   const softwareRenderer = await page.evaluate(() => {
     const gl = document.querySelector('canvas').getContext('webgl2');
     const debug = gl.getExtension('WEBGL_debug_renderer_info');

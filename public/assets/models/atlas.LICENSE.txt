@@ -1,0 +1,11 @@
+Model Information:
+* title:	CERN ATLAS Detector
+* source:	https://sketchfab.com/3d-models/cern-atlas-detector-c3761776d4f94b3eb77336896da2a3bd
+* author:	physics.atlas.vr (https://sketchfab.com/physics.atlas.vr)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "CERN ATLAS Detector" (https://sketchfab.com/3d-models/cern-atlas-detector-c3761776d4f94b3eb77336896da2a3bd) by physics.atlas.vr (https://sketchfab.com/physics.atlas.vr) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

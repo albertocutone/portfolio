@@ -21,6 +21,9 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-
 .experience { height: 100dvh; min-height: 550px; overflow: hidden; position: relative; }
 .canvas-layer { position: fixed; inset: 0; z-index: 1; }
 .scene-shade { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, transparent 44%, #10171412 55%, #101714e6 78%, #101714f5 100%), linear-gradient(0deg, #101714a0, transparent 14%, transparent 85%, #10171466); }
+.scene-transition { position: fixed; inset: 0; z-index: 3; pointer-events: none; background: #101714; }
+.model-credit { position: absolute; left: 48px; bottom: 130px; max-width: calc(100% - 96px); color: var(--muted); font: 8px 'DM Mono', monospace; }
+.model-credit:hover { color: var(--gold); }
 .overlay { position: relative; z-index: 10; height: 100%; pointer-events: none; }
 .overlay a, .overlay button, .station-card, dialog { pointer-events: auto; }
 .masthead { position: absolute; top: 0; left: 0; width: 100%; padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; }
@@ -100,6 +103,7 @@ h3 { font-size: 15px; font-weight: 500; margin: 0 0 12px; }
   .description { font-size: 12px; line-height: 1.65; margin-bottom: 14px; max-width: 420px; }
   .tags { margin-bottom: 12px; }
   .scene-caption, .scroll-cue, .flight-position { display: none; }
+  .model-credit { left: 24px; bottom: 108px; font-size: 7px; max-width: calc(100% - 48px); }
   .flight-footer { left: 24px; right: 24px; bottom: 27px; padding-top: 13px; }
   nav { gap: 12px; max-width: none; }
   nav button { display: flex; flex-direction: column; gap: 6px; }

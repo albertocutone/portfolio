@@ -56,8 +56,12 @@ export function resolveTimeline(value, stations) {
   const travel = index === stations.length - 1 ? 0 : clampOffset((local - motion.dwellRatio) / (1 - motion.dwellRatio));
   const eased = ease(travel);
   const arrival = index === 0 ? 1 : ease(clampOffset((offset - start) / motion.arrivalFade));
+  const changesScene = (station.scene ?? 'pcb') !== (next.scene ?? 'pcb');
   return {
     station, index, transitionProgress: travel,
+    scene: changesScene && travel >= 0.5 ? next.scene : (station.scene ?? 'pcb'),
+    // Fade through the background while the camera moves between separate worlds.
+    sceneOpacity: changesScene ? ease(Math.abs(travel * 2 - 1)) : 1,
     position: cameraCurve(station, next, eased),
     target: mixTuple(station.target, next.target, eased),
     focus: mixTuple(station.focus ?? station.anchor, next.focus ?? next.anchor, eased),

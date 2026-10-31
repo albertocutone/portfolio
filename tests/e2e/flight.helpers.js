@@ -1,6 +1,8 @@
 import { expect } from '@playwright/test';
+import { stations } from '../../src/config/stations.js';
+import { stationLanding } from '../../src/config/motion.js';
 
-export const shots = [['Sensing', '0.00000'], ['Instrumentation', '0.28750'], ['Edge Intelligence', '0.53750'], ['Architecture', '0.78750']];
+export const shots = stations.map((station, index) => [station.label, stationLanding(stations, index).toFixed(5)]);
 
 export async function ready(page) {
   await page.goto('./');

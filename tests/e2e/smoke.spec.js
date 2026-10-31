@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('published 3D scene loads and navigation reaches a readable architecture shot', async ({ page }, testInfo) => {
+test('ATLAS opens the scene, scroll reaches the PCB, and navigation reaches architecture', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('requestfailed', request => errors.push(request.url()));
@@ -16,6 +16,15 @@ test('published 3D scene loads and navigation reaches a readable architecture sh
   });
   await testInfo.attach('rendering-context', { body: JSON.stringify(rendering), contentType: 'application/json' });
   console.log('Published rendering context:', JSON.stringify(rendering));
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'atlas');
+  await expect(page.getByRole('link', { name: /ATLAS model: physics.atlas.vr/ })).toBeVisible();
+  await page.screenshot({ path: testInfo.outputPath('atlas.png') });
+  const scrollPixels = await page.getByLabel('Portfolio flight scroll area').evaluate(el => (el.scrollHeight - el.clientHeight) * 0.23);
+  await page.locator('.station-card').dispatchEvent('wheel', { deltaY: scrollPixels, deltaMode: 0, bubbles: true, cancelable: true });
+  await expect(page.locator('.experience')).toHaveAttribute('data-offset', '0.23000');
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'sensor');
+  await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
+  await expect(page.locator('.scene-transition')).toHaveCSS('opacity', '0');
   await page.screenshot({ path: testInfo.outputPath('sensor.png') });
   await page.getByRole('button', { name: 'Architecture', exact: true }).click();
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'architecture');

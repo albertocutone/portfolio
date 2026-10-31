@@ -89,11 +89,11 @@ jobs:
           case "$BROWSER_GROUP" in
             ui*)
               shard="${BROWSER_GROUP#ui}"
-              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep-invert 'record the four-station|wheel reversals and dialog|profile three warmed|records steady-state' --shard="$shard/8"
+              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep-invert 'record the five-station|wheel reversals and dialog|profile three warmed|records steady-state' --shard="$shard/8"
               ;;
             tour-*)
               direction="${BROWSER_GROUP#tour-}"
-              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep "record the four-station $direction"
+              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep "record the five-station $direction"
               ;;
             interruption)
               npm run test:e2e -- --project="$BROWSER_PROJECT" --grep 'wheel reversals and dialog'

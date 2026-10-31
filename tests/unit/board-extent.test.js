@@ -14,6 +14,7 @@ for (const [width, height] of [[1440, 900], [2560, 1080], [390, 844]]) {
     camera.setViewOffset(width, height, width >= 900 ? width * 0.17 : 0, 0, width, height);
     for (let step = 0; step <= 400; step++) {
       const pose = resolveTimeline(step / 400, stations);
+      if (pose.scene !== 'pcb') continue;
       camera.position.set(...pose.position);
       camera.lookAt(new Vector3(...pose.target));
       camera.updateMatrixWorld();

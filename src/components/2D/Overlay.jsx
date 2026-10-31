@@ -30,7 +30,7 @@ export default function Overlay({ store, onModalChange }) {
     trigger.current?.focus({ preventScroll: true });
   }
 
-  return <div className="overlay">
+  return <><div className="scene-transition" aria-hidden="true" style={{ opacity: 1 - timeline.sceneOpacity }} /><div className="overlay">
     <header className="masthead">
       <a className="identity" href="#" onClick={(event) => { event.preventDefault(); store.seek(0); }} aria-label="Alberto Cutone, back to start">
         <span className="monogram" aria-hidden="true">ac<span>.</span></span>
@@ -55,9 +55,10 @@ export default function Overlay({ store, onModalChange }) {
       </article>
     </main>
 
-    <aside className="scene-caption" aria-hidden="true"><span className="caption-cross">+</span><div>{station.eyebrow.slice(5)}<small>PCB COMPONENT STUDY / LIVE WEBGL</small></div></aside>
+    <aside className="scene-caption" aria-hidden="true"><span className="caption-cross">+</span><div>{station.eyebrow.slice(5)}<small>{station.scene === 'atlas' ? 'ATLAS DETECTOR STUDY / LIVE WEBGL' : 'PCB COMPONENT STUDY / LIVE WEBGL'}</small></div></aside>
+    {station.scene === 'atlas' && <a className="model-credit" href="https://sketchfab.com/3d-models/cern-atlas-detector-c3761776d4f94b3eb77336896da2a3bd" target="_blank" rel="noreferrer">ATLAS model: physics.atlas.vr · CC BY 4.0 · adapted</a>}
     <footer className="flight-footer">
-      <div className="scroll-cue"><span aria-hidden="true">&#8595;</span><div>Scroll to explore<small>FOUR STATIONS. ONE CONNECTED SYSTEM.</small></div></div>
+      <div className="scroll-cue"><span aria-hidden="true">&#8595;</span><div>Scroll to explore<small>FIVE STATIONS. ONE CONNECTED SYSTEM.</small></div></div>
       <nav aria-label="Station navigation">{stations.map((item, i) => <button key={item.id} aria-label={item.label} aria-current={i === index ? 'step' : undefined} onClick={() => store.seek(stationLanding(stations, i))}><span className="nav-number">0{i + 1}</span><span className="nav-label">{item.label}</span><span className="nav-line" /></button>)}</nav>
       <span className="flight-position" aria-label="Flight progress">{String(Math.round(offset * 100)).padStart(3, '0')}<small> / 100</small></span>
     </footer>
@@ -70,5 +71,5 @@ export default function Overlay({ store, onModalChange }) {
       {details?.projects.map((project, i) => <section className="project" key={project.title}><span className="project-number">0{i + 1}</span><div><h3>{project.title}</h3><p>{project.body}</p>{project.link && <a href={project.link} target="_blank" rel="noreferrer">Explore project</a>}</div></section>)}
       <p className="dialog-note">Part of the journey from photons to edge intelligence.</p>
     </dialog>
-  </div>;
+  </div></>;
 }

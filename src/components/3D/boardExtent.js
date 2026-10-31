@@ -13,6 +13,7 @@ export function boardExtent(width, height) {
   // Bound the full authored tour, not just the current pose, so the PCB never expands mid-flight.
   for (let step = 0; step <= 1024; step++) {
     const pose = resolveTimeline(step / 1024, stations);
+    if (pose.scene !== 'pcb') continue;
     camera.position.set(...pose.position);
     target.set(...pose.target);
     camera.lookAt(target);

@@ -1,6 +1,6 @@
 # From Photons to Edge Intelligence
 
-Alberto Cutone's scroll-driven 3D portfolio. A tailored PCB with real component assets connects sensing, instrumentation, edge intelligence, and system architecture through a macro product-film camera tour. The board extends beyond every shot; component dimensions remain physically scaled.
+Alberto Cutone's scroll-driven 3D portfolio. A CERN ATLAS detector model opens the journey at station 1. Scrolling transitions to the tailored PCB at station 2, followed by instrumentation, edge intelligence, and system architecture. The board extends beyond every PCB shot; component dimensions remain physically scaled.
 
 ## Local Development
 
@@ -50,6 +50,16 @@ PLAYWRIGHT_BASE_URL=http://127.0.0.1:4175/portfolio/ npm run test:e2e -- tests/e
 For the most recent local browser report, run `npx playwright show-report`.
 
 ## Asset Credits
+
+The ATLAS detector model is by `physics.atlas.vr`, licensed under CC BY 4.0. The source is [CERN ATLAS Detector on Sketchfab](https://sketchfab.com/3d-models/cern-atlas-detector-c3761776d4f94b3eb77336896da2a3bd). The scene includes visible attribution and links to the original. Its optimized GLB is self-hosted; the browser does not contact Sketchfab. Asset provenance and the conversion settings are recorded in `public/assets/models/atlas.meta.json`.
+
+The downloaded source archive is retained in `assets/cern_atlas_detector.zip`. To rebuild the GLB, run:
+
+```sh
+npm run optimize:atlas -- assets/cern_atlas_detector.zip
+```
+
+The conversion script extracts the archive into a temporary directory, centers and scales the static detector, batches compatible geometry, removes unused resources, simplifies within a bounded geometric error, and applies Meshopt compression. Only the optimized asset is served from `public/`.
 
 The official KiCad component library supplies licensed CAD geometry under CC-BY-SA 4.0 and the KiCad design-use exception. Available source headers and family credits are retained; the crystal's absent header/credit record and repository-license provenance are explicitly recorded in `/Users/albertocutone/local/projects/portfolio/public/assets/ASSET_CREDITS.md`. Poly Haven's Studio Small 09 HDRI is CC0.
 

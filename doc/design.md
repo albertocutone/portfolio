@@ -2,13 +2,15 @@
 
 ## Visual Direction
 
-A scroll-driven macro product film over a tailored PCB: real CAD-derived component geometry, deep green solder mask, plated contacts, metal housings, molded plastic, white silkscreen, controlled studio reflections, and a separate readable HTML narrative. The four stations connect sensing, instrumentation, edge intelligence, and architecture.
+A scroll-driven journey opens with the CERN ATLAS detector, then transitions to a macro product film over a tailored PCB: real CAD-derived component geometry, deep green solder mask, plated contacts, metal housings, molded plastic, white silkscreen, controlled studio reflections, and a separate readable HTML narrative. The five stations are ATLAS, sensing, instrumentation, edge intelligence, and architecture.
 
-The PCB always extends beyond the camera frustum, including the architecture composition. It is not a small board scaled up with its components. Physical component dimensions remain fixed at **10 mm per scene unit**; the substrate starts at 320 x 240 mm and conservatively expands for the viewport to cover every projected tour pose with margin. Extent follows viewport changes, not camera progress; unchanged dimensions reuse buffers, replaced bodies are disposed, and the central detailed surface is built once. A single green cap prevents overlapping outer layers from fighting at distant angles.
+The PCB always extends beyond the camera frustum during its four stations, including the architecture composition. Physical component dimensions remain fixed at **10 mm per scene unit**; the substrate starts at 320 x 240 mm and conservatively expands for visible PCB camera poses with margin. Extent follows viewport changes, not camera progress; unchanged dimensions reuse buffers, replaced bodies are disposed, and the central detailed surface is built once. A single green cap prevents overlapping outer layers from fighting at distant angles.
 
 The same full-3D scene targets laptops and remains on narrow viewports. There are no quality tiers, separate mobile scenes, or static rendering fallbacks. A failed required asset produces an explicit error and retry control rather than a false ready state.
 
 ## Geometry and Assets
+
+ATLAS uses a self-hosted GLB adapted from the CC BY 4.0 model by `physics.atlas.vr`. `scripts/optimize-atlas.mjs` normalizes the static detector to a centered display model, batches compatible meshes, simplifies within a bounded error, and applies Meshopt compression and quantization. Source and output hashes, triangle counts, bounds, and conversion settings are recorded in `public/assets/models/atlas.meta.json`. Visible attribution links to the original model; detailed credits retain the license and adaptation record.
 
 Official KiCad WRL models supply QFP and SOIC packages, ceramic capacitors, resistors, inductors, crystals, cylindrical capacitors, USB metalwork, and a pin header. A purpose-built sensor surface sits on a detailed package. Runtime assets are bundled locally under the Vite `/portfolio/` base; no third-party model or lighting requests are needed.
 
@@ -24,11 +26,11 @@ Studio environment lighting, a controlled key and rim, static key shadows, and c
 
 Canvas DPR remains capped at 1.5. The effect compositor uses four-sample antialiasing, world-unit depth-of-field focus ranges, and reduced-resolution blur. HTML never enters the compositor. Camera and focus vectors are reused, while view offset and projection changes occur on resize rather than every frame.
 
-The pure evaluator in `/Users/albertocutone/local/projects/portfolio/src/scroll/timeline.js` resolves position, look-at target, focus, optical values, active station, and card visibility. The first three equal-quarter station intervals hold for 35% and travel for 65%. Authored cubic Bezier paths use cached arc-length sampling with quintic progress easing for zero endpoint velocity and acceleration. Focus and optical values change continuously. The final wider regional composition holds through exact offset 1 without revealing the PCB outline.
+The pure evaluator in `/Users/albertocutone/local/projects/portfolio/src/scroll/timeline.js` resolves position, look-at target, focus, optical values, active station, scene visibility, and card visibility. The first four equal-fifth station intervals hold for 35% and travel for 65%. Authored cubic Bezier paths use cached arc-length sampling with quintic progress easing for zero endpoint velocity and acceleration. Focus and optical values change continuously. ATLAS fades into the background during travel; the scene switches to the PCB at the fully faded midpoint and fades back in. Reverse travel uses the same evaluator. Inactive worlds remain loaded and are hidden from rendering. Static directional shadows refresh at scene switches, and PCB contact shadows are captured after its world becomes visible. The final wider regional composition holds through exact offset 1 without revealing the PCB outline.
 
-`/Users/albertocutone/local/projects/portfolio/src/config/motion.js` owns timing, camera projection, navigation landings, damping, and maximum progress speed. Drei is the sole temporal damping layer: four pages, damping 0.35, and maximum normalized speed 0.10 per second. There is no additional camera spring or tween. Reverse travel evaluates the same stateless paths.
+`/Users/albertocutone/local/projects/portfolio/src/config/motion.js` owns timing, camera projection, navigation landings, damping, and maximum progress speed. Drei is the sole temporal damping layer: five pages, damping 0.35, and maximum normalized speed 0.10 per second. Reverse travel evaluates the same stateless paths. On narrow viewports the ATLAS camera retreats to fit the detector and shifts its composition above the narrative; the PCB uses its existing macro framing.
 
-Navigation returns the first station to zero and lands 15% into later quarters: 0.2875, 0.5375, and 0.7875. Cards fade out early during travel and fade in over the first 0.02 of arrivals. Hidden cards remain inert.
+Navigation returns ATLAS to zero and lands 15% into later fifths: 0.23, 0.43, 0.63, and 0.83. Cards fade out early during travel and fade in over the first 0.02 of arrivals. Hidden cards remain inert.
 
 ## Input and Content
 

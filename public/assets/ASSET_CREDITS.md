@@ -1,5 +1,13 @@
 # Bundled Asset Credits
 
+## CERN ATLAS detector
+
+This work is based on "CERN ATLAS Detector" (https://sketchfab.com/3d-models/cern-atlas-detector-c3761776d4f94b3eb77336896da2a3bd) by physics.atlas.vr (https://sketchfab.com/physics.atlas.vr) licensed under CC-BY-4.0 (https://creativecommons.org/licenses/by/4.0/).
+
+The supplied attribution is retained in `models/atlas.LICENSE.txt`. The downloaded source archive is retained at `assets/cern_atlas_detector.zip` in the repository. Its hash, output hash, triangle counts, and conversion settings are pinned in `models/atlas.meta.json`.
+
+Adaptations: uniform display scaling and centering, flattening of static transforms, batching compatible geometry by material, removal of unused resources, mesh simplification constrained to a maximum relative error of 0.001, quantization, and Meshopt compression. The adapted GLB retains attribution in its metadata. The webpage also provides a visible author credit and link to the source.
+
 ## KiCad component geometry
 
 Source: https://github.com/KiCad/kicad-packages3d

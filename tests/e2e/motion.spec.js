@@ -15,7 +15,7 @@ test('navigation motion is slow and bounded without jumping between shots', asyn
     requestAnimationFrame(frame);
   });
   await page.getByRole('button', { name: 'Architecture', exact: true }).click();
-  await expect(page.locator('.experience')).toHaveAttribute('data-offset', '0.78750');
+  await expect(page.locator('.experience')).toHaveAttribute('data-offset', '0.83000');
   const frames = await page.evaluate(() => { window.__motionCapture.running = false; return window.__motionCapture.frames; });
   const windows = [];
   for (let i = 1; i < frames.length; i++) {

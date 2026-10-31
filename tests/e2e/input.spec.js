@@ -6,7 +6,7 @@ test('rapid retargeting reaches the last requested station', async ({ page }) =>
   for (const name of ['Architecture', 'Edge Intelligence', 'Instrumentation']) {
     await page.getByRole('button', { name, exact: true }).click();
   }
-  await expect(page.locator('.experience')).toHaveAttribute('data-offset', '0.28750');
+  await expect(page.locator('.experience')).toHaveAttribute('data-offset', '0.43000');
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'instrumentation');
 });
 
