@@ -9,7 +9,8 @@ export async function ready(page) {
 
 export async function shot(page, index) {
   await page.getByRole('button', { name: shots[index][0], exact: true }).click();
-  await expect(page.locator('.experience')).toHaveAttribute('data-offset', shots[index][1]);
+  // Drei settles at 1e-5; the published offset rounds to five decimal places.
+  await page.waitForFunction((target) => Math.abs(Number(document.querySelector('.experience').dataset.offset) - target) <= 0.000015, Number(shots[index][1]), { polling: 'raf', timeout: process.env.CI ? 600000 : 15000 });
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
 }
 

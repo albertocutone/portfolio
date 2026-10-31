@@ -4,9 +4,9 @@ const deployedURL = process.env.PLAYWRIGHT_BASE_URL;
 
 export default defineConfig({
   testDir: './tests/e2e',
-  fullyParallel: false,
+  fullyParallel: true,
   workers: 1,
-  timeout: process.env.CI ? 600000 : 60000,
+  timeout: process.env.CI ? 1200000 : 60000,
   expect: { timeout: process.env.CI ? 300000 : 15000 },
   reporter: [['list'], ['html', { open: 'never' }]],
   projects: [

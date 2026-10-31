@@ -20,9 +20,11 @@ export default function Overlay({ store, onModalChange }) {
 
   function close() {
     dialog.current.close();
+    afterClose();
   }
 
   function afterClose() {
+    if (dialog.current.open) return;
     setDetails(null);
     onModalChange(false);
     trigger.current?.focus({ preventScroll: true });
@@ -61,7 +63,7 @@ export default function Overlay({ store, onModalChange }) {
     </footer>
     <div className="progress-track" aria-hidden="true"><div style={{ transform: `scaleX(${offset})` }} /></div>
 
-    <dialog ref={dialog} aria-labelledby="detail-title" onClose={afterClose}>
+    <dialog ref={dialog} aria-labelledby="detail-title" onClose={afterClose} onCancel={(event) => { event.preventDefault(); close(); }}>
       <div className="dialog-heading"><p className="eyebrow">PROJECT NOTES / {details?.eyebrow.slice(0, 2)}</p><button className="close-button" aria-label="Close details" onClick={close}>Close <span aria-hidden="true">&#215;</span></button></div>
       <h2 id="detail-title">{details?.badge}</h2>
       <p className="dialog-role">{details?.role}</p>

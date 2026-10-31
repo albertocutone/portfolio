@@ -1,6 +1,6 @@
 # From Photons to Edge Intelligence
 
-Alberto Cutone's scroll-driven 3D portfolio. A procedural PCB connects sensing, instrumentation, edge intelligence, and system architecture.
+Alberto Cutone's scroll-driven 3D portfolio. A tailored PCB with real component assets connects sensing, instrumentation, edge intelligence, and system architecture through a macro product-film camera tour. The board extends beyond every shot; component dimensions remain physically scaled.
 
 ## Local Development
 
@@ -15,24 +15,43 @@ Open `http://127.0.0.1:5173/portfolio/`.
 
 ## Validation
 
+Use lightweight local checks while developing:
+
 ```sh
 npm test
 npm run build
-npx playwright install chromium
-npm run test:e2e
 ```
 
-Playwright starts the production preview automatically at `http://127.0.0.1:4173/portfolio/`. On macOS it uses installed Google Chrome for hardware-backed WebGL; other platforms default to bundled Chromium. Set `PLAYWRIGHT_CHANNEL=chromium` to use bundled Chromium locally, or `PLAYWRIGHT_CHANNEL=chrome` to use installed Chrome elsewhere. Software WebGL performance is not representative of the laptop GPU.
+Every main commit runs unit tests and a build, deploys to GitHub Pages, records its SHA at `revision.json`, then runs focused browser checks against that published revision. Desktop and Retina checks run on separate GitHub runners; complete validation uses eight interaction shards plus separate forward tour, reverse tour, interruption, and performance runners per display project. Reports, screenshots, and failure traces are available in the workflow's `pages-browser-evidence` artifacts.
 
-To validate the deployed site directly, without starting a local server:
+For the complete published-site suite, including independent forward/reverse station cases, dialog interruption, full-size motion recordings, and hardware performance checks:
+
+```sh
+gh workflow run pages.yml --ref main -f full_validation=true
+```
+
+GitHub runners use software WebGL. A bounded steady-state sample is recorded on software WebGL. The three warmed 20 ms p95 measurements are explicitly skipped there and require a hardware GPU. Native browser video capture is used on GitHub; saved movies are streamed into a browser decoder with HTTP Range support to check actual decoded frames, dimensions, and duration; the macOS recording helper uses browser-encoded CDP frames because native FFmpeg was unavailable in the original environment.
+
+To run the full suite from a WebGL-capable laptop against the public deployment, without a local server:
 
 ```sh
 PLAYWRIGHT_BASE_URL=https://albertocutone.github.io/portfolio/ npm run test:e2e
 ```
 
-The browser suite covers navigation in both directions, Canvas/card wheel input, keyboard endpoints, dialog scroll isolation and focus restoration, asset errors, screenshots, a narrow viewport, and a frame-performance sample. Fonts are bundled locally, so rendering needs no third-party font requests.
+Playwright uses installed Google Chrome on macOS. Set `PLAYWRIGHT_CHANNEL=chromium` for bundled Chromium. The Retina project exercises the Canvas DPR cap of 1.5. Fonts, component geometry, and studio lighting are self-hosted.
 
-For a standalone preview, run `npm run preview`. To inspect the most recent browser report, run `npx playwright show-report`.
+If public-page testing is blocked, use a dedicated production preview and one focused check:
+
+```sh
+npm run preview -- --port 4175
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:4175/portfolio/ npm run test:e2e -- tests/e2e/smoke.spec.js --project=desktop
+```
+
+For the most recent local browser report, run `npx playwright show-report`.
+
+## Asset Credits
+
+The official KiCad component library supplies licensed CAD geometry under CC-BY-SA 4.0 and the KiCad design-use exception. Available source headers and family credits are retained; the crystal's absent header/credit record and repository-license provenance are explicitly recorded in `/Users/albertocutone/local/projects/portfolio/public/assets/ASSET_CREDITS.md`. Poly Haven's Studio Small 09 HDRI is CC0.
 
 ## Content and Deployment
 
@@ -40,4 +59,4 @@ Station copy, camera waypoints, and optional CV/contact destinations live in `/U
 
 The architecture reference is `/Users/albertocutone/local/projects/portfolio/doc/design.md`.
 
-GitHub Pages uses `/portfolio/` as the asset base. Configure the repository's Pages source to **GitHub Actions**. Pushes to main or manual workflow dispatch run unit tests, build, deploy, and check the public page's HTTP response; pull requests only run unit tests and build. Full Playwright validation runs directly against the published site from a WebGL-capable laptop using the command above. The local development workflow does not publish automatically.
+GitHub Pages uses `/portfolio/` as the asset base. Configure the repository's Pages source to **GitHub Actions**. Pushes to main or manual workflow dispatch run unit tests, build, deploy, and verify the exact published revision with browser checks; pull requests only run unit tests and build. Manual full validation includes motion recordings and all browser scenarios. The local development workflow does not publish automatically.

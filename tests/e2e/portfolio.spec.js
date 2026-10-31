@@ -18,14 +18,17 @@ async function station(page, index) {
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', nativeOffset.toFixed(5));
 }
 
-test('production WebGL renders all stations forward and backward without asset or runtime errors', async ({ page }, testInfo) => {
+for (const [index, direction] of [[0, 'initial'], [1, 'forward'], [2, 'forward'], [3, 'forward'], [2, 'reverse'], [1, 'reverse'], [0, 'reverse']]) {
+ test(`production WebGL renders station ${index} during ${direction} navigation without asset or runtime errors`, async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
   page.on('response', (response) => { if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`); });
   page.on('requestfailed', (request) => errors.push(`${request.url()} ${request.failure()?.errorText}`));
   await ready(page);
-  for (const index of [0, 1, 2, 3, 2, 1, 0]) {
+  if (direction === 'reverse') await station(page, index + 1);
+  else if (index > 0) await station(page, index - 1);
+  {
     await station(page, index);
     await expect(page.getByRole('button', { name: 'View details' })).toBeVisible();
     if (index === 0) await expect(page.locator('h1')).toContainText('From photons');
@@ -36,9 +39,11 @@ test('production WebGL renders all stations forward and backward without asset o
   expect(image.byteLength).toBeGreaterThan(20000);
   await expect(page.getByRole('link', { name: /CV|Contact/i })).toHaveCount(0);
   expect(errors).toEqual([]);
-});
+ });
+}
 
 test('wheel over scene and card, keyboard, and exact endpoints control the same flight', async ({ page }, testInfo) => {
+  if (process.env.CI) test.setTimeout(1200000);
   await ready(page);
   await page.mouse.move(750, 400);
   await page.mouse.wheel(0, 1200);
@@ -99,14 +104,21 @@ test('narrow viewport preserves readable controls and the full 3D scene', async 
 });
 
 test('records steady-state animation-frame performance', async ({ page }, testInfo) => {
+  if (process.env.CI) test.setTimeout(1200000);
   await ready(page);
   await station(page, 3);
-  const metrics = await page.evaluate(async () => {
+  const softwareRenderer = await page.evaluate(() => {
+    const gl = document.querySelector('canvas').getContext('webgl2');
+    const debug = gl.getExtension('WEBGL_debug_renderer_info');
+    return debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+  });
+  const sampleCount = process.env.CI && /SwiftShader|llvmpipe|Software/i.test(softwareRenderer) ? 13 : 121;
+  const metrics = await page.evaluate(async (sampleCount) => {
     const times = [];
     await new Promise((resolve) => {
       function frame(time) {
         times.push(time);
-        if (times.length === 121) resolve();
+        if (times.length === sampleCount) resolve();
         else requestAnimationFrame(frame);
       }
       requestAnimationFrame(frame);
@@ -115,8 +127,8 @@ test('records steady-state animation-frame performance', async ({ page }, testIn
     const mean = intervals.reduce((sum, time) => sum + time, 0) / intervals.length;
     const gl = document.querySelector('canvas').getContext('webgl2');
     const debug = gl.getExtension('WEBGL_debug_renderer_info');
-    return { fps: 1000 / mean, meanFrameMs: mean, p95FrameMs: intervals.toSorted((a, b) => a - b)[114], renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER), userAgent: navigator.userAgent, viewport: [innerWidth, innerHeight] };
-  });
+    return { fps: 1000 / mean, meanFrameMs: mean, p95FrameMs: intervals.toSorted((a, b) => a - b)[Math.floor(intervals.length * 0.95)], sampleCount, renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER), userAgent: navigator.userAgent, viewport: [innerWidth, innerHeight] };
+  }, sampleCount);
   await testInfo.attach('frame-performance', { body: JSON.stringify(metrics, null, 2), contentType: 'application/json' });
   console.log('Frame performance:', JSON.stringify(metrics));
   expect(metrics.fps).toBeGreaterThan(0);

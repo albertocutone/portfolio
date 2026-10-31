@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      full_validation:
+        description: Run the complete published-site suite with motion recordings
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -58,15 +63,19 @@ jobs:
     if: github.event_name != 'pull_request'
     needs: deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
         project: [desktop, retina]
+        group: ${{ fromJSON(github.event_name == 'workflow_dispatch' && inputs.full_validation && '["ui1","ui2","ui3","ui4","ui5","ui6","ui7","ui8","tour-forward","tour-reverse","interruption","performance"]' || '["quick"]') }}
     env:
       PLAYWRIGHT_BASE_URL: https://albertocutone.github.io/portfolio/
       PLAYWRIGHT_CHANNEL: chromium
       EXPECTED_COMMIT_SHA: ${{ github.sha }}
+      FULL_VALIDATION: ${{ github.event_name == 'workflow_dispatch' && inputs.full_validation || false }}
+      BROWSER_PROJECT: ${{ matrix.project }}
+      BROWSER_GROUP: ${{ matrix.group }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -76,12 +85,33 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Verify interactions on the published revision
-        run: npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js tests/e2e/motion.spec.js tests/e2e/assets.spec.js --project=${{ matrix.project }}
+        run: |
+          case "$BROWSER_GROUP" in
+            ui*)
+              shard="${BROWSER_GROUP#ui}"
+              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep-invert 'record the four-station|wheel reversals and dialog|profile three warmed|records steady-state' --shard="$shard/8"
+              ;;
+            tour-*)
+              direction="${BROWSER_GROUP#tour-}"
+              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep "record the four-station $direction"
+              ;;
+            interruption)
+              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep 'wheel reversals and dialog'
+              ;;
+            performance)
+              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep 'profile three warmed|records steady-state'
+              ;;
+            quick)
+              npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js tests/e2e/motion.spec.js tests/e2e/input.spec.js --project="$BROWSER_PROJECT"
+              ;;
+          esac
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pages-browser-evidence-${{ matrix.project }}
+          name: pages-browser-evidence-${{ matrix.project }}-${{ matrix.group }}
           path: |
             playwright-report/
             test-results/
+            .superpowers/artifacts/cinematic-live/
+          include-hidden-files: true
           retention-days: 14

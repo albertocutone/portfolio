@@ -1,79 +1,55 @@
 # From Photons to Edge Intelligence
 
-## Design
+## Visual Direction
 
-Alberto Cutone's portfolio is a cinematic, scroll-driven flight over a deterministic procedural printed circuit board. Four stations connect sensing, instrumentation, edge inference, and system architecture. Deep green soldermask, gold traces, restrained cyan accents, macro lighting, and a separate readable HTML narrative establish the visual language.
+A scroll-driven macro product film over a tailored PCB: real CAD-derived component geometry, deep green solder mask, plated contacts, metal housings, molded plastic, white silkscreen, controlled studio reflections, and a separate readable HTML narrative. The four stations connect sensing, instrumentation, edge intelligence, and architecture.
 
-The full WebGL experience targets laptops. A narrow-screen layout keeps the same scene and adjusts only HTML placement. There are no automatic quality tiers, separate mobile scenes, external model dependencies, or static fallbacks.
+The PCB always extends beyond the camera frustum, including the architecture composition. It is not a small board scaled up with its components. Physical component dimensions remain fixed at **10 mm per scene unit**; the substrate starts at 320 x 240 mm and conservatively expands for the viewport to cover every projected tour pose with margin. Extent follows viewport changes, not camera progress; unchanged dimensions reuse buffers, replaced bodies are disposed, and the central detailed surface is built once. A single green cap prevents overlapping outer layers from fighting at distant angles.
 
-## Architecture
+The same full-3D scene targets laptops and remains on narrow viewports. There are no quality tiers, separate mobile scenes, or static rendering fallbacks. A failed required asset produces an explicit error and retry control rather than a false ready state.
 
-```mermaid
-flowchart TD
-    Input[Wheel / keyboard] --> Drei[Drei ScrollControls]
-    Navigation[HTML station navigation] --> Seek[store.seek]
-    Seek --> Drei
-    Drei --> Bridge[ScrollBridge]
-    Bridge --> Store[Shared normalized scroll store]
-    Config[Immutable station configuration] --> Timeline[Pure timeline resolver]
-    Store --> Timeline
-    Timeline --> Camera[CameraRig and world-space focus]
-    Timeline --> Overlay[Semantic HTML overlay]
-    Camera --> PCB[Procedural PCBWorld]
-    Camera --> Effects[Depth of field and bloom]
-    Overlay --> Dialog[Native project details dialog]
-```
+## Geometry and Assets
 
-The application shell mounts sibling WebGL and HTML layers. Rendering, content, and scroll utilities remain separate:
+Official KiCad WRL models supply QFP and SOIC packages, ceramic capacitors, resistors, inductors, crystals, cylindrical capacitors, USB metalwork, and a pin header. A purpose-built sensor surface sits on a detailed package. Runtime assets are bundled locally under the Vite `/portfolio/` base; no third-party model or lighting requests are needed.
 
-- `/Users/albertocutone/local/projects/portfolio/src/App.jsx` owns the Canvas, shared store, and modal pause state.
-- `/Users/albertocutone/local/projects/portfolio/src/config/stations.js` owns station copy, plain numeric camera and focus tuples, component anchors, and optional destinations.
-- `/Users/albertocutone/local/projects/portfolio/src/scroll/timeline.js` resolves camera position, target, focus, active station, transition progress, and card opacity without history-dependent state.
-- `/Users/albertocutone/local/projects/portfolio/src/scroll/store.js` exposes snapshot/subscription/seek plus bridge connection and publication. It never exposes a DOM element.
-- `/Users/albertocutone/local/projects/portfolio/src/scroll/ScrollBridge.jsx` owns the private Drei container and input routing.
-- `/Users/albertocutone/local/projects/portfolio/src/components/3D/PCBWorld.jsx` owns seeded traces, instanced capacitors/vias/pins, chip packages, a sensor die, connectors, and a custom GLSL soldermask material.
-- `/Users/albertocutone/local/projects/portfolio/src/components/3D/Scene.jsx` owns macro lighting, camera motion, world-space depth of field, and bloom.
-- `/Users/albertocutone/local/projects/portfolio/src/components/2D/Overlay.jsx` owns the narrative, station navigation, and native dialog.
+The pinned source revision, file hashes, unit scale, mounting plane, footprint origin, material classification, and license are recorded in `/Users/albertocutone/local/projects/portfolio/src/config/componentAssets.js`. The WRL source is parsed with Three's `VRMLLoader`, preserving nested transforms. Geometry is normalized from verified 2.54 mm source units and Z-up coordinates, then merged by material for efficient instancing. Through-hole leads extend below the mounting plane; models are not blindly grounded by their minimum bounding-box coordinate.
 
-Camera frame updates reuse Three.js vectors. Only the HTML overlay uses `useSyncExternalStore`; the application shell publishes its diagnostic offset attribute through a ref subscription, so scrolling does not re-render the Canvas tree. The depth-of-field target object remains stable. Canvas device pixel ratio is capped at 1.5, antialiasing and effect multisampling are disabled, and repeated geometry uses instancing. The board is generated once using seed 42; scroll changes the camera, not geometry.
+The 186-component population uses roughly 165k component triangles and 24 component draw calls. Board details add pads, plated vias, actual substrate through-bores, connected masked routing, solder contacts, and silkscreen. Most copper is covered by solder mask rather than drawn as raised glowing gold roads. Geometry is static while the camera travels.
 
-## Choreography
+KiCad geometry retains CC-BY-SA 4.0 licensing, available original headers and family credit records, and the design-use exception. The crystal has neither an embedded header nor an upstream family credit record at the source pin; its project attribution and repository-license provenance are explicit in the credits. The redistributed models retain their own license separately from application code. The selected radial capacitor has an explicit compatible license header. The bundled Poly Haven Studio Small 09 HDRI is CC0. See `/Users/albertocutone/local/projects/portfolio/public/assets/ASSET_CREDITS.md` and `/Users/albertocutone/local/projects/portfolio/public/assets/models/LICENSE.md`.
 
-| Station | Interval | Subject |
-| --- | --- | --- |
-| Sensing | 0.00-0.25 | Sensor die at the origin |
-| Instrumentation | 0.25-0.50 | Bus near (-1.2, 0, 0) |
-| Edge Intelligence | 0.50-0.75 | SoC near (1.2, 0, -1.2) |
-| Architecture | 0.75-1.00 | Whole-board overview |
+## Rendering and Motion
 
-For the first three intervals, the first 70% holds the waypoint and the remaining 30% travels to the next. Position, look-at target, and focus use smoothstep interpolation with no second camera damping layer. Drei is the sole scroll source, with four pages and damping 0.15. The final overview holds through exactly 1.
+Studio environment lighting, a controlled key and rim, static key shadows, and contact shadows establish depth and material contrast. Imported CAD colors are converted to differentiated PBR materials for metal, plastic, ceramic, and plated contacts. Surface roughness has restrained grain. Bloom is subtle, and the focal subject remains sharp.
 
-The outgoing card fades during the first third of travel, then stays hidden. Arrivals fade in over the first 0.02 of an interval; the first station begins fully visible. Hidden cards are inert. Navigation seeks 0.021 into noninitial intervals so the requested station is readable immediately after settling. Reverse scroll evaluates the same pure rules.
+Canvas DPR remains capped at 1.5. The effect compositor uses four-sample antialiasing, world-unit depth-of-field focus ranges, and reduced-resolution blur. HTML never enters the compositor. Camera and focus vectors are reused, while view offset and projection changes occur on resize rather than every frame.
 
-The 4.4 x 3.4 board contains all component anchors. Camera waypoints are calibrated to the generated geometry because the source brief did not contain numeric camera positions. Desktop view offset leaves space for the narrative. World-space focus follows the component; overview bokeh is reduced for broad sharpness. HTML never enters the effect compositor.
+The pure evaluator in `/Users/albertocutone/local/projects/portfolio/src/scroll/timeline.js` resolves position, look-at target, focus, optical values, active station, and card visibility. The first three equal-quarter station intervals hold for 35% and travel for 65%. Authored cubic Bezier paths use cached arc-length sampling with quintic progress easing for zero endpoint velocity and acceleration. Focus and optical values change continuously. The final wider regional composition holds through exact offset 1 without revealing the PCB outline.
+
+`/Users/albertocutone/local/projects/portfolio/src/config/motion.js` owns timing, camera projection, navigation landings, damping, and maximum progress speed. Drei is the sole temporal damping layer: four pages, damping 0.35, and maximum normalized speed 0.10 per second. There is no additional camera spring or tween. Reverse travel evaluates the same stateless paths.
+
+Navigation returns the first station to zero and lands 15% into later quarters: 0.2875, 0.5375, and 0.7875. Cards fade out early during travel and fade in over the first 0.02 of arrivals. Hidden cards remain inert.
 
 ## Input and Content
 
-The outer overlay ignores pointer events; controls and cards restore interaction. Native wheel input over the Drei container is not forwarded a second time. Wheel input over sibling HTML is forwarded with delta-mode conversion. Ctrl-wheel remains available for browser zoom. Home/End, arrows, PageUp/PageDown, and noncontrol Space seek the flight. Space on buttons retains native activation.
+The shared scroll store exposes subscription, publication, and commands without leaking a DOM element. `/Users/albertocutone/local/projects/portfolio/src/scroll/ScrollBridge.jsx` owns the native Drei container, normalized pixel seeks, wheel forwarding and delta-mode conversion, browser zoom preservation, and keyboard guards. Canvas initialization must maintain event-target ownership before reporting ready. Required component models and studio lighting must also load before readiness.
 
-A native modal dialog provides focus containment, an accessible name, Escape handling, a close button, independent internal scrolling, and focus restoration. Opening it freezes the published flight offset and stops underlying input. Closing resumes from the same position.
+The semantic overlay remains separate from WebGL. Native project dialogs provide an accessible name, focus containment, independent scrolling, Escape and close controls, and focus restoration. Flight input and publication are paused while details are open and resume from the visible position.
 
-Copy uses only supplied facts: Meta Reality Labs mixed-reality evaluation, Android/C++, zero-copy IPC and sensor visualization; combined CERN & Matica cryogenic imaging, robotic integration and C++ image-processing drivers; Edge Platforms & PetLog manufacturing firmware, Raspberry Pi pipelines, OpenCV/YOLO/VLM tracking; electronic engineering and perceptual ML integration. No invented dates, metrics, links, or employment claims.
+Copy uses only supplied facts: Meta Reality Labs mixed-reality evaluation and sensor visualization; CERN and Matica imaging/robotic integration; Edge Platforms and PetLog firmware and inference pipelines; electronic engineering and perceptual ML. No dates, metrics, links, or employment claims are invented. Missing CV/contact destinations produce no controls.
 
-CV/contact actions are optional and absent until real destinations are supplied. CV URLs use Vite's base-aware URL. Project external links are optional.
+## Verification and Delivery
 
-## Validation and Delivery
+`npm test` verifies real asset parsing, unit scale and transforms, pinned hashes, substrate bores and UVs, board-frustum coverage, surrounding population, timeline interpolation and continuity, reverse evaluation, navigation landings, and scroll-store contracts.
 
-`npm test` runs real timeline and store unit tests, covering clamps, interval boundaries, hold/travel interpolation, fades, reverse evaluation, exact offset 1, subscriptions, and command disconnection.
+`npm run build` creates production assets for `/portfolio/`. `npm run test:e2e` uses hardware-backed Chrome on macOS and targets the production preview at `http://127.0.0.1:4173/portfolio/`. Desktop and Retina projects use host DPRs 1 and 2; the Retina project exercises the actual 1.5 Canvas DPR cap. Tests cover assets/errors, independent station cases in both traversal directions, line/page wheel input and browser zoom preservation, rapid navigation retargeting, repeated modal dismissal and keyboard resume, absent links, and narrow layout. Actual component envelopes and the near plane are checked across the entire camera tour by unit tests.
 
-`npm run build` creates production assets with Vite base `/portfolio/`. `npm run test:e2e` uses Playwright Chromium against the production preview at `http://127.0.0.1:4173/portfolio/`. It validates real WebGL, all stations forward/reverse, wheel over scene and cards, keyboard endpoints, navigation, dialog scrolling and focus, absent links, asset/runtime errors, a narrow layout, station screenshots, and an animation-frame sample at 1440 x 900. Tests poll observable settled state instead of fixed sleeps. Failure traces, screenshots, and an HTML report are retained.
+Full-size station frames and forward/reverse and interruption videos are visual evidence, not automatic realism scores. Performance is sampled during three warmed camera moves, separately from video capture. Each animation frame must be sampled only once. The target is approximately 60 FPS and roughly 20 ms or better p95 frame time on the Apple M3 Pro. Results depend on the host/GPU; software WebGL is not representative.
 
-The animation-frame sample targets approximately 60 FPS after initialization and records the WebGL renderer. macOS uses installed Chrome for hardware-backed WebGL; other platforms default to bundled Chromium. `PLAYWRIGHT_CHANNEL` overrides this choice. Bundled macOS headless Chromium uses SwiftShader software rendering on this host, which is not representative of the Apple GPU. Browser, headless mode, and host GPU affect measurements; it is not a universal performance guarantee. Screenshots require visual inspection for framing, focus, legibility, and clipping. Manrope and DM Mono fonts are bundled locally.
+The Pages workflow runs unit/build gating, Pages deployment, an HTTP check, and focused browser verification of the exact published SHA. Desktop and Retina checks run on separate runners and upload reports/screenshots/traces; full validation uses four interaction shards plus separate tour, interruption, and performance runners per display project. Manual dispatch with `full_validation=true` runs the complete suite and records full-size videos. GitHub software WebGL timings are reported separately from the hardware GPU performance target. Pull requests only test/build. Hardware GPU acceptance can be run against the public deployment:
 
-The bridge maintains Drei's event target when Canvas initialization reconnects events to its root. Application readiness waits for that event connection and initialization animation frames, avoiding input before the native scroll listener is attached. Browser station helpers also wait for the damped offset to match the native scroll target exactly before testing modal isolation.
+```sh
+PLAYWRIGHT_BASE_URL=https://albertocutone.github.io/portfolio/ npm run test:e2e
+```
 
-The Pages workflow runs `npm ci`, unit tests, and the production build before upload/deployment, then checks the public page's HTTP response. It supports pushes to main and manual dispatch; pull requests run unit tests and build without deploying. Official Pages artifact and deployment actions use the github-pages environment, scoped Pages/OIDC permissions, and concurrency. Repository Pages settings must select GitHub Actions.
-
-Full browser acceptance runs directly against GitHub Pages on a WebGL-capable laptop using `PLAYWRIGHT_BASE_URL=https://albertocutone.github.io/portfolio/ npm run test:e2e`. Setting this variable disables the local preview server. The Ubuntu deployment runner's browser interactions and frame sampling exceeded test timeouts, so hardware-dependent validation is performed against the actual deployed site rather than gating deployment on that software-rendered environment. All five browser scenarios remain required; no application rendering quality is reduced.
-
-Release acceptance requires unit/build success, a successful Pages deployment, and successful live Playwright validation with screenshot inspection.
+The public URL override disables the local preview server. Release acceptance requires unit/build success, a successful Pages deployment, live browser checks, and visual inspection of actual frames and motion recordings.
