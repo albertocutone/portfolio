@@ -25,6 +25,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - name: Record deployed revision
+        run: |
+          node -e 'require("node:fs").writeFileSync("dist/revision.json", JSON.stringify({ commit: process.env.GITHUB_SHA }))'
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'
         with:
@@ -50,3 +53,31 @@ jobs:
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: curl --fail --silent --show-error --retry 6 --retry-delay 10 --retry-all-errors "$PAGE_URL" --output /dev/null
+
+  verify:
+    if: github.event_name != 'pull_request'
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PLAYWRIGHT_BASE_URL: https://albertocutone.github.io/portfolio/
+      PLAYWRIGHT_CHANNEL: chromium
+      EXPECTED_COMMIT_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Verify interactions on the published revision
+        run: npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pages-browser-evidence
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14

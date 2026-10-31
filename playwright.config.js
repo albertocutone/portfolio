@@ -6,8 +6,8 @@ export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: false,
   workers: 1,
-  timeout: 60000,
-  expect: { timeout: 15000 },
+  timeout: process.env.CI ? 240000 : 60000,
+  expect: { timeout: process.env.CI ? 90000 : 15000 },
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: deployedURL || 'http://127.0.0.1:4173/portfolio/',
