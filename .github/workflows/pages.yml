@@ -59,6 +59,10 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [desktop, retina]
     env:
       PLAYWRIGHT_BASE_URL: https://albertocutone.github.io/portfolio/
       PLAYWRIGHT_CHANNEL: chromium
@@ -72,11 +76,11 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Verify interactions on the published revision
-        run: npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js tests/e2e/motion.spec.js
+        run: npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js tests/e2e/motion.spec.js tests/e2e/assets.spec.js --project=${{ matrix.project }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pages-browser-evidence
+          name: pages-browser-evidence-${{ matrix.project }}
           path: |
             playwright-report/
             test-results/

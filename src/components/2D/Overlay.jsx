@@ -53,7 +53,7 @@ export default function Overlay({ store, onModalChange }) {
       </article>
     </main>
 
-    <aside className="scene-caption" aria-hidden="true"><span className="caption-cross">+</span><div>{station.eyebrow.slice(5)}<small>PROCEDURAL PCB / LIVE WEBGL</small></div></aside>
+    <aside className="scene-caption" aria-hidden="true"><span className="caption-cross">+</span><div>{station.eyebrow.slice(5)}<small>PCB COMPONENT STUDY / LIVE WEBGL</small></div></aside>
     <footer className="flight-footer">
       <div className="scroll-cue"><span aria-hidden="true">&#8595;</span><div>Scroll to explore<small>FOUR STATIONS. ONE CONNECTED SYSTEM.</small></div></div>
       <nav aria-label="Station navigation">{stations.map((item, i) => <button key={item.id} aria-label={item.label} aria-current={i === index ? 'step' : undefined} onClick={() => store.seek(stationLanding(stations, i))}><span className="nav-number">0{i + 1}</span><span className="nav-label">{item.label}</span><span className="nav-line" /></button>)}</nav>

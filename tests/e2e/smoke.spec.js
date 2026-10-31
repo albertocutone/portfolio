@@ -8,6 +8,14 @@ test('published 3D scene loads and navigation reaches a readable architecture sh
   await page.goto('./');
   await expect(page.locator('.experience')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('canvas')).toBeVisible();
+  const rendering = await page.evaluate(() => {
+    const canvas = document.querySelector('canvas');
+    const gl = canvas.getContext('webgl2');
+    const debug = gl.getExtension('WEBGL_debug_renderer_info');
+    return { renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER), hostDpr: devicePixelRatio, canvasSize: [canvas.width, canvas.height] };
+  });
+  await testInfo.attach('rendering-context', { body: JSON.stringify(rendering), contentType: 'application/json' });
+  console.log('Published rendering context:', JSON.stringify(rendering));
   await page.screenshot({ path: testInfo.outputPath('sensor.png') });
   await page.getByRole('button', { name: 'Architecture', exact: true }).click();
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'architecture');
