@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useLoader } from '@react-three/fiber';
-import { VRMLLoader } from 'three/addons/loaders/VRMLLoader.js';
+import { RetryingVRMLLoader } from './RetryingVRMLLoader.js';
 import { Object3D } from 'three';
 import { componentAssets } from '../../config/componentAssets.js';
 import { placements } from '../../config/boardLayout.js';
@@ -25,7 +25,7 @@ function Instances({ geometry, material, parts }) {
 }
 
 export default function ComponentAssets() {
-  const sources = useLoader(VRMLLoader, urls);
+  const sources = useLoader(RetryingVRMLLoader, urls);
   const [models] = useState(() => componentAssets.map((asset, index) => ({
     id: asset.id,
     geometry: prepareComponent(sources[index], asset),

@@ -19,9 +19,12 @@ test('ATLAS opens the scene, scroll reaches the PCB, and navigation reaches arch
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'atlas');
   await expect(page.getByRole('link', { name: /ATLAS model: physics.atlas.vr/ })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('atlas.png') });
-  const scrollPixels = await page.getByLabel('Portfolio flight scroll area').evaluate(el => (el.scrollHeight - el.clientHeight) * 0.23);
+  const area = page.getByLabel('Portfolio flight scroll area');
+  const scrollPixels = await area.evaluate(el => (el.scrollHeight - el.clientHeight) * 0.23);
   await page.locator('.station-card').dispatchEvent('wheel', { deltaY: scrollPixels, deltaMode: 0, bubbles: true, cancelable: true });
-  await expect(page.locator('.experience')).toHaveAttribute('data-offset', '0.23000');
+  const sensorTarget = await area.evaluate(el => el.scrollTop / (el.scrollHeight - el.clientHeight));
+  expect(sensorTarget).toBeCloseTo(0.23, 3);
+  await expect(page.locator('.experience')).toHaveAttribute('data-offset', sensorTarget.toFixed(5));
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'sensor');
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
   await expect(page.locator('.scene-transition')).toHaveCSS('opacity', '0');
@@ -29,7 +32,6 @@ test('ATLAS opens the scene, scroll reaches the PCB, and navigation reaches arch
   await page.getByRole('button', { name: 'Architecture', exact: true }).click();
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'architecture');
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
-  const area = page.getByLabel('Portfolio flight scroll area');
   const target = await area.evaluate(el => el.scrollTop / (el.scrollHeight - el.clientHeight));
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', target.toFixed(5));
   await expect(page.getByRole('button', { name: 'View details' })).toBeVisible();

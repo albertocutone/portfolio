@@ -26,6 +26,27 @@ test('missing ATLAS geometry does not report a ready 3D scene', async ({ page })
   await expect(page.getByRole('status')).toHaveCount(0);
 });
 
+test('a temporary component HTTP 503 recovers before scene readiness', async ({ page }) => {
+  let attempts = 0;
+  await page.route('**/assets/models/ceramic.wrl', route => ++attempts === 1
+    ? route.fulfill({ status: 503, body: 'Temporarily unavailable' })
+    : route.continue());
+  await page.goto('./');
+  await expect(page.locator('.experience')).toHaveAttribute('data-ready', 'true');
+  expect(attempts).toBe(2);
+  await expect(page.getByRole('alert')).toHaveCount(0);
+});
+
+test('the scene retry control remains usable above the narrow-screen narrative', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.route('**/assets/models/lqfp.wrl', route => route.abort());
+  await page.goto('./');
+  await expect(page.getByRole('alert')).toBeVisible();
+  const retry = page.getByRole('button', { name: 'Retry scene' });
+  await expect(retry).toBeInViewport();
+  await retry.click({ trial: true });
+});
+
 test('missing required geometry does not report a ready 3D scene', async ({ page }) => {
   await page.route('**/assets/models/lqfp.wrl', (route) => route.abort());
   await page.goto('./');

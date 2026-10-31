@@ -20,6 +20,7 @@ a { color: inherit; text-decoration: none; }
 button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 6px; }
 .experience { height: 100dvh; min-height: 550px; overflow: hidden; position: relative; }
 .canvas-layer { position: fixed; inset: 0; z-index: 1; }
+.canvas-layer:has(.scene-error) { z-index: 12; }
 .scene-shade { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, transparent 44%, #10171412 55%, #101714e6 78%, #101714f5 100%), linear-gradient(0deg, #101714a0, transparent 14%, transparent 85%, #10171466); }
 .scene-transition { position: fixed; inset: 0; z-index: 3; pointer-events: none; background: #101714; }
 .model-credit { position: absolute; left: 48px; bottom: 130px; max-width: calc(100% - 96px); color: var(--muted); font: 8px 'DM Mono', monospace; }
