@@ -9,6 +9,10 @@ export default defineConfig({
   timeout: process.env.CI ? 240000 : 60000,
   expect: { timeout: process.env.CI ? 90000 : 15000 },
   reporter: [['list'], ['html', { open: 'never' }]],
+  projects: [
+    { name: 'desktop', use: { deviceScaleFactor: 1 } },
+    { name: 'retina', use: { deviceScaleFactor: 2 } },
+  ],
   use: {
     baseURL: deployedURL || 'http://127.0.0.1:4173/portfolio/',
     viewport: { width: 1440, height: 900 },

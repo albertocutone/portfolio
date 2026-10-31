@@ -72,7 +72,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Verify interactions on the published revision
-        run: npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js
+        run: npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js tests/e2e/motion.spec.js
       - uses: actions/upload-artifact@v4
         if: always()
         with:

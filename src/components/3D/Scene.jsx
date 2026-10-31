@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer } from '@react-three/postprocessing';
 import { Vector3 } from 'three';
 import { stations } from '../../config/stations.js';
+import { cameraProjection } from '../../config/motion.js';
 import { resolveTimeline } from '../../scroll/timeline.js';
 import PCBWorld from './PCBWorld.jsx';
 
@@ -10,17 +11,21 @@ function CameraRig({ store, depth }) {
   const { camera, size } = useThree();
   const [target] = useState(() => new Vector3());
   const [focus] = useState(() => new Vector3());
+  useLayoutEffect(() => {
+    const shift = size.width >= 900 ? size.width * cameraProjection.desktopOffset : 0;
+    camera.setViewOffset(size.width, size.height, shift, 0, size.width, size.height);
+    return () => camera.clearViewOffset();
+  }, [camera, size.width, size.height]);
   useFrame(() => {
     const timeline = resolveTimeline(store.getSnapshot(), stations);
     camera.position.set(...timeline.position);
     target.set(...timeline.target);
     camera.lookAt(target);
-    const shift = size.width >= 900 ? size.width * 0.17 : 0;
-    camera.setViewOffset(size.width, size.height, shift, 0, size.width, size.height);
     focus.set(...timeline.focus);
     if (depth.current) {
       depth.current.target.copy(focus);
-      depth.current.bokehScale = timeline.index === 3 ? 0.15 : 1.8 * (1 - timeline.transitionProgress * 0.4);
+      depth.current.bokehScale = timeline.bokehScale;
+      depth.current.circleOfConfusionMaterial.focusRange = timeline.focusRange;
     }
   });
   return null;
@@ -38,7 +43,7 @@ export default function Scene({ store }) {
     <PCBWorld />
     <CameraRig store={store} depth={depth} />
     <EffectComposer multisampling={0}>
-      <DepthOfField ref={depth} target={initialFocus} focalLength={0.035} bokehScale={1.8} height={480} />
+      <DepthOfField ref={depth} target={initialFocus} focusRange={0.32} bokehScale={0.75} height={480} />
       <Bloom luminanceThreshold={1.4} intensity={0.18} mipmapBlur />
     </EffectComposer>
   </>;

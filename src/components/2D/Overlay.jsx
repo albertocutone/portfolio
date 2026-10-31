@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { profile, stations } from '../../config/stations.js';
 import { resolveTimeline } from '../../scroll/timeline.js';
+import { stationLanding } from '../../config/motion.js';
 
 export default function Overlay({ store, onModalChange }) {
   const offset = useSyncExternalStore(store.subscribe, store.getSnapshot);
@@ -55,7 +56,7 @@ export default function Overlay({ store, onModalChange }) {
     <aside className="scene-caption" aria-hidden="true"><span className="caption-cross">+</span><div>{station.eyebrow.slice(5)}<small>PROCEDURAL PCB / LIVE WEBGL</small></div></aside>
     <footer className="flight-footer">
       <div className="scroll-cue"><span aria-hidden="true">&#8595;</span><div>Scroll to explore<small>FOUR STATIONS. ONE CONNECTED SYSTEM.</small></div></div>
-      <nav aria-label="Station navigation">{stations.map((item, i) => <button key={item.id} aria-label={item.label} aria-current={i === index ? 'step' : undefined} onClick={() => store.seek(item.scrollRange[0] + (i ? 0.021 : 0))}><span className="nav-number">0{i + 1}</span><span className="nav-label">{item.label}</span><span className="nav-line" /></button>)}</nav>
+      <nav aria-label="Station navigation">{stations.map((item, i) => <button key={item.id} aria-label={item.label} aria-current={i === index ? 'step' : undefined} onClick={() => store.seek(stationLanding(stations, i))}><span className="nav-number">0{i + 1}</span><span className="nav-label">{item.label}</span><span className="nav-line" /></button>)}</nav>
       <span className="flight-position" aria-label="Flight progress">{String(Math.round(offset * 100)).padStart(3, '0')}<small> / 100</small></span>
     </footer>
     <div className="progress-track" aria-hidden="true"><div style={{ transform: `scaleX(${offset})` }} /></div>

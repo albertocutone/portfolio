@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { ScrollControls } from '@react-three/drei';
 import { createScrollStore } from './scroll/store.js';
+import { cameraProjection, motion } from './config/motion.js';
 import ScrollBridge from './scroll/ScrollBridge.jsx';
 import Scene from './components/3D/Scene.jsx';
 import Overlay from './components/2D/Overlay.jsx';
@@ -17,8 +18,8 @@ export default function App() {
   function ready() { setReady(true); }
   return <div ref={shell} className="experience" data-offset="0.00000" data-ready={isReady}>
     <div className="canvas-layer" aria-label="A cinematic flight across a procedural printed circuit board">
-      <Canvas dpr={[1, 1.5]} camera={{ fov: 40, near: 0.01, far: 100 }} gl={{ antialias: false, powerPreference: 'high-performance' }}>
-        <ScrollControls pages={4} damping={0.15} enabled={!paused} style={{ scrollbarWidth: 'none' }}>
+      <Canvas dpr={[1, 1.5]} camera={{ fov: cameraProjection.fov, near: cameraProjection.near, far: cameraProjection.far }} gl={{ antialias: false, powerPreference: 'high-performance' }}>
+        <ScrollControls pages={4} damping={motion.damping} maxSpeed={motion.maxSpeed} enabled={!paused} style={{ scrollbarWidth: 'none' }}>
           <ScrollBridge store={store} paused={paused} onReady={ready} />
           <Scene store={store} />
         </ScrollControls>

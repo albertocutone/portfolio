@@ -13,7 +13,7 @@ async function station(page, index) {
   await page.getByRole('button', { name: names[index], exact: true }).click();
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', ids[index]);
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
-  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(index * 0.25 + (index ? 0.021 : 0), 3);
+  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo([0, 0.2875, 0.5375, 0.7875][index], 3);
   const nativeOffset = await page.getByLabel('Portfolio flight scroll area').evaluate((element) => element.scrollTop / (element.scrollHeight - element.clientHeight));
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', nativeOffset.toFixed(5));
 }
@@ -38,7 +38,7 @@ test('production WebGL renders all stations forward and backward without asset o
   expect(errors).toEqual([]);
 });
 
-test('wheel over scene and card, keyboard, and exact endpoints control the same flight', async ({ page }) => {
+test('wheel over scene and card, keyboard, and exact endpoints control the same flight', async ({ page }, testInfo) => {
   await ready(page);
   await page.mouse.move(750, 400);
   await page.mouse.wheel(0, 1200);
@@ -46,8 +46,14 @@ test('wheel over scene and card, keyboard, and exact endpoints control the same 
   await station(page, 1);
   const before = Number(await page.locator('.experience').getAttribute('data-offset'));
   await page.locator('.station-card').hover();
+  await page.evaluate(() => document.addEventListener('wheel', (event) => { window.__lastWheelReceipt = { deltaY: event.deltaY, mode: event.deltaMode }; }, { capture: true, once: true }));
   await page.mouse.wheel(0, 140);
-  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeGreaterThan(before + 0.035);
+  const receipt = await page.evaluate(() => ({ ...window.__lastWheelReceipt, dpr: devicePixelRatio }));
+  await testInfo.attach('wheel-receipt', { body: JSON.stringify(receipt), contentType: 'application/json' });
+  console.log('Wheel receipt:', JSON.stringify(receipt));
+  const range = await page.getByLabel('Portfolio flight scroll area').evaluate((element) => element.scrollHeight - element.clientHeight);
+  expect(receipt.deltaY).toBeGreaterThan(0);
+  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(before + receipt.deltaY / range, 3);
   await page.keyboard.press('End');
   await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(1, 3);
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'architecture');
