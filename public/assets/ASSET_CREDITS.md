@@ -8,7 +8,7 @@ The Quest 3 model comes from the user-supplied `assets/meta-quest-3.zip` (`sourc
 
 "META VR GLASSES" (https://sketchfab.com/3d-models/meta-vr-glasses-165e3a61fb3344ee812474ffa2e613ce) by rogeressig (https://sketchfab.com/roger_essig) is licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/). The source GLB's embedded attribution is preserved and also retained in `models/meta-vr-glasses.LICENSE.txt`; the scene links to the source and credits its author.
 
-Rebuild all three models with `npm run optimize:meta`. Adaptations: animation frozen at the authored rest pose, centering, uniform display scaling, static transforms flattened, legacy specular/glossiness materials converted to metallic/roughness for the current renderer, Meshopt geometry compression, and texture recompression as WebP up to 2048px. The downloaded geometry is retained. Source files, hashes, and output bounds are recorded in `models/meta.meta.json`.
+Rebuild all three models with `npm run optimize:meta`. Adaptations: centering, uniform display scaling, static models flattened, legacy specular/glossiness materials converted to metallic/roughness for the current renderer, Meshopt geometry compression, and texture recompression as WebP up to 2048px. The downloaded geometry and original logo animation tracks are retained. The logo loops its authored animation; the two products slowly rotate around the world Y axis while the Meta scene is visible. Source files, hashes, and output bounds are recorded in `models/meta.meta.json`.
 
 ## Colosseum, Rome, Italy
 

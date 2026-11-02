@@ -1,23 +1,23 @@
 {
   "provenance": "Models converted from the downloaded files in assets/.",
-  "adaptations": "Animation frozen at the authored rest pose, centered, uniformly scaled, static transforms flattened, legacy materials converted to metallic/roughness, geometry Meshopt-compressed, and textures recompressed as WebP up to 2048px.",
+  "adaptations": "Original animation tracks preserved, centered, uniformly scaled, static models flattened, legacy materials converted to metallic/roughness, geometry Meshopt-compressed, and textures recompressed as WebP up to 2048px.",
   "models": [
     {
       "file": "meta-logo.glb",
       "sourceFile": "meta_logo.zip",
       "sourceFileSha256": "3606cf75c94ef1052554c3c2f67b9d1142814c6c1f3bf33c4d29681d8e0b8851",
-      "bytes": 143812,
-      "sha256": "f081a07b504b3d3d9c6e7e5dfcedaefa3bb7b6ebf6808ab0e54e90c173752805",
+      "bytes": 143592,
+      "sha256": "a6739da1e57df4852b87a408dc1cab9c1576d8b0887bd1ac2e1f80e30429c19e",
       "bounds": {
         "min": [
           -1.5000246074261585,
           -0.30121840701911307,
-          -0.4434149163090474
+          -0.4434149163090475
         ],
         "max": [
           1.4999999999999996,
           0.30121840701911307,
-          0.4434148914084476
+          0.4434148914084477
         ]
       },
       "attribution": {

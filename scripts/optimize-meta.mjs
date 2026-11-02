@@ -25,8 +25,6 @@ for (const [archive, entry, file, size] of [
   const root = document.getRoot();
   const scene = root.getDefaultScene() ?? root.listScenes()[0];
   if (!scene || root.listSkins().length) throw new Error(`Expected unskinned geometry: ${archive}`);
-  // Keep the authored rest pose; the CV camera supplies the motion.
-  for (const animation of root.listAnimations()) animation.dispose();
   root.setDefaultScene(scene);
   const { min, max } = getBounds(scene);
   console.log(`${archive} source bounds:`, { min, max });
@@ -42,7 +40,8 @@ for (const [archive, entry, file, size] of [
     texture.setImage(new Uint8Array(image)).setMimeType('image/webp');
   }
   // Convert legacy specular/glossiness materials for the current Three.js loader.
-  await document.transform(metalRough(), center(), flatten(), dedup(), prune(), meshopt({ encoder: MeshoptEncoder, level: 'high' }));
+  // Preserve animated hierarchies and their original tracks.
+  await document.transform(metalRough(), center(), ...(root.listAnimations().length ? [] : [flatten()]), dedup(), prune(), meshopt({ encoder: MeshoptEncoder, level: 'high' }));
   const bytes = await io.writeBinary(document);
   await writeFile(new URL(`../public/assets/models/${file}`, import.meta.url), bytes);
   const attribution = root.getAsset().extras ?? null;
@@ -56,6 +55,6 @@ for (const [archive, entry, file, size] of [
 }
 await writeFile(new URL('../public/assets/models/meta.meta.json', import.meta.url), `${JSON.stringify({
   provenance: 'Models converted from the downloaded files in assets/.',
-  adaptations: 'Animation frozen at the authored rest pose, centered, uniformly scaled, static transforms flattened, legacy materials converted to metallic/roughness, geometry Meshopt-compressed, and textures recompressed as WebP up to 2048px.',
+  adaptations: 'Original animation tracks preserved, centered, uniformly scaled, static models flattened, legacy materials converted to metallic/roughness, geometry Meshopt-compressed, and textures recompressed as WebP up to 2048px.',
   models,
 }, null, 2)}\n`);
