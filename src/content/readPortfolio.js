@@ -72,12 +72,7 @@ export function readPortfolio(cvSource, experienceSource) {
   if (!profileRecord) throw new Error('Missing Markdown group: Profile');
   const profile = {
     name: field(profileRecord, 'name'), title: field(profileRecord, 'title'),
-    contact: `mailto:${field(profileRecord, 'email')}`,
-    phone: field(profileRecord, 'phone'),
-    telephone: `tel:${field(profileRecord, 'phone').replace(/\s/g, '')}`,
-    linkedin: field(profileRecord, 'linkedin'),
-    github: field(profileRecord, 'github'),
-    leetcode: field(profileRecord, 'leetcode'),
+    linkedin: field(profileRecord, 'linkedin'), github: field(profileRecord, 'github'), leetcode: field(profileRecord, 'leetcode'),
     summary: text(cv.get('Summary')?.[0]?.sections.Body),
   };
   if (!profile.summary) throw new Error('Missing CV summary');

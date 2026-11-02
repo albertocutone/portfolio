@@ -43,8 +43,8 @@ for (const [index, direction] of [[0, 'initial'], ...stations.slice(1).map((_, i
   const image = await page.screenshot({ clip: { x: 80, y: 180, width: 700, height: 380 } });
   expect(image.byteLength).toBeGreaterThan(20000);
   await expect(page.getByRole('link', { name: /Download CV/i })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: /GitHub/i })).toHaveAttribute('href', 'https://github.com/albertocutone');
-  await expect(page.getByRole('link', { name: /Contact/i })).toHaveAttribute('href', 'mailto:alberto.cutone@gmail.com');
+  await expect(page.getByRole('button', { name: /Let's talk/i })).toBeVisible();
+  await expect(page.locator('a[href^="mailto:"], a[href^="tel:"]')).toHaveCount(0);
   expect(errors).toEqual([]);
  });
 }

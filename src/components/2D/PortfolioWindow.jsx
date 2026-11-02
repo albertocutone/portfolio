@@ -4,7 +4,7 @@ import { projects, publicProjects, experiences, skills, education, profile } fro
 const categories = ['All', 'Work', 'Research', 'Personal'];
 const views = [{ id: 'projects', label: '🗂️ Projects' }, { id: 'experience', label: '💼 Experience' }, { id: 'about', label: '👋 About' }];
 
-export default function PortfolioWindow({ initialView = 'projects', initialProject }) {
+export default function PortfolioWindow({ initialView = 'projects', initialProject, onContact }) {
   const [view, setView] = useState(initialView);
   const [selectedId, setSelectedId] = useState(initialProject || 'petlog');
   const [category, setCategory] = useState('All');
@@ -81,12 +81,11 @@ export default function PortfolioWindow({ initialView = 'projects', initialProje
           <h3>Hardware curious.<br />Software driven.</h3>
           <p>{profile.summary}</p>
           <div className="contact-actions">
-            <a className="primary-link" href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href={profile.contact}>✉️ Let's talk</a>
+            <button className="primary-link" type="button" onClick={onContact}>✉️ Let's talk</button>
+            <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
             <a className="secondary-profile" href={profile.leetcode} target="_blank" rel="noreferrer">LeetCode ↗</a>
           </div>
-          <a className="phone-link" href={profile.telephone}>📞 {profile.phone}</a>
         </div>
         <div className="about-stamp" aria-hidden="true">ac<span>⚡</span><small>HARDWARE<br />SOFTWARE<br />PERCEPTION</small></div>
       </div>

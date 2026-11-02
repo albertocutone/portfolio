@@ -30,6 +30,8 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+        env:
+          VITE_CONTACT_FORM_ENDPOINT: ${{ vars.CONTACT_FORM_ENDPOINT }}
       - name: Record deployed revision
         run: |
           node -e 'require("node:fs").writeFileSync("dist/revision.json", JSON.stringify({ commit: process.env.GITHUB_SHA }))'

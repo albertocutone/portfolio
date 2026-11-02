@@ -44,6 +44,8 @@ test('project workspace filters, selects, explains projects, and connects experi
   await expect(dialog).toContainText('Bachelor in Biomedical Engineering');
   await expect(page.locator('a[download]')).toHaveCount(0);
   await expect(page.getByRole('button', { name: /CV/ })).toHaveCount(0);
+  await expect(dialog.getByRole('button', { name: /Let's talk/ })).toBeVisible();
+  await expect(dialog.locator('a[href^="mailto:"], a[href^="tel:"]')).toHaveCount(0);
   await expect(dialog.getByRole('link', { name: /GitHub/ })).toHaveAttribute('href', 'https://github.com/albertocutone');
   await expect(dialog.getByRole('link', { name: /LeetCode/ })).toHaveAttribute('href', 'https://leetcode.com/u/alcut1/');
   await expect(dialog.getByRole('link', { name: /LinkedIn/ })).toHaveAttribute('href', 'https://www.linkedin.com/in/alberto-cutone-1414a512b/');
@@ -52,6 +54,28 @@ test('project workspace filters, selects, explains projects, and connects experi
   await expect(dialog).not.toBeVisible();
   await expect(trigger).toBeFocused();
   expect(errors).toEqual([]);
+});
+
+test('Let’s talk opens the contact form without publishing direct contact details', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('.experience')).toHaveAttribute('data-ready', 'true');
+  const trigger = page.getByRole('button', { name: /Let's talk/ });
+  await trigger.click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toHaveAccessibleName("Let's talk");
+  await expect(dialog.getByLabel('Your name')).toBeVisible();
+  await expect(dialog.getByLabel('Your email')).toBeVisible();
+  await expect(dialog.getByLabel('Message')).toBeVisible();
+  await expect(page.locator('a[href^="mailto:"], a[href^="tel:"]')).toHaveCount(0);
+  await expect(dialog).not.toContainText('Message sent');
+  if (await dialog.getByRole('button', { name: 'Send message' }).isDisabled()) {
+    await expect(dialog.getByRole('status')).toContainText('temporarily unavailable');
+  }
+  await page.keyboard.press('Escape');
+  await expect(trigger).toBeFocused();
+  await page.locator('.header-actions').getByRole('button', { name: /About/ }).click();
+  await dialog.getByRole('button', { name: /Let's talk/ }).click();
+  await expect(dialog).toHaveAccessibleName("Let's talk");
 });
 
 test('mobile personal station opens selected windows without overflowing', async ({ page }, testInfo) => {

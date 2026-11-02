@@ -2,11 +2,17 @@
 
 Alberto Cutone's scroll-driven CV portfolio. A general introduction and pitch open the journey, followed by Education (the Colosseum in Rome), CERN (ATLAS), HCL, xFarm, Matica, Meta Reality Labs, personal projects, and a final recap. Each CV station highlights its related experience and projects. The board extends beyond every PCB shot; component dimensions remain physically scaled.
 
-The 2D workspace is available from the header, each related project, and the recap. Browse ten projects, search by technology, filter work/research/personal projects, and select overview, build, or outcome notes. A public-project directory links six repositories and their available demos. Experience cards link to their projects; About includes skills, education, contact details, GitHub, LinkedIn, and LeetCode. Escape closes the window, returns focus, and resumes the 3D journey.
+The 2D workspace is available from the header, each related project, and the recap. Browse ten projects, search by technology, filter work/research/personal projects, and select overview, build, or outcome notes. A public-project directory links six repositories and their available demos. Experience cards link to their projects; About includes skills, education, the approved GitHub/LinkedIn/LeetCode links, and a contact-form button. Email and phone are excluded. Escape closes the window, returns focus, and resumes the 3D journey.
 
 The CERN and Meta stations include muted autoplay YouTube frames. CERN's DUNE experiment video is also linked from the Cryo-Submarine project. The robot is intended to operate inside DUNE's cryostat; its separate liquid-argon level measurement PCB is intended to sit outside and measure the level inside. Each player unloads when leaving its station or opening a dialog. Browser autoplay still depends on the visitor's browser and YouTube availability.
 
 ## Local Development
+
+### Contact form
+
+"Let's talk" opens a contact form. Configure an opaque HTTPS endpoint (for example, a Formspree form ID) with `VITE_CONTACT_FORM_ENDPOINT` in `.env.local` for local builds, and the GitHub repository variable `CONTACT_FORM_ENDPOINT` for Pages deployments. Keep the recipient address and any delivery credentials in the provider's private settings; never put them in frontend code or `VITE_*` variables. The endpoint must accept JSON POST requests and return JSON. Without an endpoint, the form displays an unavailable message and cannot submit. Success is shown only after the provider confirms a successful response.
+
+Email and phone have been removed from the current source files. Existing Git history may still contain earlier versions; this change does not rewrite that history.
 
 Requires Node.js 24 and a browser with WebGL support.
 

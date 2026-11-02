@@ -4,4 +4,6 @@ playwright-report/
 test-results/
 .superpowers/
 .DS_Store
+.env.local
+.env.*.local
 assets/colosseum_rome_italy.glb

@@ -7,6 +7,7 @@ import PortfolioWindow from './PortfolioWindow.jsx';
 import StationDetails from './StationDetails.jsx';
 import ModelCredit from './ModelCredit.jsx';
 import StationVideo from './StationVideo.jsx';
+import ContactForm from './ContactForm.jsx';
 import { profile, projects, education, experiences, stationDescriptions, stationVideos } from '../../config/portfolio.js';
 
 export default function Overlay({ store, onModalChange }) {
@@ -28,6 +29,12 @@ export default function Overlay({ store, onModalChange }) {
     if (!dialog.current.open) trigger.current = event.currentTarget;
     onModalChange(true);
     setDetails({ workspace: true, view, project });
+  }
+
+  function openContact(event) {
+    if (!dialog.current.open) trigger.current = event.currentTarget;
+    onModalChange(true);
+    setDetails({ contact: true });
   }
 
   useEffect(() => {
@@ -84,7 +91,8 @@ export default function Overlay({ store, onModalChange }) {
           : <button type="button" className="details-button" onClick={station.kind === 'recap' ? event => openWorkspace('projects', null, event) : openStation}>View details <span aria-hidden="true">↗</span></button>}
         <div className="optional-actions">
           {station.kind === 'recap' && <button type="button" onClick={event => openWorkspace('experience', null, event)}>Full experience ↗</button>}
-          <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a><a href={profile.contact}>✉️ Contact</a>
+          <button type="button" onClick={openContact}>✉️ Let's talk</button>
+          <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
           <a className="secondary-profile" href={profile.leetcode} target="_blank" rel="noreferrer">LeetCode ↗</a>
         </div>
       </article>
@@ -100,8 +108,8 @@ export default function Overlay({ store, onModalChange }) {
     <div className="progress-track" aria-hidden="true"><div style={{ transform: `scaleX(${offset})` }} /></div>
 
     <dialog ref={dialog} className={details?.workspace ? 'workspace-dialog' : 'station-dialog'} aria-labelledby="detail-title" onClose={afterClose} onCancel={event => { event.preventDefault(); close(); }}>
-      <div className="dialog-heading"><p className="eyebrow">{details?.workspace ? 'ALBERTO’S DESKTOP / EXPLORE & DISCOVER' : `CV / ${details?.label ?? ''}`}</p><button type="button" className="close-button" aria-label="Close details" onClick={close}>Close <span aria-hidden="true">×</span></button></div>
-      {details?.workspace ? <PortfolioWindow key={`${details.view}:${details.project}`} initialView={details.view} initialProject={details.project} /> : details && <StationDetails station={details} onOpenProject={(id, event) => openWorkspace('projects', id, event)} />}
+      <div className="dialog-heading"><p className="eyebrow">{details?.contact ? 'CONTACT' : details?.workspace ? 'ALBERTO’S DESKTOP / EXPLORE & DISCOVER' : `CV / ${details?.label ?? ''}`}</p><button type="button" className="close-button" aria-label="Close details" onClick={close}>Close <span aria-hidden="true">×</span></button></div>
+      {details?.contact ? <ContactForm /> : details?.workspace ? <PortfolioWindow key={`${details.view}:${details.project}`} initialView={details.view} initialProject={details.project} onContact={openContact} /> : details && <StationDetails station={details} onOpenProject={(id, event) => openWorkspace('projects', id, event)} />}
     </dialog>
   </div></>;
 }

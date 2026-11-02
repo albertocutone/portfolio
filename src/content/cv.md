@@ -6,8 +6,6 @@ Converted from `CV_Alberto_Cutone.docx`. Edit this Markdown to update the portfo
 
 - name: Alberto Cutone
 - title: Software Engineer
-- email: alberto.cutone@gmail.com
-- phone: +41 78 262 21 06
 - linkedin: https://www.linkedin.com/in/alberto-cutone-1414a512b/
 - github: https://github.com/albertocutone
 - leetcode: https://leetcode.com/u/alcut1/

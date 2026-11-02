@@ -2,7 +2,7 @@
 
 The portfolio reads these Markdown files directly through Vite's `?raw` imports. There is no generated content file or Word parser in the app. The CV is an authoring source only; it is not emitted as a downloadable file or linked in the UI.
 
-- **[cv.md](cv.md):** profile and contact details, summary, skills, employment highlights, education, and PetLog.
+- **[cv.md](cv.md):** name, approved professional profile links, summary, skills, employment highlights, education, and PetLog. Email and phone are excluded.
 - **[experiences-and-projects.md](experiences-and-projects.md):** the original working, academic, and personal experience notes; project records; verified public repository/demo links; station introductions.
 
 Both documents were converted from the supplied Word files. The original situation, actions, results, and reflections are retained. Short project summaries provide readable introductions. Dates come from the CV; durations from the detailed experience document remain labeled as durations.
@@ -32,7 +32,7 @@ Run `npm test` and `npm run build`. The content tests validate the actual Markdo
 
 ## Public links
 
-Profile metadata includes `github`, `linkedin`, and `leetcode`. GitHub is the primary code link; LeetCode is a secondary profile.
+Profile metadata includes `name`, `title`, and the approved `github`, `linkedin`, and `leetcode` links. Email and phone are excluded from this public content. The contact form uses an opaque endpoint configured through `VITE_CONTACT_FORM_ENDPOINT`; recipient details belong in the form provider's private settings.
 
 The `## Public projects` group contains `###` records with `id`, `emoji`, `github`, optional `demo` and `status`, and a `#### Description`. Only link verified public destinations. Keep design-stage projects labeled appropriately; work-project descriptions do not imply public source availability.
 

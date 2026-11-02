@@ -15,10 +15,8 @@ test('the converted documents supply complete projects, career, education, and s
   assert.equal(content.education.length, 2);
   for (const station of stations) assert.ok(content.stationDescriptions[station.id]);
   for (const project of content.projects) assert.ok(stations.some(station => station.id === project.station));
-  assert.equal(content.profile.contact, 'mailto:alberto.cutone@gmail.com');
-  assert.equal(content.profile.telephone, 'tel:+41782622106');
-  assert.equal(content.profile.github, 'https://github.com/albertocutone');
-  assert.equal(content.profile.leetcode, 'https://leetcode.com/u/alcut1/');
+  assert.deepEqual(Object.keys(content.profile).sort(), ['github', 'leetcode', 'linkedin', 'name', 'summary', 'title']);
+  assert.doesNotMatch(cv, /^- (email|phone):/m);
   assert.equal(content.publicProjects.length, 6);
   for (const project of content.publicProjects) {
     assert.ok(project.github.startsWith('https://github.com/albertocutone/'));
@@ -38,13 +36,13 @@ test('the converted documents supply complete projects, career, education, and s
 });
 
 test('editing Markdown updates profile, education, and referenced project details without editing JavaScript', () => {
-  const editedCV = cv.replace('alberto.cutone@gmail.com', 'alberto@example.com')
+  const editedCV = cv.replace('- name: Alberto Cutone', '- name: Updated author')
     .replace('La Sapienza', 'Updated university')
     .replace('Unblocked a $1M+ commercial contract', 'Updated commercial outcome');
   const editedNotes = notes.replace('### Budget Tracker', '### My new budget app')
     .replace('Implemented MQTT-based communication', 'Implemented updated telemetry');
   const content = readPortfolio(editedCV, editedNotes);
-  assert.equal(content.profile.contact, 'mailto:alberto@example.com');
+  assert.equal(content.profile.name, 'Updated author');
   assert.equal(content.education[0].school, 'Updated university');
   assert.equal(content.projects.find(project => project.id === 'budget').title, 'My new budget app');
   assert.match(content.projects.find(project => project.id === 'edisecure').built.join(' '), /Updated commercial outcome/);
