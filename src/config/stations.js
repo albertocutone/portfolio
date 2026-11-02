@@ -3,6 +3,7 @@ export const stationPoses = Object.freeze({
   overview: { label: 'PCB overview', scene: 'pcb', anchor: [0, 0.05, -0.3], camera: [3.9, 5.35, 4.9], target: [0, 0.05, -0.3], focusRange: 3, bokehScale: 0.15 },
   colosseum: { label: 'Colosseum · Rome', scene: 'colosseum', anchor: [-0.2, 0.02, 0], camera: [1.4, 1.5, 2.4], target: [-0.2, 0.02, 0], focusRange: 8, bokehScale: 0 },
   atlas: { label: 'ATLAS detector', scene: 'atlas', anchor: [0, 1.6, 0], camera: [4, 5.7, 6], target: [0, 1.6, 0], focusRange: 8, bokehScale: 0 },
+  meta: { label: 'Meta infinity · Quest 3', scene: 'meta', anchor: [0, 1.65, 0], camera: [2.8, 2.6, 6.6], target: [0, 1.65, 0], focusRange: 8, bokehScale: 0 },
   processor: { label: 'PCB processor', scene: 'pcb', anchor: [1.2, 0.15, -1.1], camera: [2.8, 3.2, 3.4], target: [1.2, 0.15, -1.1], focusRange: 0.7, bokehScale: 0.3 },
   edge: { label: 'Edge SoC', scene: 'pcb', anchor: [1.2, 0.15, -1.1], camera: [1.73, 1.45, 0.21], target: [1.2, 0.15, -1.1], focusRange: 0.36, bokehScale: 0.6 },
   controller: { label: 'PCB instrumentation', scene: 'pcb', anchor: [-1.15, 0.16, 0], camera: [-1.65, 1.05, 0.92], target: [-1.15, 0.11, 0], focusRange: 0.3, bokehScale: 0.65 },
@@ -42,7 +43,7 @@ export const stations = Object.freeze([
     experienceIds: ['matica'], tags: ['C++ / C#', 'Windows drivers', 'Reverse engineering'],
   },
   {
-    id: 'meta', kind: 'experience', pose: 'sensor', label: 'Meta', badge: 'Meta Reality Labs · Zurich', subject: 'META / MIXED REALITY',
+    id: 'meta', kind: 'experience', pose: 'meta', label: 'Meta', badge: 'Meta Reality Labs · Zurich', subject: 'META / MIXED REALITY',
     title: 'From photons\nto perception.', role: 'Sensor tools & perceptual evaluation',
     experienceIds: ['meta'], tags: ['Android / C++', 'Zero-copy IPC', 'Computer vision'],
   },
@@ -62,7 +63,8 @@ export const stations = Object.freeze([
   if (!pose) throw new Error(`Unknown station pose: ${station.pose}`);
   const nextPose = stationPoses[all[Math.min(index + 1, all.length - 1)].pose];
   const clearance = Math.max(pose.camera[1], nextPose.camera[1]) + 0.8;
-  const cameraControls = pose.scene === 'pcb' && nextPose.scene === 'pcb' ? [
+  // Lift the camera around the oblique Meta pose to clear the PCB horizon.
+  const cameraControls = (pose.scene === 'pcb' && nextPose.scene === 'pcb') || pose.scene === 'meta' || nextPose.scene === 'meta' ? [
     [pose.camera[0], clearance, pose.camera[2]],
     [nextPose.camera[0], clearance, nextPose.camera[2]],
   ] : undefined;

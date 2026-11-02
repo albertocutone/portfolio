@@ -1,5 +1,13 @@
 # Bundled Asset Credits
 
+## Meta mixed reality station
+
+This work is based on "Meta logo" (https://sketchfab.com/3d-models/meta-logo-913b2a99b7404b80b75a8d3927ce20d0) by Elin (https://sketchfab.com/ElinHohler), licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/). The original license is retained in `models/meta-logo.LICENSE.txt`, and the scene links to the author, model, and license.
+
+The Quest 3 model comes from the user-supplied `assets/meta-quest-3.zip` (`source/Quest3.glb`). This archive contains no source attribution or license record; no license or author is inferred. The assets retain their own rights separately from the application code.
+
+Rebuild both models with `npm run optimize:meta`. Adaptations: animation frozen at the authored rest pose, centering, uniform display scaling, static transforms flattened, Meshopt geometry compression, and texture recompression as WebP up to 2048px. The downloaded geometry is retained. Source archives, hashes, and output bounds are recorded in `models/meta.meta.json`.
+
 ## Colosseum, Rome, Italy
 
 "Colosseum, Rome, Italy" (https://skfb.ly/orOMD) by Brian Trepanier is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).

@@ -10,6 +10,7 @@ import { resolveTimeline } from '../../scroll/timeline.js';
 import PCBWorld from './PCBWorld.jsx';
 import AtlasWorld from './AtlasWorld.jsx';
 import ColosseumWorld from './ColosseumWorld.jsx';
+import MetaWorld from './MetaWorld.jsx';
 
 function CameraRig({ store, depth, activeScene }) {
   const { camera, size } = useThree();
@@ -61,6 +62,7 @@ export default function Scene({ store }) {
     <directionalLight position={[3, 2, -3]} color="#d4e2e1" intensity={0.8} />
     <group visible={activeScene === 'colosseum'}><ColosseumWorld /></group>
     <group visible={activeScene === 'atlas'}><AtlasWorld /></group>
+    <group visible={activeScene === 'meta'}><MetaWorld /></group>
     <group visible={activeScene === 'pcb'}>
       <PCBWorld />
       {activeScene === 'pcb' && <ContactShadows frames={1} position={[0, 0.006, -0.3]} scale={8} opacity={0.42} blur={1.3} far={1.6} resolution={1024} />}

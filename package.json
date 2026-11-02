@@ -10,6 +10,7 @@
     "test": "node --test tests/unit/*.test.js",
     "test:e2e": "playwright test",
     "optimize:atlas": "node scripts/optimize-atlas.mjs",
+    "optimize:meta": "node scripts/optimize-meta.mjs",
     "optimize:colosseum": "node scripts/optimize-colosseum.mjs"
   },
   "dependencies": {

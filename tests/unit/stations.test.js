@@ -13,6 +13,7 @@ test('intro opens, education and career follow the CV order, and recap closes th
   assert.deepEqual(stations.map(station => station.id), ['intro', 'education', 'cern', 'hcl', 'xfarm', 'matica', 'meta', 'personal', 'recap']);
   assert.equal(stations.find(station => station.id === 'education').pose, 'colosseum');
   assert.equal(stations.find(station => station.id === 'cern').pose, 'atlas');
+  assert.equal(stations.find(station => station.id === 'meta').scene, 'meta');
   for (const [index, station] of stations.entries()) {
     assert.equal(station.eyebrow.slice(0, 2), String(index + 1).padStart(2, '0'));
     assert.deepEqual(station.scrollRange, [index / stations.length, (index + 1) / stations.length]);

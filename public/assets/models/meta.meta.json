@@ -1,0 +1,53 @@
+{
+  "provenance": "Models converted from the downloaded archives in assets/.",
+  "adaptations": "Animation frozen at the authored rest pose, centered, uniformly scaled, static transforms flattened, geometry Meshopt-compressed, and textures recompressed as WebP up to 2048px.",
+  "models": [
+    {
+      "file": "meta-logo.glb",
+      "sourceFile": "meta_logo.zip",
+      "sourceFileSha256": "3606cf75c94ef1052554c3c2f67b9d1142814c6c1f3bf33c4d29681d8e0b8851",
+      "bytes": 143812,
+      "sha256": "f081a07b504b3d3d9c6e7e5dfcedaefa3bb7b6ebf6808ab0e54e90c173752805",
+      "bounds": {
+        "min": [
+          -1.5000246074261585,
+          -0.30121840701911307,
+          -0.4434149163090474
+        ],
+        "max": [
+          1.4999999999999996,
+          0.30121840701911307,
+          0.4434148914084476
+        ]
+      },
+      "attribution": {
+        "author": "Elin (https://sketchfab.com/ElinHohler)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/meta-logo-913b2a99b7404b80b75a8d3927ce20d0",
+        "title": "Meta logo"
+      },
+      "licenseNote": "Original license retained in meta-logo.LICENSE.txt."
+    },
+    {
+      "file": "quest3.glb",
+      "sourceFile": "meta-quest-3.zip",
+      "sourceFileSha256": "c421bdfaab195fe182b82c274225aaa0ce276512cfdcb4989d91db099be11bba",
+      "bytes": 1739376,
+      "sha256": "0b18ea05899c5edb2666f7b4bc061edeb1f85ee95449332e2a0254f959902f84",
+      "bounds": {
+        "min": [
+          -0.8977569629014995,
+          -0.7880369386147831,
+          -1.1999999999879327
+        ],
+        "max": [
+          0.8977569629014995,
+          0.7880369385974975,
+          1.2000000000167577
+        ]
+      },
+      "attribution": null,
+      "licenseNote": "User-supplied archive has no source attribution or license record."
+    }
+  ]
+}

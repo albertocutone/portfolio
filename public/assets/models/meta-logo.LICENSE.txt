@@ -1,0 +1,11 @@
+Model Information:
+* title:	Meta logo
+* source:	https://sketchfab.com/3d-models/meta-logo-913b2a99b7404b80b75a8d3927ce20d0
+* author:	Elin (https://sketchfab.com/ElinHohler)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Meta logo" (https://sketchfab.com/3d-models/meta-logo-913b2a99b7404b80b75a8d3927ce20d0) by Elin (https://sketchfab.com/ElinHohler) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
