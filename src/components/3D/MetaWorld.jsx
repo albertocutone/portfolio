@@ -24,7 +24,7 @@ export default function MetaWorld({ active }) {
     glassesTurn.current.rotation.y = angle + Math.PI;
   });
   return <group>
-    <primitive object={logo.scene} position={[0, 2.75, -0.3]} />
+    <primitive object={logo.scene} position={[1.4, 2.75, -0.3]} />
     <group ref={headsetTurn} position={[-0.55, 1.5, -0.4]} rotation={[0, -0.28, 0]}>
       <primitive object={headset.scene} rotation={[-0.1, 0, -0.12]} scale={0.82} />
     </group>
