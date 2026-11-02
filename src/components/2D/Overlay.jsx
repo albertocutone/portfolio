@@ -6,6 +6,7 @@ import { getStationContent } from '../../content/stationContent.js';
 import PortfolioWindow from './PortfolioWindow.jsx';
 import StationDetails from './StationDetails.jsx';
 import ModelCredit from './ModelCredit.jsx';
+import StationVideo from './StationVideo.jsx';
 import { profile, projects, education, experiences, stationDescriptions } from '../../config/portfolio.js';
 
 export default function Overlay({ store, onModalChange }) {
@@ -18,6 +19,7 @@ export default function Overlay({ store, onModalChange }) {
   const trigger = useRef();
   const canInteract = cardOpacity > 0.95;
   const general = station.kind === 'intro' || station.kind === 'recap';
+  const videoProject = station.id === 'cern' && canInteract ? content.projects.find(project => project.video) : null;
 
   function openWorkspace(view, project, event) {
     // Keep the original station button as the return target when opening a
@@ -56,7 +58,8 @@ export default function Overlay({ store, onModalChange }) {
       <div className="header-actions"><button type="button" onClick={event => openWorkspace('projects', null, event)}>🗂️ Projects</button><button type="button" onClick={event => openWorkspace('experience', null, event)}>💼 Experience</button><button type="button" onClick={event => openWorkspace('about', null, event)}>👋 About</button></div>
     </header>
 
-    <main className={`narrative${general ? ' narrative-general' : ''}`} aria-label="Portfolio stations">
+    <main className={`narrative${general ? ' narrative-general' : ''}${videoProject ? ' narrative-media' : ''}`} aria-label="Portfolio stations" data-scroll-panel={videoProject ? '' : undefined} tabIndex={videoProject ? 0 : undefined}>
+      {videoProject && <StationVideo project={videoProject} active={!details} />}
       <article className="station-card" data-station={station.id} data-pose={station.pose} style={{ opacity: cardOpacity }} inert={!canInteract} aria-hidden={!canInteract}>
         <p className="eyebrow">{station.eyebrow}</p>
         <p className="affiliation"><span />{station.badge}</p>

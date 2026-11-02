@@ -20,11 +20,12 @@ export default function StationDetails({ station, onOpenProject }) {
     {content.projects.length > 0 && <section className="station-detail-projects" aria-label="Related projects">
       <h3>Related projects</h3>{content.projects.map(project => <article className="project" key={project.id}>
         <span aria-hidden="true">{project.emoji}</span><div><h3>{project.title}</h3><p>{project.summary}</p>
+          {project.video && <a className="project-video-link" href={project.video} target="_blank" rel="noreferrer">▶ DUNE experiment video ↗</a>}
           <button type="button" className="project-detail-link" onClick={event => onOpenProject(project.id, event)}>What I built & outcomes ↗</button>
         </div>
       </article>)}
     </section>}
-    {station.id === 'cern' && <p className="dialog-note">The ATLAS detector model illustrates CERN. My master thesis focused on cryogenic electronic systems for Liquid Argon Time Projection Chambers.</p>}
+    {station.id === 'cern' && <p className="dialog-note">The ATLAS model illustrates CERN. The cryogenic robot is intended for DUNE; the separate liquid-argon level measurement PCB is designed to sit outside the cryostat and measure the level inside.</p>}
     <ModelCredit scene={station.scene} className="dialog-note" />
   </>;
 }

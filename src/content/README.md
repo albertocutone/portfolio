@@ -24,6 +24,7 @@ Each project needs `id`, `emoji`, `color`, `category`, `organization`, `station`
 - Stations: `education`, `cern`, `hcl`, `xfarm`, `matica`, `meta`, or `personal`.
 - Write `#### Overview`, `#### What I built` (a bullet list), and `#### Outcome` for an independent project.
 - Alternatively, `- experience: <id>` reads the matching experience's **Situation**, **Task & Action**, and **Result** directly. Optional `- cv: <id>` adds the corresponding CV employment highlights to the build details. This keeps the source paragraphs in one place.
+- Optional `- video: https://www.youtube.com/watch?v=<11-character-id>` adds a project video link. The CERN station embeds its related project's video with muted autoplay while the station is visible; opening a dialog or leaving the station unloads the player.
 
 ## Verify changes
 

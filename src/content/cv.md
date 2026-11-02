@@ -182,11 +182,11 @@ Accomplished Software Engineer with over 7 years of expertise in developing low-
 
 #### Highlights
 
-- Architected and built a robust cryogenic imaging system for robotic units, facilitating autonomous inspection within high-radiation environments.
+- Architected and built a cryogenic imaging system for a robot intended to operate inside DUNE’s liquid-argon cryostat.
 
 - Deployed real-time vision pipelines and telemetry logging to ensure operational stability under extreme thermal and physical conditions.
 
-- Developed printed circuit boards to interface with specialized cryogenic hardware for Liquid Argon particle detectors.
+- Developed a separate PCB intended to sit outside the cryostat and measure the liquid-argon level inside.
 
 ## Education
 

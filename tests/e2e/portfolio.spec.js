@@ -6,6 +6,7 @@ const names = stations.map(station => station.label);
 const ids = stations.map(station => station.id);
 
 async function ready(page) {
+  await page.route('https://www.youtube-nocookie.com/embed/**', route => route.fulfill({ contentType: 'text/html', body: '<p>DUNE video player</p>' }));
   await page.goto('./');
   await expect(page.locator('canvas')).toBeVisible();
   await expect(page.locator('.experience')).toHaveAttribute('data-ready', 'true');

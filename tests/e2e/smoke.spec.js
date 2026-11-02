@@ -10,6 +10,7 @@ async function navigate(page, id) {
 }
 
 test('intro opens, education shows the Colosseum, CERN and Meta link their work, and recap closes the CV', async ({ page }, testInfo) => {
+  await page.route('https://www.youtube-nocookie.com/embed/**', route => route.fulfill({ contentType: 'text/html', body: '<p>DUNE video player</p>' }));
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('requestfailed', request => errors.push(request.url()));
@@ -47,8 +48,14 @@ test('intro opens, education shows the Colosseum, CERN and Meta link their work,
   await expect(page.locator('.experience-preview')).toContainText('Mar 2018');
   await expect(page.locator('.station-projects')).toContainText('Cryo-Submarine');
   await expect(page.getByRole('link', { name: 'ATLAS model: physics.atlas.vr' })).toBeVisible();
+  const video = page.locator('.station-video iframe');
+  await expect(video).toBeVisible();
+  await expect(video).toHaveAttribute('src', 'https://www.youtube-nocookie.com/embed/nv13DswIKr8?autoplay=1&mute=1&playsinline=1&rel=0');
+  await expect(video).toHaveAttribute('allow', /autoplay/);
   await page.locator('.station-projects').getByRole('button', { name: /Cryo-Submarine/ }).click();
   await expect(dialog.getByRole('article', { name: 'Cryo-Submarine project' })).toBeVisible();
+  await expect(video).toHaveCount(0);
+  await expect(dialog.getByRole('link', { name: 'DUNE experiment video', exact: false })).toHaveAttribute('href', 'https://www.youtube.com/watch?v=nv13DswIKr8');
   await page.keyboard.press('Escape');
   await page.screenshot({ path: testInfo.outputPath('cern.png') });
 
@@ -60,6 +67,7 @@ test('intro opens, education shows the Colosseum, CERN and Meta link their work,
   expect(nativeOffset).toBeCloseTo(targetOffset, 3);
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', nativeOffset.toFixed(5));
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'meta');
+  await expect(video).toHaveCount(0);
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
   await expect(page.locator('.station-card')).toHaveAttribute('data-pose', 'meta');
   await expect(page.locator('.model-credit')).toContainText('Quest 3');
@@ -73,4 +81,22 @@ test('intro opens, education shows the Colosseum, CERN and Meta link their work,
   await expect(page.locator('.station-launchpad')).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('recap.png') });
   expect(errors).toEqual([]);
+});
+
+test('mobile CERN video and project panel scroll without moving the journey', async ({ page }) => {
+  await page.route('https://www.youtube-nocookie.com/embed/**', route => route.fulfill({ contentType: 'text/html', body: '<p>DUNE video player</p>' }));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./');
+  await expect(page.locator('.experience')).toHaveAttribute('data-ready', 'true');
+  await navigate(page, 'cern');
+  await expect(page.locator('.station-video iframe')).toBeInViewport();
+  const panel = page.locator('.narrative-media');
+  const before = Number(await page.locator('.experience').getAttribute('data-offset'));
+  await page.locator('.station-card h1').hover();
+  await page.mouse.wheel(0, 120);
+  await expect.poll(() => panel.evaluate(element => element.scrollTop)).toBeGreaterThan(0);
+  expect(Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(before, 3);
+  await page.locator('.station-projects').getByRole('button', { name: /Cryo-Submarine/ }).click();
+  await expect(page.getByRole('dialog').getByRole('link', { name: /DUNE experiment video/ })).toBeVisible();
+  await expect(page.locator('.station-video iframe')).toHaveCount(0);
 });

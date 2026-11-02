@@ -176,7 +176,7 @@ This role provided valuable exposure to cross-platform development, CI/CD practi
 
 #### Situation
 
-CERN, the world’s leading laboratory for Particle Physics, was conducting neutrino detection experiments that required precise measurements inside large cryostats filled with liquid Argon at -200°C. A cryogenic robot was needed to perform these measurements under those extreme conditions..
+My CERN master thesis focused on a cryogenic robot intended to operate inside the liquid-argon cryostat of DUNE, a neutrino experiment. Its camera and electronics had to support inspection in extreme cold. A separate PCB was designed to sit outside the cryostat and measure the liquid-argon level inside.
 
 
 #### Task & Action
@@ -189,14 +189,14 @@ CERN, the world’s leading laboratory for Particle Physics, was conducting neut
 
 - Wrote Python scripts to control and manage system components.
 
-- As a side project, I was entitled to design and develop an electronic board for measuring Liquid Argon levels in a cryostat, overseeing its production and testing.
+- As a side project, I designed and developed a PCB intended to sit outside the cryostat and measure the liquid-argon level inside, overseeing its production and testing.
 
 
 #### Result
 
 - Built a functional cryogenic camera system that operated successfully at -200°C.
 
-- Developed an electronic board for Liquid Argon measurement, which performed exceptionally well and was replicated for use in the experiment.
+- Developed and tested a liquid-argon level measurement PCB, which was replicated for use in the experiment. Its intended placement is outside the cryostat, with the liquid argon being measured inside.
 
 - Contributed reliable solutions that enhanced the accuracy and efficiency of neutrino detection experiments at CERN.
 
@@ -423,12 +423,13 @@ A simpler installation path for an enterprise endpoint-management platform.
 - category: Research
 - organization: CERN · Master thesis
 - station: cern
-- tags: Raspberry Pi | Python | Altium Designer | Robotics | Cryogenics
+- tags: Raspberry Pi | Python | Altium Designer | Robotics | Cryogenics | DUNE
 - experience: cern
+- video: https://www.youtube.com/watch?v=nv13DswIKr8
 
 #### Summary
 
-A camera and electronics system designed to work in extreme cold.
+Cryogenic imaging for a robot intended for DUNE, plus an external liquid-argon level measurement PCB.
 
 ### Cardiac MRI Mapping
 
@@ -555,7 +556,7 @@ At La Sapienza in Rome, I studied biomedical and electronic engineering. Cardiac
 
 #### Description
 
-My master thesis took me to CERN: a cryogenic camera, custom electronics, and real-time telemetry for robotic inspection in extreme conditions.
+At CERN, I developed a cryogenic camera for a robot intended for DUNE and a separate PCB designed to sit outside the cryostat and measure the liquid-argon level inside.
 
 ### HCL
 

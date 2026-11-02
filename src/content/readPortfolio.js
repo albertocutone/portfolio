@@ -102,10 +102,12 @@ export function readPortfolio(cvSource, experienceSource) {
       overview: text(record.sections.Overview ?? source?.sections.Situation),
       built: [...((record.sections['What I built'] ?? source?.sections['Task & Action'])?.items ?? []), ...(cvExperience?.sections.Highlights?.items ?? [])],
       outcome: text(record.sections.Outcome ?? source?.sections.Result),
+      video: record.fields.video,
     };
     if (!['Work', 'Research', 'Personal'].includes(project.category)) throw new Error(`Invalid category: ${project.id}`);
     if (!['violet', 'blue', 'mint', 'peach'].includes(project.color)) throw new Error(`Invalid color: ${project.id}`);
     if (!project.summary || !project.overview || !project.built.length || !project.outcome) throw new Error(`Incomplete project: ${project.id}`);
+    if (project.video && !/^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/.test(project.video)) throw new Error(`Invalid YouTube video: ${project.id}`);
     return project;
   });
   const projectIds = new Set();

@@ -4,6 +4,8 @@ Alberto Cutone's scroll-driven CV portfolio. A general introduction and pitch op
 
 The 2D workspace is available from the header, each related project, and the recap. Browse ten projects, search by technology, filter work/research/personal projects, and select overview, build, or outcome notes. A public-project directory links six repositories and their available demos. Experience cards link to their projects; About includes skills, education, contact details, GitHub, LinkedIn, and LeetCode. Escape closes the window, returns focus, and resumes the 3D journey.
 
+The CERN station includes a muted autoplay YouTube frame for DUNE experiment context, also linked from the Cryo-Submarine project. The robot is intended to operate inside DUNE's cryostat; its separate liquid-argon level measurement PCB is intended to sit outside and measure the level inside. The player unloads when leaving CERN or opening a dialog. Browser autoplay still depends on the visitor's browser and YouTube availability.
+
 ## Local Development
 
 Requires Node.js 24 and a browser with WebGL support.

@@ -33,6 +33,8 @@ export default function ScrollBridge({ store, paused, onReady }) {
     const el = data.el;
     if (event.ctrlKey || event.target.closest('dialog')) return;
     if (paused) { event.preventDefault(); return; }
+    const panel = event.target.closest('[data-scroll-panel]');
+    if (panel && getComputedStyle(panel).overflowY === 'auto') return;
     if (el.contains(event.target)) {
       // Read after the browser scrolls; this also survives Drei's listener reset window.
       cancelAnimationFrame(nativeWheelFrame.current);
@@ -46,6 +48,8 @@ export default function ScrollBridge({ store, paused, onReady }) {
   });
   const key = useEffectEvent((event) => {
     if (paused || event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey || event.target.closest('dialog, input, textarea, select, [contenteditable="true"]')) return;
+    const panel = event.target.closest('[data-scroll-panel]');
+    if (panel && getComputedStyle(panel).overflowY === 'auto') return;
     if (event.key === ' ' && event.target.closest('button, a')) return;
     const range = data.el.scrollHeight - data.el.clientHeight;
     const current = range > 0 ? data.el.scrollTop / range : 0;
