@@ -60,7 +60,7 @@ export default function Scene({ store }) {
     <ambientLight intensity={0.18} />
     <directionalLight position={[-2, 4, 2.5]} color="#fff9ef" intensity={2.6} castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-12} shadow-camera-right={12} shadow-camera-top={12} shadow-camera-bottom={-12} shadow-bias={-0.0001} />
     <directionalLight position={[3, 2, -3]} color="#d4e2e1" intensity={0.8} />
-    <group visible={activeScene === 'colosseum'}><ColosseumWorld /></group>
+    <group visible={activeScene === 'colosseum'}><ColosseumWorld active={activeScene === 'colosseum'} /></group>
     <group visible={activeScene === 'atlas'}><AtlasWorld active={activeScene === 'atlas'} /></group>
     <group visible={activeScene === 'meta'}><MetaWorld active={activeScene === 'meta'} /></group>
     <group visible={activeScene === 'pcb'}>
