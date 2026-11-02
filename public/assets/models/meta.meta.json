@@ -1,6 +1,6 @@
 {
-  "provenance": "Models converted from the downloaded archives in assets/.",
-  "adaptations": "Animation frozen at the authored rest pose, centered, uniformly scaled, static transforms flattened, geometry Meshopt-compressed, and textures recompressed as WebP up to 2048px.",
+  "provenance": "Models converted from the downloaded files in assets/.",
+  "adaptations": "Animation frozen at the authored rest pose, centered, uniformly scaled, static transforms flattened, legacy materials converted to metallic/roughness, geometry Meshopt-compressed, and textures recompressed as WebP up to 2048px.",
   "models": [
     {
       "file": "meta-logo.glb",
@@ -26,7 +26,7 @@
         "source": "https://sketchfab.com/3d-models/meta-logo-913b2a99b7404b80b75a8d3927ce20d0",
         "title": "Meta logo"
       },
-      "licenseNote": "Original license retained in meta-logo.LICENSE.txt."
+      "licenseNote": "Attribution retained in meta-logo.LICENSE.txt."
     },
     {
       "file": "quest3.glb",
@@ -47,7 +47,33 @@
         ]
       },
       "attribution": null,
-      "licenseNote": "User-supplied archive has no source attribution or license record."
+      "licenseNote": "User-supplied model has no source attribution or license record."
+    },
+    {
+      "file": "meta-vr-glasses.glb",
+      "sourceFile": "meta_vr_glasses.glb",
+      "sourceFileSha256": "096cd202344da1e631daba0ba0bf508aa2158704b422c7b4bf23512ababdbffe",
+      "bytes": 294788,
+      "sha256": "21ee67b86391c20be44fde02b11f53d38c42663bb149ea86b120f275718619ee",
+      "bounds": {
+        "min": [
+          -0.7821390423291725,
+          -0.2902508621478928,
+          -0.8499999999999993
+        ],
+        "max": [
+          0.7821390423291725,
+          0.2902508621478922,
+          0.8499999999999999
+        ]
+      },
+      "attribution": {
+        "author": "rogeressig (https://sketchfab.com/roger_essig)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/meta-vr-glasses-165e3a61fb3344ee812474ffa2e613ce",
+        "title": "META VR GLASSES"
+      },
+      "licenseNote": "Attribution retained in meta-vr-glasses.LICENSE.txt."
     }
   ]
 }

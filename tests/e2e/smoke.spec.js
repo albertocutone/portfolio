@@ -63,6 +63,7 @@ test('intro opens, education shows the Colosseum, CERN and Meta link their work,
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
   await expect(page.locator('.station-card')).toHaveAttribute('data-pose', 'meta');
   await expect(page.locator('.model-credit')).toContainText('Quest 3');
+  await expect(page.locator('.model-credit')).toContainText('VR glasses: rogeressig');
   await page.screenshot({ path: testInfo.outputPath('meta-quest3.png') });
   await expect(page.locator('.experience-preview')).toContainText('Qualitest');
   await expect(page.locator('.station-project')).toHaveCount(3);

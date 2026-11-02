@@ -21,7 +21,7 @@ export default function App() {
   function ready() { setReady(true); }
   function failed() { setSceneError(true); setReady(false); }
   return <div ref={shell} className="experience" data-offset="0.00000" data-ready={isReady}>
-    <div className="canvas-layer" aria-label="A CV journey through education at the Colosseum, CERN research, industry experience, Meta mixed reality with a 3D logo and Quest 3 headset, personal projects, and a recap">
+    <div className="canvas-layer" aria-label="A CV journey through education at the Colosseum, CERN research, industry experience, Meta mixed reality with a 3D logo, Quest 3 headset and VR glasses, personal projects, and a recap">
       <SceneBoundary onFailure={failed}>
       <Canvas shadows dpr={[1, 1.5]} camera={{ fov: cameraProjection.fov, near: cameraProjection.near, far: cameraProjection.far }} gl={{ antialias: false, powerPreference: 'high-performance' }}>
         <ScrollControls pages={stations.length} damping={motion.damping} maxSpeed={motion.maxSpeed} enabled={!paused} style={{ scrollbarWidth: 'none' }}>

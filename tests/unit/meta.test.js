@@ -8,6 +8,7 @@ import { MeshoptDecoder } from 'meshoptimizer';
 
 test('downloaded Meta models decode with preserved attribution, textures, and display bounds', async () => {
   const metadata = JSON.parse(readFileSync(new URL('../../public/assets/models/meta.meta.json', import.meta.url)));
+  assert.deepEqual(metadata.models.map(asset => asset.file), ['meta-logo.glb', 'quest3.glb', 'meta-vr-glasses.glb']);
   await MeshoptDecoder.ready;
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder });
   for (const asset of metadata.models) {
@@ -23,7 +24,9 @@ test('downloaded Meta models decode with preserved attribution, textures, and di
     assert.equal(root.listAnimations().length, 0);
     const { min, max } = getBounds(scene);
     for (let axis = 0; axis < 3; axis++) assert.ok(Math.abs(min[axis] + max[axis]) < 0.001);
-    assert.ok(Math.abs(Math.max(...max.map((value, axis) => value - min[axis])) - (asset.file === 'meta-logo.glb' ? 3 : 2.4)) < 0.001);
+    const size = { 'meta-logo.glb': 3, 'quest3.glb': 2.4, 'meta-vr-glasses.glb': 1.7 }[asset.file];
+    assert.ok(Math.abs(Math.max(...max.map((value, axis) => value - min[axis])) - size) < 0.001);
+    assert.ok(!root.listExtensionsRequired().some(extension => extension.extensionName === 'KHR_materials_pbrSpecularGlossiness'));
     let count = 0;
     scene.traverse(node => {
       for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
@@ -35,12 +38,15 @@ test('downloaded Meta models decode with preserved attribution, textures, and di
     if (asset.file === 'meta-logo.glb') {
       assert.match(root.getAsset().extras.author, /Elin/);
       assert.match(root.getAsset().extras.license, /CC-BY-4.0/);
-    } else {
+    } else if (asset.file === 'quest3.glb') {
       assert.equal(root.listTextures().length, 3);
       const material = root.listMaterials()[0];
       assert.ok(material.getBaseColorTexture());
       assert.ok(material.getNormalTexture());
       assert.ok(material.getMetallicRoughnessTexture());
+    } else {
+      assert.match(root.getAsset().extras.author, /rogeressig/);
+      assert.match(root.getAsset().extras.license, /CC-BY-4.0/);
     }
   }
 });

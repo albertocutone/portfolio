@@ -53,7 +53,7 @@ For the most recent local browser report, run `npx playwright show-report`.
 
 ## Asset Credits
 
-Meta Reality Labs displays the downloaded Meta logo and Quest 3 models. Rebuild the self-hosted GLBs with `npm run optimize:meta` using `assets/meta_logo.zip` and `assets/meta-quest-3.zip`. The logo is by Elin, licensed under CC BY 4.0; its original license is retained and credited in the scene. The user-supplied Quest archive contains no source attribution or license record. Conversion notes and asset hashes are recorded in `public/assets/models/meta.meta.json`.
+Meta Reality Labs displays the downloaded Meta logo, Quest 3, and Meta VR glasses models. Rebuild the self-hosted GLBs with `npm run optimize:meta` using `assets/meta_logo.zip`, `assets/meta-quest-3.zip`, and `assets/meta_vr_glasses.glb`. The logo is by Elin and the glasses are by rogeressig, both licensed under CC BY 4.0 and credited in the scene. The user-supplied Quest archive contains no source attribution or license record. Conversion notes and asset hashes are recorded in `public/assets/models/meta.meta.json`.
 
 "Colosseum, Rome, Italy" (https://skfb.ly/orOMD) by Brian Trepanier is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/). The scene includes visible author credit, source and license links, and education details drawn from the CV. Its self-hosted GLB retains attribution and adaptation notes; provenance and optimization settings are recorded in `public/assets/models/colosseum.meta.json`.
 
