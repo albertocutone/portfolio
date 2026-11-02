@@ -1,3 +1,5 @@
+export const modelRotationPeriod = 45;
+
 export const motion = Object.freeze({
   dwellRatio: 0.35,
   arrivalFade: 0.02,
