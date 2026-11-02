@@ -40,7 +40,8 @@ for (const [index, direction] of [[0, 'initial'], [1, 'forward'], [2, 'forward']
   // Capture the scene-only region without element scrolling/stability checks.
   const image = await page.screenshot({ clip: { x: 80, y: 180, width: 700, height: 380 } });
   expect(image.byteLength).toBeGreaterThan(20000);
-  await expect(page.getByRole('link', { name: /Download CV/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Download CV/i })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: /GitHub/i })).toHaveAttribute('href', 'https://github.com/albertocutone');
   await expect(page.getByRole('link', { name: /Contact/i })).toHaveAttribute('href', 'mailto:alberto.cutone@gmail.com');
   expect(errors).toEqual([]);
  });

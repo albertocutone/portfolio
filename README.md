@@ -2,7 +2,7 @@
 
 Alberto Cutone's scroll-driven 3D portfolio. A CERN ATLAS detector model opens the journey at station 1. Scrolling transitions to the tailored PCB at station 2, followed by instrumentation, edge intelligence, and an interactive project station. The board extends beyond every PCB shot; component dimensions remain physically scaled.
 
-The 2D workspace is available from the header and the project station. Browse ten projects, search by technology, filter work/research/personal projects, and select overview, build, or outcome notes. Experience cards link to their projects; About & CV includes skills, education, contact details, and the original downloadable CV. Escape closes the window, returns focus, and resumes the 3D journey.
+The 2D workspace is available from the header and the project station. Browse ten projects, search by technology, filter work/research/personal projects, and select overview, build, or outcome notes. A public-project directory links six repositories and their available demos. Experience cards link to their projects; About includes skills, education, contact details, GitHub, LinkedIn, and LeetCode. Escape closes the window, returns focus, and resumes the 3D journey.
 
 ## Local Development
 
@@ -67,7 +67,7 @@ The official KiCad component library supplies licensed CAD geometry under CC-BY-
 
 ## Content and Deployment
 
-Content comes directly from the converted Markdown documents in [`src/content/cv.md`](src/content/cv.md) and [`src/content/experiences-and-projects.md`](src/content/experiences-and-projects.md). They include clear sections for profile, skills, career, education, and project notes. `src/config/portfolio.js` imports these files as text and `src/content/readPortfolio.js` reads their sections; the UI has no duplicate CV or project data. The same CV Markdown is served as the download. See [`src/content/README.md`](src/content/README.md) for the editing format.
+Content comes directly from the converted Markdown documents in [`src/content/cv.md`](src/content/cv.md) and [`src/content/experiences-and-projects.md`](src/content/experiences-and-projects.md). They include clear sections for profile, skills, career, education, and project notes. `src/config/portfolio.js` imports these files as text and `src/content/readPortfolio.js` reads their sections; the UI has no duplicate CV or project data. The CV is an authoring source with no public download or CV controls. See [`src/content/README.md`](src/content/README.md) for the editing format.
 
 Camera waypoints and scene presentation live in `src/config/stations.js`. The CV supplies exact employment dates; projects retain contractor attribution and distinguish planned features from completed work. No dates, metrics, or additional employment claims are invented.
 

@@ -75,6 +75,8 @@ export function readPortfolio(cvSource, experienceSource) {
     phone: field(profileRecord, 'phone'),
     telephone: `tel:${field(profileRecord, 'phone').replace(/\s/g, '')}`,
     linkedin: field(profileRecord, 'linkedin'),
+    github: field(profileRecord, 'github'),
+    leetcode: field(profileRecord, 'leetcode'),
     summary: text(cv.get('Summary')?.[0]?.sections.Body),
   };
   if (!profile.summary) throw new Error('Missing CV summary');
@@ -142,5 +144,10 @@ export function readPortfolio(cvSource, experienceSource) {
       internship: text(record.sections.Internship), projectId };
   });
   const stationDescriptions = Object.fromEntries(recordsIn(notes, 'Station introductions').map(record => [field(record, 'id'), text(record.sections.Description)]));
-  return { profile, projects, experiences, skills, education, stationDescriptions };
+  const publicProjects = recordsIn(notes, 'Public projects').map(record => ({
+    id: field(record, 'id'), title: record.title, emoji: field(record, 'emoji'),
+    github: field(record, 'github'), demo: record.fields.demo,
+    status: record.fields.status, description: text(record.sections.Description),
+  }));
+  return { profile, projects, publicProjects, experiences, skills, education, stationDescriptions };
 }

@@ -226,6 +226,23 @@ h3 { font-size: 15px; font-weight: 500; margin: 0 0 12px; }
 .primary-link { padding: 12px 15px; background: #a5dfbb; color: #092218; border-radius: 8px; }
 .primary-link small { opacity: 0.8; font: 8px 'DM Mono', monospace; margin-left: 6px; }
 .phone-link { display: inline-block; margin-top: 18px; font-size: 11px; color: #c0d1c4; }
+.secondary-profile { color: var(--muted); }
+.secondary-profile:hover { color: var(--cyan); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.public-projects { padding: 0 28px 28px; }
+.public-projects-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid var(--line); padding-top: 24px; margin-bottom: 18px; }
+.public-projects-heading h3 { font-size: 22px; font-weight: 600; margin: 9px 0 0; }
+.public-projects-heading > a { color: var(--cyan); font-size: 11px; }
+.public-project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.public-project-card { display: flex; flex-direction: column; min-width: 0; padding: 18px; background: #162b21; border: 1px solid var(--line); border-radius: 12px; }
+.public-project-title { display: flex; gap: 10px; align-items: center; }
+.public-project-title > span { font-size: 24px; }
+.public-project-title h4 { font-size: 12px; font-weight: 600; margin: 0; }
+.public-project-status { color: #c4b0ff; font: 8px/1.6 'DM Mono', monospace; margin-top: 12px; }
+.public-project-card p { color: #c0d1c4; font-size: 11px; line-height: 1.8; margin: 12px 0 18px; }
+.public-project-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: auto; font-size: 10px; color: var(--cyan); }
+.public-project-links a { padding: 5px 0; }
+.public-project-links a:hover, .public-projects-heading > a:hover { color: var(--gold); }
 .about-stamp { background: #c4b0ff14; border: 1px solid #c4b0ff50; border-radius: 20px; height: 200px; align-self: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #c4b0ff; font: 64px 'Baskerville', serif; position: relative; }
 .about-stamp > span { position: absolute; right: 20px; top: 20px; font-size: 25px; }
 .about-stamp small { font: 9px/1.9 'DM Mono', monospace; margin-top: 12px; text-align: center; }
@@ -250,6 +267,8 @@ h3 { font-size: 15px; font-weight: 500; margin: 0 0 12px; }
   .experience-page, .about-page { padding: 0 20px 24px; }
   .about-hero { gap: 24px; grid-template-columns: minmax(0, 1fr) 130px; }
   .about-stamp { height: 170px; }
+  .public-projects { padding: 0 20px 24px; }
+  .public-project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
   .workspace-dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 24px); border-radius: 14px; }
@@ -257,6 +276,8 @@ h3 { font-size: 15px; font-weight: 500; margin: 0 0 12px; }
   .workspace-dialog .dialog-heading .eyebrow { max-width: 170px; font-size: 8px; line-height: 1.7; }
   .workspace-toolbar { padding: 18px 16px; gap: 15px; }
   .workspace-toolbar h2 { font-size: 21px; }
+  .public-projects { padding: 0 16px 24px; }
+  .public-project-grid { grid-template-columns: minmax(0, 1fr); }
   .workspace-views { width: 100%; }
   .workspace-views button { flex: 1; font-size: 10px; padding: 9px 5px; }
   .project-workspace { grid-template-columns: minmax(0, 1fr); padding: 0 16px 16px; }

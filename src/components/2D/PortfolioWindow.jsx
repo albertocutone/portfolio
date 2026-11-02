@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { projects, experiences, skills, education, profile } from '../../config/portfolio.js';
+import { projects, publicProjects, experiences, skills, education, profile } from '../../config/portfolio.js';
 
 const categories = ['All', 'Work', 'Research', 'Personal'];
-const views = [{ id: 'projects', label: '🗂️ Projects' }, { id: 'experience', label: '💼 Experience' }, { id: 'about', label: '👋 About & CV' }];
+const views = [{ id: 'projects', label: '🗂️ Projects' }, { id: 'experience', label: '💼 Experience' }, { id: 'about', label: '👋 About' }];
 
 export default function PortfolioWindow({ initialView = 'projects', initialProject }) {
   const [view, setView] = useState(initialView);
@@ -27,7 +27,7 @@ export default function PortfolioWindow({ initialView = 'projects', initialProje
       <div className="workspace-views" aria-label="Workspace sections">{views.map(item => <button type="button" key={item.id} aria-pressed={view === item.id} onClick={() => setView(item.id)}>{item.label}</button>)}</div>
     </div>
 
-    {view === 'projects' && <div className="project-workspace">
+    {view === 'projects' && <><div className="project-workspace">
       <aside className="project-library" aria-label="Project library">
         <label className="search-label" htmlFor="project-search">Find a project</label>
         <input id="project-search" type="search" placeholder="Search projects or technologies…" value={query} onChange={event => { setQuery(event.target.value); setChapter('Overview'); }} />
@@ -54,7 +54,22 @@ export default function PortfolioWindow({ initialView = 'projects', initialProje
           <div className="project-pagination"><span>{projects.findIndex(project => project.id === selected.id) + 1} / {projects.length}</span><button type="button" onClick={() => openProject(projects[(projects.findIndex(project => project.id === selected.id) + 1) % projects.length].id)}>Next project <span aria-hidden="true">→</span></button></div>
         </div>
       </article> : <div className="empty-project"><span aria-hidden="true">🔎</span><h3>Something else in mind?</h3><p>Clear your search to explore the collection.</p><button type="button" onClick={() => { setQuery(''); setCategory('All'); }}>Show all projects</button></div>}
-    </div>}
+    </div>
+    <section className="public-projects" aria-labelledby="public-projects-title">
+      <div className="public-projects-heading">
+        <div><span className="section-label">🌍 Explore the code</span><h3 id="public-projects-title">Public projects</h3></div>
+        <a href={profile.github} target="_blank" rel="noreferrer">All repositories ↗</a>
+      </div>
+      <div className="public-project-grid">{publicProjects.map(project => <article className="public-project-card" key={project.id}>
+        <div className="public-project-title"><span aria-hidden="true">{project.emoji}</span><h4>{project.title}</h4></div>
+        {project.status && <span className="public-project-status">{project.status}</span>}
+        <p>{project.description}</p>
+        <div className="public-project-links">
+          {project.demo && <a href={project.demo} target="_blank" rel="noreferrer">Try the demo ↗</a>}
+          <a href={project.github} target="_blank" rel="noreferrer">GitHub ↗<span className="sr-only"> — {project.title}</span></a>
+        </div>
+      </article>)}</div>
+    </section></>}
 
     {view === 'experience' && <div className="experience-page"><div className="page-intro"><span className="section-label">💼 The journey so far</span><h3>From circuits to spatial computing.</h3><p>Software, sensing, and the real-world systems that connect them.</p></div><div className="career-list">{experiences.map(item => <article className="career-card" key={item.company}><span className="career-icon" aria-hidden="true">{item.emoji}</span><div><div className="career-heading"><h4>{item.company}</h4><span>{item.dates}</span></div><p className="career-role">{item.role} · {item.location}</p>{item.note && <p className="career-note">{item.note}</p>}<p className="career-summary">{item.summary}</p>{item.highlights.length > 0 && <details className="career-highlights"><summary>More about this role</summary><ul>{item.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul></details>}<div className="career-projects">{item.projectIds.map(id => { const project = projects.find(entry => entry.id === id); return <button type="button" key={id} onClick={() => openProject(id)}>{project.emoji} {project.title} <span aria-hidden="true">↗</span></button>; })}</div></div></article>)}</div></div>}
 
@@ -65,9 +80,10 @@ export default function PortfolioWindow({ initialView = 'projects', initialProje
           <h3>Hardware curious.<br />Software driven.</h3>
           <p>{profile.summary}</p>
           <div className="contact-actions">
-            <a className="primary-link" href={profile.cv} download="Alberto-Cutone-CV.md">📄 Download CV <small>MD</small></a>
+            <a className="primary-link" href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
             <a href={profile.contact}>✉️ Let's talk</a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a className="secondary-profile" href={profile.leetcode} target="_blank" rel="noreferrer">LeetCode ↗</a>
           </div>
           <a className="phone-link" href={profile.telephone}>📞 {profile.phone}</a>
         </div>

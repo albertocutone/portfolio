@@ -17,6 +17,15 @@ test('the converted documents supply complete projects, career, education, and s
   for (const project of content.projects) assert.ok(stations.some(station => station.id === project.station));
   assert.equal(content.profile.contact, 'mailto:alberto.cutone@gmail.com');
   assert.equal(content.profile.telephone, 'tel:+41782622106');
+  assert.equal(content.profile.github, 'https://github.com/albertocutone');
+  assert.equal(content.profile.leetcode, 'https://leetcode.com/u/alcut1/');
+  assert.equal(content.publicProjects.length, 6);
+  for (const project of content.publicProjects) {
+    assert.ok(project.github.startsWith('https://github.com/albertocutone/'));
+    assert.ok(project.description);
+    if (project.demo) assert.ok(project.demo.startsWith('https://albertocutone.github.io/'));
+  }
+  assert.equal(content.publicProjects.find(project => project.id === 'secondsight').status, 'Architecture & planning');
   assert.match(content.experiences[0].note, /Qualitest/);
   assert.match(content.projects.find(project => project.id === 'mr-quality').built.join(' '), /100\+/);
   assert.match(content.projects.find(project => project.id === 'edisecure').built.join(' '), /\$1M\+/);

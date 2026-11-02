@@ -460,6 +460,77 @@ Make cardiac tissue patterns easier to inspect with a color-coded image map.
 
 Everyday expenses, organized. A friendly Android app for keeping budgets in view.
 
+## Public projects
+
+### Moving Trade-offs
+
+- id: moving-trade-offs
+- emoji: 🧭
+- github: https://github.com/albertocutone/moving-trade-offs
+- demo: https://albertocutone.github.io/moving-trade-offs/
+- status: Interactive prototype
+
+#### Description
+
+A relocation explorer connecting household budgets and lifestyle priorities, with charts, weighted comparisons, and optional AI reports.
+
+### Wealth Engine
+
+- id: wealth-engine
+- emoji: 🏠
+- github: https://github.com/albertocutone/wealth-engine
+- demo: https://albertocutone.github.io/wealth-engine/
+- status: Interactive calculator
+
+#### Description
+
+Compare buying a home with renting and investing in Zurich. Explore net worth and cash flow using adjustable financial assumptions.
+
+### Seam Carving Visualizer
+
+- id: seam-carving
+- emoji: 🖼️
+- github: https://github.com/albertocutone/seam-carving-visualizer-cpp
+- status: C++ desktop application
+
+#### Description
+
+Content-aware image resizing with greedy and dynamic-programming algorithms, progressive caching, and an interactive OpenGL/ImGui comparison view.
+
+### SecondSight
+
+- id: secondsight
+- emoji: 👓
+- github: https://github.com/albertocutone/secondSight
+- status: Architecture & planning
+
+#### Description
+
+An assistive perception design for wearable and mobile devices. The public repository documents a planned on-device C++ pipeline; application code and measured benchmarks are still to come.
+
+### Physical AI DataEngine
+
+- id: physicalai-dataengine
+- emoji: 🧠
+- github: https://github.com/albertocutone/physicalai-dataengine
+- demo: https://albertocutone.github.io/physicalai-dataengine/
+- status: Architecture & interactive model
+
+#### Description
+
+A system-design page and interactive performance model for multimodal robotic telemetry, media storage, and latent-vector retrieval.
+
+### This Portfolio
+
+- id: portfolio
+- emoji: ✨
+- github: https://github.com/albertocutone/portfolio
+- status: 3D web experience
+
+#### Description
+
+A scroll-driven Three.js journey from the ATLAS detector to a circuit board, with readable 2D project windows and content authored in Markdown.
+
 ## Station introductions
 
 ### ATLAS

@@ -1,9 +1,9 @@
 # Editing portfolio content
 
-The portfolio reads these Markdown files directly through Vite's `?raw` imports. There is no generated content file or Word parser in the app. The same `cv.md` is emitted as the downloadable CV using a `?url` import.
+The portfolio reads these Markdown files directly through Vite's `?raw` imports. There is no generated content file or Word parser in the app. The CV is an authoring source only; it is not emitted as a downloadable file or linked in the UI.
 
 - **[cv.md](cv.md):** profile and contact details, summary, skills, employment highlights, education, and PetLog.
-- **[experiences-and-projects.md](experiences-and-projects.md):** the original working, academic, and personal experience notes; project records; station introductions.
+- **[experiences-and-projects.md](experiences-and-projects.md):** the original working, academic, and personal experience notes; project records; verified public repository/demo links; station introductions.
 
 Both documents were converted from the supplied Word files. The original situation, actions, results, and reflections are retained. Short project summaries provide readable introductions. Dates come from the CV; durations from the detailed experience document remain labeled as durations.
 
@@ -27,4 +27,10 @@ Each project needs `id`, `emoji`, `color`, `category`, `organization`, `station`
 
 ## Verify changes
 
-Run `npm test` and `npm run build`. The content tests validate the actual Markdown, references, and station coverage. Browser checks in `tests/e2e/workspace.spec.js` cover filters, project selection, career links, the Markdown download, and mobile layouts.
+Run `npm test` and `npm run build`. The content tests validate the actual Markdown, references, and station coverage. Browser checks in `tests/e2e/workspace.spec.js` cover filters, project selection, career links, public profiles, project destinations, absence of CV controls, and mobile layouts.
+
+## Public links
+
+Profile metadata includes `github`, `linkedin`, and `leetcode`. GitHub is the primary code link; LeetCode is a secondary profile.
+
+The `## Public projects` group contains `###` records with `id`, `emoji`, `github`, optional `demo` and `status`, and a `#### Description`. Only link verified public destinations. Keep design-stage projects labeled appropriately; work-project descriptions do not imply public source availability.

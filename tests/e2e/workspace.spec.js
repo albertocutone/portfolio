@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('project workspace filters, selects, explains projects, and connects experience and CV', async ({ page }, testInfo) => {
+test('project workspace filters, selects, explains projects, and connects experience and public profiles', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('./');
@@ -10,6 +10,9 @@ test('project workspace filters, selects, explains projects, and connects experi
   const dialog = page.getByRole('dialog');
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('.project-choice')).toHaveCount(10);
+  await expect(dialog.locator('.public-project-card')).toHaveCount(6);
+  await expect(dialog.getByRole('link', { name: /GitHub.*Moving Trade-offs/ })).toHaveAttribute('href', 'https://github.com/albertocutone/moving-trade-offs');
+  await expect(dialog.locator('.public-project-card').filter({ hasText: 'Wealth Engine' }).getByRole('link', { name: /Try the demo/ })).toHaveAttribute('href', 'https://albertocutone.github.io/wealth-engine/');
   await expect(dialog.getByRole('article', { name: 'PetLog project', exact: true })).toBeVisible();
   const before = await page.locator('.experience').getAttribute('data-offset');
   await dialog.getByRole('button', { name: 'Personal', exact: true }).click();
@@ -35,15 +38,14 @@ test('project workspace filters, selects, explains projects, and connects experi
   await dialog.getByRole('button', { name: /Outcome/ }).click();
   await expect(dialog.locator('.chapter-content')).toContainText('replicated');
   await page.screenshot({ path: testInfo.outputPath('projects-desktop.png') });
-  await dialog.getByRole('button', { name: /About & CV/ }).click();
+  await dialog.getByRole('button', { name: /About/ }).click();
   await expect(dialog.locator('.skill-card')).toHaveCount(6);
   await expect(dialog).toContainText('Master in Electronic Engineering');
   await expect(dialog).toContainText('Bachelor in Biomedical Engineering');
-  const cv = dialog.getByRole('link', { name: /Download CV/ });
-  const response = await page.request.get(await cv.getAttribute('href'));
-  expect(response.ok()).toBeTruthy();
-  expect(await response.text()).toContain('# Alberto Cutone');
-  await expect(cv).toHaveAttribute('download', 'Alberto-Cutone-CV.md');
+  await expect(page.locator('a[download]')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /CV/ })).toHaveCount(0);
+  await expect(dialog.getByRole('link', { name: /GitHub/ })).toHaveAttribute('href', 'https://github.com/albertocutone');
+  await expect(dialog.getByRole('link', { name: /LeetCode/ })).toHaveAttribute('href', 'https://leetcode.com/u/alcut1/');
   await expect(dialog.getByRole('link', { name: /LinkedIn/ })).toHaveAttribute('href', 'https://www.linkedin.com/in/alberto-cutone-1414a512b/');
   expect(await page.locator('.experience').getAttribute('data-offset')).toBe(before);
   await page.keyboard.press('Escape');
@@ -70,9 +72,11 @@ test('mobile project station opens selected windows without overflowing', async 
   await dialog.getByRole('button', { name: /What I built/ }).click();
   await expect(dialog.locator('.chapter-content')).toContainText('React Native');
   await page.screenshot({ path: testInfo.outputPath('projects-mobile.png') });
-  await dialog.getByRole('button', { name: /About & CV/ }).click();
+  await dialog.getByRole('button', { name: /About/ }).click();
   expect(await dialog.evaluate(element => element.scrollWidth <= element.clientWidth)).toBeTruthy();
-  await expect(dialog.getByRole('link', { name: /Download CV/ })).toBeVisible();
+  await expect(dialog.getByRole('link', { name: /GitHub/ })).toBeVisible();
+  await expect(dialog.getByRole('link', { name: /LeetCode/ })).toBeVisible();
+  await expect(page.locator('a[download]')).toHaveCount(0);
   await page.getByRole('button', { name: 'Close details' }).click();
   await expect(trigger).toBeFocused();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);

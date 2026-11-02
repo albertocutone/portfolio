@@ -9,6 +9,8 @@ Converted from `CV_Alberto_Cutone.docx`. Edit this Markdown to update the portfo
 - email: alberto.cutone@gmail.com
 - phone: +41 78 262 21 06
 - linkedin: https://www.linkedin.com/in/alberto-cutone-1414a512b/
+- github: https://github.com/albertocutone
+- leetcode: https://leetcode.com/u/alcut1/
 
 ## Summary
 
@@ -32,7 +34,7 @@ Accomplished Software Engineer with over 7 years of expertise in developing low-
 
 ### Software Engineering
 
-- emoji: 🧠
+- emoji: ⚙️
 
 #### Tools
 
@@ -46,7 +48,7 @@ Accomplished Software Engineer with over 7 years of expertise in developing low-
 
 ### Artificial Intelligence
 
-- emoji: 🥽
+- emoji: 🧠
 
 #### Tools
 
@@ -60,7 +62,7 @@ Accomplished Software Engineer with over 7 years of expertise in developing low-
 
 ### XR & Graphics
 
-- emoji: 🔧
+- emoji: 🥽
 
 #### Tools
 
@@ -78,7 +80,7 @@ Accomplished Software Engineer with over 7 years of expertise in developing low-
 
 ### Hardware
 
-- emoji: ⚙️
+- emoji: 🔧
 
 #### Tools
 

@@ -44,7 +44,7 @@ export default function Overlay({ store, onModalChange }) {
         <span className="monogram" aria-hidden="true">ac<span>.</span></span>
         <span>{profile.name}<small>HARDWARE / SOFTWARE / PERCEPTION</small></span>
       </a>
-      <div className="header-actions"><button type="button" onClick={event => openWorkspace('projects', null, event)}>🗂️ Projects</button><button type="button" onClick={event => openWorkspace('experience', null, event)}>💼 Experience</button><button type="button" onClick={event => openWorkspace('about', null, event)}>👋 About & CV</button></div>
+      <div className="header-actions"><button type="button" onClick={event => openWorkspace('projects', null, event)}>🗂️ Projects</button><button type="button" onClick={event => openWorkspace('experience', null, event)}>💼 Experience</button><button type="button" onClick={event => openWorkspace('about', null, event)}>👋 About</button></div>
     </header>
 
     <main className="narrative" aria-label="Portfolio stations">
@@ -61,10 +61,11 @@ export default function Overlay({ store, onModalChange }) {
           trigger.current = event.currentTarget;
           onModalChange(true); setDetails(station);
         }}>View details <span aria-hidden="true">&#8599;</span></button>
-        {(profile.cv || profile.contact) && <div className="optional-actions">
-          {profile.cv && <a href={profile.cv} download="Alberto-Cutone-CV.md">📄 Download CV</a>}
-          {profile.contact && <a href={profile.contact}>✉️ Contact</a>}
-        </div>}
+        <div className="optional-actions">
+          <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a href={profile.contact}>✉️ Contact</a>
+          <a className="secondary-profile" href={profile.leetcode} target="_blank" rel="noreferrer">LeetCode ↗</a>
+        </div>
       </article>
     </main>
 
