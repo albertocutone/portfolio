@@ -1,0 +1,3 @@
+"Colosseum, Rome, Italy" (https://skfb.ly/orOMD) by Brian Trepanier is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+Centered, uniformly scaled, simplified, vertex normals reconstructed, texture recompressed as WebP, and Meshopt-compressed for this scene.

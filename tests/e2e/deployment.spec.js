@@ -3,6 +3,11 @@ import { createHash } from 'node:crypto';
 import { componentAssets, environmentAsset } from '../../src/config/componentAssets.js';
 
 test('published component assets and studio environment match their qualified sources', async ({ request }) => {
+  const colosseumMetadata = await request.get('assets/models/colosseum.meta.json');
+  expect(colosseumMetadata.ok()).toBe(true);
+  const colosseum = await request.get('assets/models/colosseum.glb');
+  expect(colosseum.ok()).toBe(true);
+  expect(createHash('sha256').update(await colosseum.body()).digest('hex')).toBe((await colosseumMetadata.json()).sha256);
   const atlasMetadata = await request.get('assets/models/atlas.meta.json');
   expect(atlasMetadata.ok()).toBe(true);
   const atlas = await request.get('assets/models/atlas.glb');
@@ -16,7 +21,7 @@ test('published component assets and studio environment match their qualified so
   const environment = await request.get(environmentAsset.file);
   expect(environment.ok()).toBe(true);
   expect(createHash('md5').update(await environment.body()).digest('hex')).toBe(environmentAsset.md5);
-  for (const file of ['assets/ASSET_CREDITS.md', 'assets/models/LICENSE.md', 'assets/models/atlas.LICENSE.txt']) {
+  for (const file of ['assets/ASSET_CREDITS.md', 'assets/models/LICENSE.md', 'assets/models/atlas.LICENSE.txt', 'assets/models/colosseum.LICENSE.txt']) {
     expect((await request.get(file)).ok(), file).toBe(true);
   }
   if (process.env.EXPECTED_COMMIT_SHA) {

@@ -1,5 +1,15 @@
 # Bundled Asset Credits
 
+## Colosseum, Rome, Italy
+
+"Colosseum, Rome, Italy" (https://skfb.ly/orOMD) by Brian Trepanier is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+The supplied attribution is retained in `models/colosseum.LICENSE.txt` and embedded in the adapted GLB. The webpage links to the source and license, and its education details include the author credit.
+
+Adaptations: uniform display scaling and centering, flattening static transforms, batching compatible geometry, rebuilding vertex normals, mesh simplification constrained to a maximum relative error of 0.001, texture recompression as WebP, quantization, and Meshopt compression. The full 8192 × 8192 texture resolution is retained. Source and output hashes, geometry counts, and settings are recorded in `models/colosseum.meta.json`.
+
+The original 234 MB GLB is kept locally at `assets/colosseum_rome_italy.glb` and excluded from Git; only the optimized GLB is served. Rebuild with `npm run optimize:colosseum` after downloading the original model.
+
 ## CERN ATLAS detector
 
 This work is based on "CERN ATLAS Detector" (https://sketchfab.com/3d-models/cern-atlas-detector-c3761776d4f94b3eb77336896da2a3bd) by physics.atlas.vr (https://sketchfab.com/physics.atlas.vr) licensed under CC-BY-4.0 (https://creativecommons.org/licenses/by/4.0/).

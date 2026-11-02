@@ -533,6 +533,14 @@ A scroll-driven Three.js journey from the ATLAS detector to a circuit board, wit
 
 ## Station introductions
 
+### Rome
+
+- id: rome
+
+#### Description
+
+My journey began at La Sapienza in Rome, with a Bachelor in Biomedical Engineering and a Master in Electronic Engineering. From cardiac MRI at Policlinico Umberto I to cryogenic electronics at CERN, I learned to connect software with the physical world.
+
 ### ATLAS
 
 - id: atlas

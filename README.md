@@ -1,6 +1,6 @@
 # From Photons to Edge Intelligence
 
-Alberto Cutone's scroll-driven 3D portfolio. A CERN ATLAS detector model opens the journey at station 1. Scrolling transitions to the tailored PCB at station 2, followed by instrumentation, edge intelligence, and an interactive project station. The board extends beyond every PCB shot; component dimensions remain physically scaled.
+Alberto Cutone's scroll-driven 3D portfolio. The Colosseum opens the journey with education at La Sapienza in Rome. Scrolling transitions to the CERN ATLAS detector, then the tailored PCB, instrumentation, edge intelligence, and an interactive project station. The board extends beyond every PCB shot; component dimensions remain physically scaled.
 
 The 2D workspace is available from the header and the project station. Browse ten projects, search by technology, filter work/research/personal projects, and select overview, build, or outcome notes. A public-project directory links six repositories and their available demos. Experience cards link to their projects; About includes skills, education, contact details, GitHub, LinkedIn, and LeetCode. Escape closes the window, returns focus, and resumes the 3D journey.
 
@@ -52,6 +52,10 @@ PLAYWRIGHT_BASE_URL=http://127.0.0.1:4175/portfolio/ npm run test:e2e -- tests/e
 For the most recent local browser report, run `npx playwright show-report`.
 
 ## Asset Credits
+
+"Colosseum, Rome, Italy" (https://skfb.ly/orOMD) by Brian Trepanier is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/). The scene includes visible author credit, source and license links, and education details drawn from the CV. Its self-hosted GLB retains attribution and adaptation notes; provenance and optimization settings are recorded in `public/assets/models/colosseum.meta.json`.
+
+The original Colosseum GLB is kept locally in `assets/colosseum_rome_italy.glb` and ignored by Git because it is 234 MB. After downloading it, rebuild the optimized asset with `npm run optimize:colosseum`. The conversion uses Sharp to recompress its full-resolution 8192 × 8192 texture as WebP and Meshopt to compress simplified geometry with reconstructed vertex normals.
 
 The ATLAS detector model is by `physics.atlas.vr`, licensed under CC BY 4.0. The source is [CERN ATLAS Detector on Sketchfab](https://sketchfab.com/3d-models/cern-atlas-detector-c3761776d4f94b3eb77336896da2a3bd). The scene includes visible attribution and links to the original. Its optimized GLB is self-hosted; the browser does not contact Sketchfab. Asset provenance and the conversion settings are recorded in `public/assets/models/atlas.meta.json`.
 

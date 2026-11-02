@@ -1,0 +1,49 @@
+{
+  "name": "Colosseum, Rome, Italy",
+  "author": "Brian Trepanier",
+  "source": "https://skfb.ly/orOMD",
+  "license": "CC-BY-4.0",
+  "attribution": "\"Colosseum, Rome, Italy\" (https://skfb.ly/orOMD) by Brian Trepanier is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).",
+  "adaptations": "Centered, uniformly scaled, simplified, vertex normals reconstructed, texture recompressed as WebP, and Meshopt-compressed for this scene.",
+  "sourceFile": "colosseum_rome_italy.glb",
+  "sourceFileBytes": 234466460,
+  "sourceFileSha256": "304d9ee49cc88263454515a83aa1d582ef3c7bbf069522f5187ba3f2a47548d0",
+  "sourceTriangles": 1509784,
+  "triangles": 1456794,
+  "bytes": 68812988,
+  "sha256": "f7b44d1c71d5e11a0cee199c0163eade3a859ff1b8676cb5a44e2a807dbdba74",
+  "bounds": {
+    "min": [
+      -3,
+      -0.3187047921024004,
+      -1.1937925374345733
+    ],
+    "max": [
+      3,
+      0.31870479298536114,
+      1.1937925480523985
+    ]
+  },
+  "textures": [
+    {
+      "sourceSize": [
+        8192,
+        8192
+      ],
+      "outputSize": [
+        8192,
+        8192
+      ],
+      "bytes": 35068490
+    }
+  ],
+  "optimization": {
+    "ratio": 0.4,
+    "maximumRelativeError": 0.001,
+    "compression": "EXT_meshopt_compression",
+    "quantizePosition": 16,
+    "textureMaxSize": 8192,
+    "textureQuality": 85,
+    "textureFormat": "webp"
+  }
+}

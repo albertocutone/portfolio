@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ready, shot, readFrames } from './flight.helpers.js';
+import { ready, shot, shots, readFrames } from './flight.helpers.js';
 
 test('profile three warmed camera moves at the actual rendering resolution', async ({ page }, testInfo) => {
   if (process.env.CI) test.setTimeout(1200000);
@@ -19,7 +19,7 @@ test('profile three warmed camera moves at the actual rendering resolution', asy
   await shot(page, 1);
   await shot(page, 0);
   const runs = [];
-  for (const index of [4, 0, 4]) {
+  for (const index of [shots.length - 1, 0, shots.length - 1]) {
     const times = await readFrames(page, () => shot(page, index));
     const intervals = times.slice(1).map((time, i) => time - times[i]).sort((a, b) => a - b);
     expect(intervals.every((interval) => interval > 0), 'each animation frame must be sampled exactly once').toBe(true);

@@ -21,7 +21,7 @@ export default function App() {
   function ready() { setReady(true); }
   function failed() { setSceneError(true); setReady(false); }
   return <div ref={shell} className="experience" data-offset="0.00000" data-ready={isReady}>
-    <div className="canvas-layer" aria-label="A scroll journey from the CERN ATLAS detector to a printed circuit board with real component geometry">
+    <div className="canvas-layer" aria-label="A scroll journey from the Colosseum in Rome through the CERN ATLAS detector to a printed circuit board with real component geometry">
       <SceneBoundary onFailure={failed}>
       <Canvas shadows dpr={[1, 1.5]} camera={{ fov: cameraProjection.fov, near: cameraProjection.near, far: cameraProjection.far }} gl={{ antialias: false, powerPreference: 'high-performance' }}>
         <ScrollControls pages={stations.length} damping={motion.damping} maxSpeed={motion.maxSpeed} enabled={!paused} style={{ scrollbarWidth: 'none' }}>

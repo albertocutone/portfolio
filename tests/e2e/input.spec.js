@@ -1,3 +1,4 @@
+import { shots } from './flight.helpers.js';
 import { test, expect } from '@playwright/test';
 import { ready, shot } from './flight.helpers.js';
 
@@ -6,7 +7,7 @@ test('rapid retargeting reaches the last requested station', async ({ page }) =>
   for (const name of ['Projects', 'Edge Intelligence', 'Instrumentation']) {
     await page.getByRole('button', { name, exact: true }).click();
   }
-  await expect(page.locator('.experience')).toHaveAttribute('data-offset', '0.43000');
+  await expect(page.locator('.experience')).toHaveAttribute('data-offset', shots.find(([name]) => name === 'Instrumentation')[1]);
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'instrumentation');
 });
 

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ready, shot } from './flight.helpers.js';
+import { ready, shot, shots } from './flight.helpers.js';
 import { startRecording } from './recording.helpers.js';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
@@ -9,8 +9,8 @@ test.setTimeout(process.env.CI ? 1800000 : 60000);
 
 const evidenceRoot = fileURLToPath(new URL(`../../.superpowers/artifacts/cinematic-${process.env.PLAYWRIGHT_BASE_URL ? 'live' : 'preview'}/`, import.meta.url));
 
-for (const [direction, indices] of [['forward', [0, 1, 2, 3, 4]], ['reverse', [4, 3, 2, 1, 0]]]) {
- test(`record the five-station ${direction} macro tour`, async ({ page }, testInfo) => {
+for (const [direction, indices] of [['forward', shots.map((_, i) => i)], ['reverse', shots.map((_, i) => i).reverse()]]) {
+ test(`record the six-station ${direction} macro tour`, async ({ page }, testInfo) => {
   await ready(page);
   const save = await startRecording(page);
   for (const index of indices) {

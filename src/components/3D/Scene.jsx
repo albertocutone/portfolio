@@ -9,6 +9,7 @@ import { cameraProjection } from '../../config/motion.js';
 import { resolveTimeline } from '../../scroll/timeline.js';
 import PCBWorld from './PCBWorld.jsx';
 import AtlasWorld from './AtlasWorld.jsx';
+import ColosseumWorld from './ColosseumWorld.jsx';
 
 function CameraRig({ store, depth, activeScene }) {
   const { camera, size } = useThree();
@@ -16,7 +17,7 @@ function CameraRig({ store, depth, activeScene }) {
   const [focus] = useState(() => new Vector3());
   useLayoutEffect(() => {
     const shift = size.width >= 900 ? size.width * cameraProjection.desktopOffset : 0;
-    const verticalShift = size.width < 900 && activeScene === 'atlas' ? size.height * 0.18 : 0;
+    const verticalShift = size.width < 900 && activeScene !== 'pcb' ? size.height * 0.18 : 0;
     camera.setViewOffset(size.width, size.height, shift, verticalShift, size.width, size.height);
     return () => camera.clearViewOffset();
   }, [camera, size.width, size.height, activeScene]);
@@ -24,7 +25,7 @@ function CameraRig({ store, depth, activeScene }) {
     const timeline = resolveTimeline(store.getSnapshot(), stations);
     camera.position.set(...timeline.position);
     target.set(...timeline.target);
-    if (activeScene === 'atlas' && size.width < 900) {
+    if (activeScene !== 'pcb' && size.width < 900) {
       camera.position.sub(target).multiplyScalar(Math.max(1, 0.9 * size.height / size.width)).add(target);
     }
     camera.lookAt(target);
@@ -58,6 +59,7 @@ export default function Scene({ store }) {
     <ambientLight intensity={0.18} />
     <directionalLight position={[-2, 4, 2.5]} color="#fff9ef" intensity={2.6} castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-12} shadow-camera-right={12} shadow-camera-top={12} shadow-camera-bottom={-12} shadow-bias={-0.0001} />
     <directionalLight position={[3, 2, -3]} color="#d4e2e1" intensity={0.8} />
+    <group visible={activeScene === 'colosseum'}><ColosseumWorld /></group>
     <group visible={activeScene === 'atlas'}><AtlasWorld /></group>
     <group visible={activeScene === 'pcb'}>
       <PCBWorld />

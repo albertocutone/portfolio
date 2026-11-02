@@ -9,7 +9,8 @@
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "test": "node --test tests/unit/*.test.js",
     "test:e2e": "playwright test",
-    "optimize:atlas": "node scripts/optimize-atlas.mjs"
+    "optimize:atlas": "node scripts/optimize-atlas.mjs",
+    "optimize:colosseum": "node scripts/optimize-colosseum.mjs"
   },
   "dependencies": {
     "@fontsource/dm-mono": "^5.3.0",
@@ -30,6 +31,7 @@
     "@vitejs/plugin-react": "^5.0.4",
     "fflate": "^0.8.3",
     "meshoptimizer": "^1.3.0",
+    "sharp": "^0.35.5",
     "vite": "^7.1.12"
   }
 }

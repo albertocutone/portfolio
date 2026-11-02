@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
+import { stations } from '../../src/config/stations.js';
+import { stationLanding } from '../../src/config/motion.js';
 
-test('ATLAS opens the scene, scroll reaches the PCB, and navigation reaches architecture', async ({ page }, testInfo) => {
+test('Rome opens the scene, navigation reaches ATLAS, scroll reaches the PCB, and navigation reaches architecture', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('requestfailed', request => errors.push(request.url()));
@@ -16,14 +18,30 @@ test('ATLAS opens the scene, scroll reaches the PCB, and navigation reaches arch
   });
   await testInfo.attach('rendering-context', { body: JSON.stringify(rendering), contentType: 'application/json' });
   console.log('Published rendering context:', JSON.stringify(rendering));
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'rome');
+  await expect(page.locator('.model-credit')).toContainText('Brian Trepanier');
+  await expect(page.getByRole('link', { name: 'Creative Commons Attribution 4.0' })).toHaveAttribute('href', 'http://creativecommons.org/licenses/by/4.0/');
+  await page.screenshot({ path: testInfo.outputPath('rome.png') });
+  await page.getByRole('button', { name: 'View details' }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toContainText('Master in Electronic Engineering');
+  await expect(dialog).toContainText('Bachelor in Biomedical Engineering');
+  await expect(dialog).toContainText('Policlinico Umberto I');
+  await expect(dialog).toContainText('Internship at CERN');
+  await expect(dialog).toContainText('Brian Trepanier');
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('button', { name: 'View details' })).toBeFocused();
+  await page.getByRole('button', { name: 'ATLAS', exact: true }).click();
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'atlas');
+  await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
   await expect(page.getByRole('link', { name: /ATLAS model: physics.atlas.vr/ })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('atlas.png') });
   const area = page.getByLabel('Portfolio flight scroll area');
-  const scrollPixels = await area.evaluate(el => (el.scrollHeight - el.clientHeight) * 0.23);
+  const sensorOffset = stationLanding(stations, stations.findIndex(station => station.id === 'sensor'));
+  const scrollPixels = await area.evaluate((el, target) => (el.scrollHeight - el.clientHeight) * target - el.scrollTop, sensorOffset);
   await page.locator('.station-card').dispatchEvent('wheel', { deltaY: scrollPixels, deltaMode: 0, bubbles: true, cancelable: true });
   const sensorTarget = await area.evaluate(el => el.scrollTop / (el.scrollHeight - el.clientHeight));
-  expect(sensorTarget).toBeCloseTo(0.23, 3);
+  expect(sensorTarget).toBeCloseTo(sensorOffset, 3);
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', sensorTarget.toFixed(5));
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'sensor');
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');

@@ -25,6 +25,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-
 .scene-transition { position: fixed; inset: 0; z-index: 3; pointer-events: none; background: #101714; }
 .model-credit { position: absolute; left: 48px; bottom: 130px; max-width: calc(100% - 96px); color: var(--muted); font: 8px 'DM Mono', monospace; }
 .model-credit:hover { color: var(--gold); }
+.model-credit a { color: inherit; }
+.model-credit a:hover { color: var(--gold); }
 .overlay { position: relative; z-index: 10; height: 100%; pointer-events: none; }
 .overlay a, .overlay button, .station-card, dialog { pointer-events: auto; }
 .masthead { position: absolute; top: 0; left: 0; width: 100%; padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; }

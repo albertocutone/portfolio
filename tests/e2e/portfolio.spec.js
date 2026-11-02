@@ -20,7 +20,7 @@ async function station(page, index) {
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', nativeOffset.toFixed(5));
 }
 
-for (const [index, direction] of [[0, 'initial'], [1, 'forward'], [2, 'forward'], [3, 'forward'], [4, 'forward'], [3, 'reverse'], [2, 'reverse'], [1, 'reverse'], [0, 'reverse']]) {
+for (const [index, direction] of [[0, 'initial'], ...stations.slice(1).map((_, i) => [i + 1, 'forward']), ...stations.slice(0, -1).map((_, i) => [i, 'reverse']).reverse()]) {
  test(`production WebGL renders station ${index} during ${direction} navigation without asset or runtime errors`, async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -33,8 +33,9 @@ for (const [index, direction] of [[0, 'initial'], [1, 'forward'], [2, 'forward']
   {
     await station(page, index);
     await expect(page.getByRole('button', { name: 'View details' })).toBeVisible();
-    if (index === 0) await expect(page.locator('h1')).toContainText('Making the invisible');
-    if (index === 1) await expect(page.locator('h1')).toContainText('From photons');
+    if (ids[index] === 'rome') await expect(page.locator('h1')).toContainText('Where curiosity');
+    if (ids[index] === 'atlas') await expect(page.locator('h1')).toContainText('Making the invisible');
+    if (ids[index] === 'sensor') await expect(page.locator('h1')).toContainText('From photons');
     await page.screenshot({ path: testInfo.outputPath(`station-${index}.png`) });
   }
   // Capture the scene-only region without element scrolling/stability checks.
@@ -52,7 +53,7 @@ test('wheel over scene and card, keyboard, and exact endpoints control the same 
   await ready(page);
   await page.mouse.move(750, 400);
   await page.mouse.wheel(0, 1200);
-  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeGreaterThan(0.25);
+  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeGreaterThan(0.2);
   await station(page, 1);
   const before = Number(await page.locator('.experience').getAttribute('data-offset'));
   await page.locator('.station-card').hover();
@@ -70,14 +71,14 @@ test('wheel over scene and card, keyboard, and exact endpoints control the same 
   await page.keyboard.press('Home');
   await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(0, 3);
   await page.keyboard.press('PageDown');
-  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeGreaterThan(0.2);
+  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeGreaterThan(0.15);
   await page.keyboard.press('PageUp');
   await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(0, 3);
 });
 
 test('details isolate scrolling, retain station, close with Escape and restore focus', async ({ page }) => {
   await ready(page);
-  await station(page, 3);
+  await station(page, ids.indexOf('edge'));
   const before = await page.locator('.experience').getAttribute('data-offset');
   const trigger = page.getByRole('button', { name: 'View details' });
   await trigger.click();
@@ -102,10 +103,10 @@ test('details isolate scrolling, retain station, close with Escape and restore f
 test('narrow viewport preserves readable controls and the full 3D scene', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await ready(page);
-  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'atlas');
-  await expect(page.getByRole('link', { name: /ATLAS model: physics.atlas.vr/ })).toBeInViewport();
-  await page.screenshot({ path: testInfo.outputPath('atlas-narrow.png') });
-  await station(page, 4);
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'rome');
+  await expect(page.getByRole('link', { name: 'Colosseum, Rome, Italy', exact: false })).toBeInViewport();
+  await page.screenshot({ path: testInfo.outputPath('rome-narrow.png') });
+  await station(page, ids.indexOf('architecture'));
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await expect(page.getByRole('button', { name: 'View details' })).toBeInViewport();
   await page.screenshot({ path: testInfo.outputPath('narrow.png') });
@@ -114,7 +115,7 @@ test('narrow viewport preserves readable controls and the full 3D scene', async 
 test('records steady-state animation-frame performance', async ({ page }, testInfo) => {
   if (process.env.CI) test.setTimeout(1200000);
   await ready(page);
-  await station(page, 4);
+  await station(page, ids.indexOf('architecture'));
   const softwareRenderer = await page.evaluate(() => {
     const gl = document.querySelector('canvas').getContext('webgl2');
     const debug = gl.getExtension('WEBGL_debug_renderer_info');

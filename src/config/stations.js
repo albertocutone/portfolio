@@ -1,5 +1,14 @@
 export const stations = Object.freeze([
   {
+    id: 'rome', scene: 'colosseum', anchor: [-0.2, 0.02, 0],
+    camera: [1.4, 1.5, 2.4], target: [-0.2, 0.02, 0],
+    cameraControls: [[1.6, 2.8, 3.4], [3.7, 5.4, 5.7]],
+    focusRange: 8, bokehScale: 0,
+    label: 'Rome', badge: 'La Sapienza · Rome', subject: 'ROME / EDUCATION',
+    title: 'Where curiosity\nbecame engineering.', role: 'Biomedical & electronic engineering',
+    tags: ['Biomedical engineering', 'Electronic engineering', 'Medical imaging'],
+  },
+  {
     id: 'atlas', scene: 'atlas', anchor: [0, 1.6, 0],
     camera: [4, 5.7, 6], target: [0, 1.6, 0],
     cameraControls: [[0, 5.3, 5.8], [0.35, 2.5, 1.2]],
