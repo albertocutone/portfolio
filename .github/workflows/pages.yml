@@ -102,7 +102,7 @@ jobs:
               npm run test:e2e -- --project="$BROWSER_PROJECT" --grep 'profile three warmed|records steady-state'
               ;;
             quick)
-              npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js tests/e2e/motion.spec.js tests/e2e/input.spec.js --project="$BROWSER_PROJECT"
+              npm run test:e2e -- tests/e2e/deployment.spec.js tests/e2e/smoke.spec.js tests/e2e/motion.spec.js tests/e2e/input.spec.js tests/e2e/workspace.spec.js --project="$BROWSER_PROJECT"
               ;;
           esac
       - uses: actions/upload-artifact@v4

@@ -29,7 +29,7 @@ test('ATLAS opens the scene, scroll reaches the PCB, and navigation reaches arch
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
   await expect(page.locator('.scene-transition')).toHaveCSS('opacity', '0');
   await page.screenshot({ path: testInfo.outputPath('sensor.png') });
-  await page.getByRole('button', { name: 'Architecture', exact: true }).click();
+  await page.getByRole('button', { name: 'Projects', exact: true }).click();
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'architecture');
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
   const target = await area.evaluate(el => el.scrollTop / (el.scrollHeight - el.clientHeight));

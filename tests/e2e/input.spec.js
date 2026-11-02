@@ -3,7 +3,7 @@ import { ready, shot } from './flight.helpers.js';
 
 test('rapid retargeting reaches the last requested station', async ({ page }) => {
   await ready(page);
-  for (const name of ['Architecture', 'Edge Intelligence', 'Instrumentation']) {
+  for (const name of ['Projects', 'Edge Intelligence', 'Instrumentation']) {
     await page.getByRole('button', { name, exact: true }).click();
   }
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', '0.43000');

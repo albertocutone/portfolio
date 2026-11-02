@@ -40,7 +40,8 @@ for (const [index, direction] of [[0, 'initial'], [1, 'forward'], [2, 'forward']
   // Capture the scene-only region without element scrolling/stability checks.
   const image = await page.screenshot({ clip: { x: 80, y: 180, width: 700, height: 380 } });
   expect(image.byteLength).toBeGreaterThan(20000);
-  await expect(page.getByRole('link', { name: /CV|Contact/i })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: /Download CV/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Contact/i })).toHaveAttribute('href', 'mailto:alberto.cutone@gmail.com');
   expect(errors).toEqual([]);
  });
 }
@@ -81,7 +82,7 @@ test('details isolate scrolling, retain station, close with Escape and restore f
   await trigger.click();
   const dialog = page.getByRole('dialog');
   await expect(dialog).toBeVisible();
-  await expect(dialog).toHaveAccessibleName('Edge Platforms & PetLog');
+  await expect(dialog).toHaveAccessibleName(/My workspace/);
   await dialog.evaluate((element) => { element.style.maxHeight = '260px'; });
   await dialog.hover();
   await page.mouse.wheel(0, 600);
