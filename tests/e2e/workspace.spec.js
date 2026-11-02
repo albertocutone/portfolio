@@ -54,15 +54,15 @@ test('project workspace filters, selects, explains projects, and connects experi
   expect(errors).toEqual([]);
 });
 
-test('mobile project station opens selected windows without overflowing', async ({ page }, testInfo) => {
+test('mobile personal station opens selected windows without overflowing', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('./');
   await expect(page.locator('.experience')).toHaveAttribute('data-ready', 'true');
-  await page.getByRole('button', { name: 'Projects', exact: true }).click();
-  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'architecture');
+  await page.getByRole('button', { name: 'Personal', exact: true }).click();
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'personal');
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
   await expect(page.locator('.header-actions')).toBeInViewport();
-  const trigger = page.locator('.station-launchpad').getByRole('button', { name: /Budget Tracker/ });
+  const trigger = page.locator('.station-projects').getByRole('button', { name: /Budget Tracker/ });
   await expect(trigger).toBeInViewport();
   await page.screenshot({ path: testInfo.outputPath('project-station-mobile.png') });
   await trigger.click();

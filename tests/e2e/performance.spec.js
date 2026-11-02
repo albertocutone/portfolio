@@ -17,6 +17,7 @@ test('profile three warmed camera moves at the actual rendering resolution', asy
     test.skip(true, 'The three warmed 20 ms measurements require a hardware GPU; Pages uses software WebGL.');
   }
   await shot(page, 1);
+  await shot(page, 2);
   await shot(page, 0);
   const runs = [];
   for (const index of [shots.length - 1, 0, shots.length - 1]) {

@@ -12,5 +12,6 @@ export const cameraProjection = Object.freeze({ fov: 35, near: 0.05, far: 200, d
 export function stationLanding(stations, index) {
   if (index === 0) return 0;
   const [start, end] = stations[index].scrollRange;
-  return start + (end - start) * motion.landingRatio;
+  // Keep navigation past the arrival fade as station ranges get shorter.
+  return start + Math.max((end - start) * motion.landingRatio, motion.arrivalFade + 0.001);
 }

@@ -81,3 +81,14 @@ test('scroll store notifies changes once, clamps seeks, and disconnects cleanly'
   disconnect(); store.seek(0.7); assert.deepEqual(sought, [1, 0]);
   unsubscribe(); store.publish(0.8); assert.equal(notifications, 1);
 });
+
+test('navigation requested while scene assets load is delivered when scrolling connects', () => {
+  const store = createScrollStore();
+  store.seek(0.13);
+  store.seek(0.25);
+  const sought = [];
+  store.connect(offset => sought.push(offset));
+  assert.deepEqual(sought, [0.25]);
+  store.seek(0.5);
+  assert.deepEqual(sought, [0.25, 0.5]);
+});

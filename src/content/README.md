@@ -21,7 +21,7 @@ Each project needs `id`, `emoji`, `color`, `category`, `organization`, `station`
 
 - Categories: `Work`, `Research`, or `Personal`.
 - Colors: `violet`, `blue`, `mint`, or `peach`.
-- Stations: `sensor`, `instrumentation`, `edge`, or `architecture`.
+- Stations: `education`, `cern`, `hcl`, `xfarm`, `matica`, `meta`, or `personal`.
 - Write `#### Overview`, `#### What I built` (a bullet list), and `#### Outcome` for an independent project.
 - Alternatively, `- experience: <id>` reads the matching experience's **Situation**, **Task & Action**, and **Result** directly. Optional `- cv: <id>` adds the corresponding CV employment highlights to the build details. This keeps the source paragraphs in one place.
 
@@ -34,3 +34,9 @@ Run `npm test` and `npm run build`. The content tests validate the actual Markdo
 Profile metadata includes `github`, `linkedin`, and `leetcode`. GitHub is the primary code link; LeetCode is a secondary profile.
 
 The `## Public projects` group contains `###` records with `id`, `emoji`, `github`, optional `demo` and `status`, and a `#### Description`. Only link verified public destinations. Keep design-stage projects labeled appropriately; work-project descriptions do not imply public source availability.
+
+## CV journey
+
+The narrative order in `src/config/stations.js` is Intro → Education → CERN → HCL → xFarm → Matica → Meta → Personal → Recap. CV topics select a pose from `stationPoses`; camera coordinates and model names are separate from content IDs.
+
+Each career station references `experienceIds` from the CV. Its panel shows the role, exact dates, contractor note, and linked projects. Education combines both degree records and thesis projects. Personal projects use their `station` metadata. The final recap brings the journey together and opens the complete workspace.

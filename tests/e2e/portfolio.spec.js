@@ -32,10 +32,10 @@ for (const [index, direction] of [[0, 'initial'], ...stations.slice(1).map((_, i
   else if (index > 0) await station(page, index - 1);
   {
     await station(page, index);
-    await expect(page.getByRole('button', { name: 'View details' })).toBeVisible();
-    if (ids[index] === 'rome') await expect(page.locator('h1')).toContainText('Where curiosity');
-    if (ids[index] === 'atlas') await expect(page.locator('h1')).toContainText('Making the invisible');
-    if (ids[index] === 'sensor') await expect(page.locator('h1')).toContainText('From photons');
+    await expect(page.getByRole('button', { name: ids[index] === 'intro' ? 'Start my CV' : 'View details' })).toBeVisible();
+    if (ids[index] === 'education') await expect(page.locator('h1')).toContainText('Where curiosity');
+    if (ids[index] === 'cern') await expect(page.locator('h1')).toContainText('Engineering for');
+    if (ids[index] === 'meta') await expect(page.locator('h1')).toContainText('From photons');
     await page.screenshot({ path: testInfo.outputPath(`station-${index}.png`) });
   }
   // Capture the scene-only region without element scrolling/stability checks.
@@ -53,7 +53,7 @@ test('wheel over scene and card, keyboard, and exact endpoints control the same 
   await ready(page);
   await page.mouse.move(750, 400);
   await page.mouse.wheel(0, 1200);
-  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeGreaterThan(0.2);
+  await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeGreaterThan(0.1);
   await station(page, 1);
   const before = Number(await page.locator('.experience').getAttribute('data-offset'));
   await page.locator('.station-card').hover();
@@ -67,7 +67,7 @@ test('wheel over scene and card, keyboard, and exact endpoints control the same 
   await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(before + receipt.deltaY / range, 3);
   await page.keyboard.press('End');
   await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(1, 3);
-  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'architecture');
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'recap');
   await page.keyboard.press('Home');
   await expect.poll(async () => Number(await page.locator('.experience').getAttribute('data-offset'))).toBeCloseTo(0, 3);
   await page.keyboard.press('PageDown');
@@ -78,13 +78,13 @@ test('wheel over scene and card, keyboard, and exact endpoints control the same 
 
 test('details isolate scrolling, retain station, close with Escape and restore focus', async ({ page }) => {
   await ready(page);
-  await station(page, ids.indexOf('edge'));
+  await station(page, ids.indexOf('personal'));
   const before = await page.locator('.experience').getAttribute('data-offset');
   const trigger = page.getByRole('button', { name: 'View details' });
   await trigger.click();
   const dialog = page.getByRole('dialog');
   await expect(dialog).toBeVisible();
-  await expect(dialog).toHaveAccessibleName(/My workspace/);
+  await expect(dialog).toHaveAccessibleName('Personal');
   await dialog.evaluate((element) => { element.style.maxHeight = '260px'; });
   await dialog.hover();
   await page.mouse.wheel(0, 600);
@@ -94,7 +94,7 @@ test('details isolate scrolling, retain station, close with Escape and restore f
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
   await expect(trigger).toBeFocused();
-  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'edge');
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'personal');
   await trigger.click();
   await page.getByRole('button', { name: 'Close details' }).click();
   await expect(trigger).toBeFocused();
@@ -103,10 +103,12 @@ test('details isolate scrolling, retain station, close with Escape and restore f
 test('narrow viewport preserves readable controls and the full 3D scene', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await ready(page);
-  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'rome');
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'intro');
+  await station(page, ids.indexOf('education'));
+  await expect(page.locator('.degree-preview')).toHaveCount(2);
   await expect(page.getByRole('link', { name: 'Colosseum, Rome, Italy', exact: false })).toBeInViewport();
   await page.screenshot({ path: testInfo.outputPath('rome-narrow.png') });
-  await station(page, ids.indexOf('architecture'));
+  await station(page, ids.indexOf('recap'));
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await expect(page.getByRole('button', { name: 'View details' })).toBeInViewport();
   await page.screenshot({ path: testInfo.outputPath('narrow.png') });
@@ -115,7 +117,7 @@ test('narrow viewport preserves readable controls and the full 3D scene', async 
 test('records steady-state animation-frame performance', async ({ page }, testInfo) => {
   if (process.env.CI) test.setTimeout(1200000);
   await ready(page);
-  await station(page, ids.indexOf('architecture'));
+  await station(page, ids.indexOf('recap'));
   const softwareRenderer = await page.evaluate(() => {
     const gl = document.querySelector('canvas').getContext('webgl2');
     const debug = gl.getExtension('WEBGL_debug_renderer_info');

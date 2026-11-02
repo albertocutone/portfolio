@@ -1,19 +1,19 @@
-import { shots } from './flight.helpers.js';
 import { test, expect } from '@playwright/test';
-import { ready, shot } from './flight.helpers.js';
+import { ready, shot, shots } from './flight.helpers.js';
 
 test('rapid retargeting reaches the last requested station', async ({ page }) => {
   await ready(page);
-  for (const name of ['Projects', 'Edge Intelligence', 'Instrumentation']) {
+  for (const name of ['Recap', 'Meta', 'Matica']) {
     await page.getByRole('button', { name, exact: true }).click();
   }
-  await expect(page.locator('.experience')).toHaveAttribute('data-offset', shots.find(([name]) => name === 'Instrumentation')[1]);
-  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'instrumentation');
+  await expect(page.locator('.experience')).toHaveAttribute('data-offset', shots.find(([name]) => name === 'Matica')[1]);
+  await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'matica');
 });
 
 test('repeated dialog dismissal resumes native keyboard commands and effective progress', async ({ page }) => {
   await ready(page);
   for (let repeat = 0; repeat < 3; repeat++) {
+    await shot(page, shots.findIndex(([name]) => name === 'Education'));
     await page.getByRole('button', { name: 'View details' }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
     if (repeat % 2) await page.getByRole('button', { name: 'Close details' }).click();

@@ -119,7 +119,7 @@ export function readPortfolio(cvSource, experienceSource) {
     return ids;
   }
   const experiences = cvExperiences.map(record => ({
-    company: record.title, emoji: field(record, 'emoji'), role: field(record, 'role'),
+    id: field(record, 'id'), company: record.title, emoji: field(record, 'emoji'), role: field(record, 'role'),
     location: field(record, 'location'), dates: field(record, 'dates'), note: record.fields.note,
     summary: record.sections.Highlights?.items[0] ?? '',
     highlights: record.sections.Highlights?.items.slice(1) ?? [],
@@ -127,7 +127,7 @@ export function readPortfolio(cvSource, experienceSource) {
   }));
   const academic = sources.get('cardiac');
   if (academic) experiences.push({
-    company: field(academic, 'company'), emoji: field(academic, 'emoji'),
+    id: 'cardiac', company: field(academic, 'company'), emoji: field(academic, 'emoji'),
     role: field(academic, 'role'), location: field(academic, 'location'),
     dates: `${field(academic, 'duration')} · research project`,
     summary: text(academic.sections.Situation), highlights: academic.sections['Task & Action']?.items ?? [],

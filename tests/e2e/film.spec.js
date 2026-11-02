@@ -10,7 +10,7 @@ test.setTimeout(process.env.CI ? 1800000 : 60000);
 const evidenceRoot = fileURLToPath(new URL(`../../.superpowers/artifacts/cinematic-${process.env.PLAYWRIGHT_BASE_URL ? 'live' : 'preview'}/`, import.meta.url));
 
 for (const [direction, indices] of [['forward', shots.map((_, i) => i)], ['reverse', shots.map((_, i) => i).reverse()]]) {
- test(`record the six-station ${direction} macro tour`, async ({ page }, testInfo) => {
+ test(`record the CV ${direction} macro tour`, async ({ page }, testInfo) => {
   await ready(page);
   const save = await startRecording(page);
   for (const index of indices) {

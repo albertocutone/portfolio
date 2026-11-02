@@ -1,64 +1,74 @@
+// CV topics choose a visual pose. Camera geometry is independent of the story order.
+export const stationPoses = Object.freeze({
+  overview: { label: 'PCB overview', scene: 'pcb', anchor: [0, 0.05, -0.3], camera: [3.9, 5.35, 4.9], target: [0, 0.05, -0.3], focusRange: 3, bokehScale: 0.15 },
+  colosseum: { label: 'Colosseum · Rome', scene: 'colosseum', anchor: [-0.2, 0.02, 0], camera: [1.4, 1.5, 2.4], target: [-0.2, 0.02, 0], focusRange: 8, bokehScale: 0 },
+  atlas: { label: 'ATLAS detector', scene: 'atlas', anchor: [0, 1.6, 0], camera: [4, 5.7, 6], target: [0, 1.6, 0], focusRange: 8, bokehScale: 0 },
+  processor: { label: 'PCB processor', scene: 'pcb', anchor: [1.2, 0.15, -1.1], camera: [2.8, 3.2, 3.4], target: [1.2, 0.15, -1.1], focusRange: 0.7, bokehScale: 0.3 },
+  edge: { label: 'Edge SoC', scene: 'pcb', anchor: [1.2, 0.15, -1.1], camera: [1.73, 1.45, 0.21], target: [1.2, 0.15, -1.1], focusRange: 0.36, bokehScale: 0.6 },
+  controller: { label: 'PCB instrumentation', scene: 'pcb', anchor: [-1.15, 0.16, 0], camera: [-1.65, 1.05, 0.92], target: [-1.15, 0.11, 0], focusRange: 0.3, bokehScale: 0.65 },
+  sensor: { label: 'Image sensor', scene: 'pcb', anchor: [0, 0.176, 0], camera: [0.64, 0.95, 1.1], target: [0, 0.15, 0], focusRange: 0.28, bokehScale: 0.65 },
+  platform: { label: 'Embedded platform', scene: 'pcb', anchor: [1.2, 0.15, -1.1], camera: [2.7, 2.9, 2.2], target: [1.2, 0.15, -1.1], focusRange: 1, bokehScale: 0.2 },
+});
+
 export const stations = Object.freeze([
   {
-    id: 'rome', scene: 'colosseum', anchor: [-0.2, 0.02, 0],
-    camera: [1.4, 1.5, 2.4], target: [-0.2, 0.02, 0],
-    cameraControls: [[1.6, 2.8, 3.4], [3.7, 5.4, 5.7]],
-    focusRange: 8, bokehScale: 0,
-    label: 'Rome', badge: 'La Sapienza · Rome', subject: 'ROME / EDUCATION',
+    id: 'intro', kind: 'intro', pose: 'overview', label: 'Intro', badge: 'Alberto Cutone · Software Engineer', subject: 'HELLO / THE PITCH',
+    title: 'Software for\nthe physical world.', role: 'Performance. Perception. Real systems.',
+    tags: ['C++ & Python', 'Physical AI', 'Mixed reality'],
+  },
+  {
+    id: 'education', kind: 'education', pose: 'colosseum', label: 'Education', badge: 'La Sapienza · Rome', subject: 'EDUCATION / ROME',
     title: 'Where curiosity\nbecame engineering.', role: 'Biomedical & electronic engineering',
-    tags: ['Biomedical engineering', 'Electronic engineering', 'Medical imaging'],
+    experienceIds: ['cardiac'], tags: ['Medical imaging', 'Electronics', 'C++'],
   },
   {
-    id: 'atlas', scene: 'atlas', anchor: [0, 1.6, 0],
-    camera: [4, 5.7, 6], target: [0, 1.6, 0],
-    cameraControls: [[0, 5.3, 5.8], [0.35, 2.5, 1.2]],
-    focusRange: 8, bokehScale: 0,
-    label: 'ATLAS', badge: 'CERN', subject: 'ATLAS DETECTOR / CERN',
-    title: 'Making the invisible\nmeasurable.', role: 'Imaging & instrumentation',
-    tags: ['Particle detection', 'Instrumentation', 'Imaging'],
-    projects: [
-      { title: 'ATLAS at CERN', body: 'ATLAS is one of the experiments at the Large Hadron Collider. Its layered detector is the opening visual for this journey across hardware, software, and perception.', link: 'https://atlas.cern/' },
-      { title: 'Model attribution', body: 'CERN ATLAS Detector by physics.atlas.vr, licensed under Creative Commons Attribution 4.0. Adapted and optimized for this scene.', link: 'https://sketchfab.com/3d-models/cern-atlas-detector-c3761776d4f94b3eb77336896da2a3bd' },
-    ],
+    id: 'cern', kind: 'experience', pose: 'atlas', label: 'CERN', badge: 'CERN · Geneva', subject: 'CERN / RESEARCH',
+    title: 'Engineering for\nextreme conditions.', role: 'Cryogenic imaging & electronics',
+    experienceIds: ['cern'], tags: ['Cryogenics', 'Robotics', 'PCB design'],
   },
   {
-    id: 'sensor', anchor: [0, 0.176, 0],
-    camera: [0.64, 0.95, 1.1], target: [0, 0.15, 0],
-    cameraControls: [[0.35, 1.8, 1.2], [-1.42, 1.75, 1.18]],
-    focusRange: 0.28, bokehScale: 0.65,
-    label: 'Sensing', badge: 'Meta Reality Labs', subject: 'THE SENSOR DIE',
-    title: 'From photons\nto perception.', role: 'Mixed reality evaluation & sensing',
-    tags: ['Android / C++', 'Zero-copy IPC', 'Sensor visualization'],
+    id: 'hcl', kind: 'experience', pose: 'processor', label: 'HCL', badge: 'HCL Technologies · Rome', subject: 'HCL / ENTERPRISE SOFTWARE',
+    title: 'Making complex\nsystems simpler.', role: 'Enterprise software & deployment',
+    experienceIds: ['hcl'], tags: ['C++', 'BigFix', 'CI/CD'],
   },
   {
-    id: 'instrumentation', anchor: [-1.15, 0.16, 0],
-    camera: [-1.65, 1.05, 0.92], target: [-1.15, 0.11, 0],
-    cameraControls: [[-1.3, 1.6, 1.05], [0.65, 2.25, 0.65]],
-    focusRange: 0.3, bokehScale: 0.65,
-    label: 'Instrumentation', badge: 'CERN & Matica', subject: 'THE CRYOGENIC BUS',
-    title: 'Precision under\nreal constraints.', role: 'Imaging & robotic integration',
-    tags: ['Cryogenic imaging', 'Robotics', 'C++ drivers'],
+    id: 'xfarm', kind: 'experience', pose: 'edge', label: 'xFarm', badge: 'xFarm · Lugano', subject: 'XFARM / CONNECTED DEVICES',
+    title: 'From the field\nto the cloud.', role: 'Embedded software & IoT',
+    experienceIds: ['xfarm'], tags: ['C++ firmware', 'ARM', 'MQTT'],
   },
   {
-    id: 'edge', anchor: [1.2, 0.15, -1.1],
-    camera: [1.73, 1.45, 0.21], target: [1.2, 0.15, -1.1],
-    cameraControls: [[2, 2.3, 1.1], [2.7, 4, 3.2]],
-    focusRange: 0.36, bokehScale: 0.6,
-    label: 'Edge Intelligence', badge: 'Edge Platforms & PetLog', subject: 'THE EDGE SoC',
-    title: 'Intelligence.\nClose to the source.', role: 'Embedded systems & perceptual ML',
-    tags: ['Raspberry Pi', 'OpenCV / YOLO', 'VLM tracking'],
+    id: 'matica', kind: 'experience', pose: 'controller', label: 'Matica', badge: 'Matica Technologies · Lugano', subject: 'MATICA / HARDWARE INTEGRATION',
+    title: 'Precision under\nreal constraints.', role: 'Printing systems & native drivers',
+    experienceIds: ['matica'], tags: ['C++ / C#', 'Windows drivers', 'Reverse engineering'],
   },
   {
-    id: 'architecture', anchor: [0, 0.05, -0.3],
-    camera: [3.9, 5.35, 4.9], target: [0, 0.05, -0.3],
-    focusRange: 3, bokehScale: 0.15,
-    label: 'Projects', badge: '🗂️ The project station', subject: 'PROJECTS / THE BIG PICTURE',
-    title: 'Ideas into\nworking things.', role: 'Pick a project. Peek under the hood.',
-    tags: ['💼 Work', '🔬 Research', '🚀 Personal'],
+    id: 'meta', kind: 'experience', pose: 'sensor', label: 'Meta', badge: 'Meta Reality Labs · Zurich', subject: 'META / MIXED REALITY',
+    title: 'From photons\nto perception.', role: 'Sensor tools & perceptual evaluation',
+    experienceIds: ['meta'], tags: ['Android / C++', 'Zero-copy IPC', 'Computer vision'],
   },
-].map((station, index, all) => Object.freeze({
-  ...station,
-  scene: station.scene ?? 'pcb',
-  scrollRange: [index / all.length, (index + 1) / all.length],
-  eyebrow: `${String(index + 1).padStart(2, '0')} / ${station.subject}`,
-})));
+  {
+    id: 'personal', kind: 'projects', pose: 'platform', label: 'Personal', badge: 'Personal projects', subject: 'PERSONAL / IDEAS INTO PRACTICE',
+    title: 'Curiosity keeps\nbuilding.', role: 'Edge intelligence & everyday tools',
+    tags: ['Raspberry Pi', 'Computer vision', 'React Native'],
+  },
+  {
+    id: 'recap', kind: 'recap', pose: 'overview', label: 'Recap', badge: 'The journey, connected', subject: 'RECAP / THE BIG PICTURE',
+    title: 'Hardware curious.\nSoftware driven.', role: 'From Rome to mixed reality in Zurich.',
+    tags: ['Native performance', 'Embedded systems', 'Perception'],
+    featuredProjectIds: ['cryo', 'insight', 'petlog'],
+  },
+].map((station, index, all) => {
+  const pose = stationPoses[station.pose];
+  if (!pose) throw new Error(`Unknown station pose: ${station.pose}`);
+  const nextPose = stationPoses[all[Math.min(index + 1, all.length - 1)].pose];
+  const clearance = Math.max(pose.camera[1], nextPose.camera[1]) + 0.8;
+  const cameraControls = pose.scene === 'pcb' && nextPose.scene === 'pcb' ? [
+    [pose.camera[0], clearance, pose.camera[2]],
+    [nextPose.camera[0], clearance, nextPose.camera[2]],
+  ] : undefined;
+  return Object.freeze({ ...pose, ...station, poseLabel: pose.label,
+    cameraControls,
+    scrollRange: [index / all.length, (index + 1) / all.length],
+    eyebrow: `${String(index + 1).padStart(2, '0')} / ${station.subject}`,
+  });
+}));

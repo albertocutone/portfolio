@@ -302,10 +302,87 @@ h3 { font-size: 15px; font-weight: 500; margin: 0 0 12px; }
   .launchpad-item > span { font-size: 20px; margin-bottom: 5px; }
   .optional-actions { margin-top: 12px; font-size: 10px; }
 }
+
+
+/* The CV topic leads the panel; its 3D pose is the visual context. */
+.narrative-general { left: 8%; right: auto; width: min(680px, 80%); }
+.narrative-general h1 { font-size: clamp(48px, 5vw, 72px); }
+.narrative-general .description { max-width: 590px; font-size: 14px; }
+.pitch-pillars { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+.pitch-pillars > span { border: 1px solid var(--line); padding: 12px 16px; color: var(--gold); font-size: 11px; }
+.station-context { margin: 16px 0; padding-left: 12px; border-left: 1px solid var(--gold); }
+.degree-preview { margin: 9px 0; }
+.degree-preview strong, .experience-preview strong { display: block; font-size: 11px; font-weight: 500; }
+.degree-preview span, .experience-preview span, .experience-preview small { display: block; font-size: 10px; line-height: 1.7; color: var(--muted); margin-top: 4px; }
+.station-projects { display: grid; gap: 7px; margin: 14px 0; }
+.station-project { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; text-align: left; color: var(--ink); border: 1px solid var(--line); background: #10251cde; border-radius: 8px; }
+.station-project:hover { border-color: var(--project-accent); }
+.station-project > span:first-child { font-size: 20px; }
+.station-project > span:last-child { margin-left: auto; color: var(--project-accent); }
+.station-project strong { display: block; font-size: 11px; font-weight: 500; }
+.station-project small { display: block; margin-top: 4px; font-size: 9px; line-height: 1.6; color: var(--muted); }
+.recap-facts { display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0; color: var(--muted); font-size: 11px; }
+.recap-facts strong { color: var(--gold); font-size: 24px; font-weight: 400; margin-right: 5px; }
+.narrative-general .station-launchpad { margin: 18px 0; }
+.optional-actions { flex-wrap: wrap; }
+.optional-actions button { padding: 0; border: 0; background: none; color: var(--ink); font-size: inherit; }
+.project-detail-link { color: var(--gold); background: transparent; border: 0; padding: 10px 0 0; font-size: 12px; }
+.station-detail-experience { border-top: 1px solid var(--line); padding: 22px 0; }
+.station-detail-experience > p, .station-detail-experience li { color: var(--muted); font-size: 12px; line-height: 1.8; }
+.station-detail-experience ul { padding-left: 18px; }
+.station-detail-experience li + li { margin-top: 9px; }
+.station-detail-projects { padding-top: 20px; }
+.station-dialog { width: min(720px, calc(100vw - 36px)); }
+.model-credit { margin: 0; line-height: 1.7; max-width: min(680px, calc(100% - 96px)); }
+.flight-footer nav { max-width: 900px; gap: 14px; min-width: 0; }
+.flight-footer nav button { min-width: 0; grid-template-columns: 17px 1fr; gap: 5px; }
+.experience:has(.station-card[data-station=intro]) .scene-shade,
+.experience:has(.station-card[data-station=recap]) .scene-shade { background: linear-gradient(90deg, #071912ed, #071912b0 58%, #07191240), linear-gradient(0deg, #071912a0, transparent 40%); }
+@media (max-width: 1150px) and (min-width: 900px) {
+  .scroll-cue { display: none; }
+  .flight-footer nav { gap: 10px; }
+}
+@media (max-width: 899px) {
+  .narrative, .narrative-general { left: 24px; right: 24px; bottom: 176px; top: auto; width: auto; }
+  .narrative-general h1, .station-card h1 { font-size: 34px; }
+  .narrative-general .description { font-size: 12px; }
+  .pitch-pillars { gap: 6px; margin: 18px 0; }
+  .pitch-pillars > span { padding: 8px 10px; font-size: 10px; }
+  .station-context { margin: 10px 0; }
+  .degree-preview { margin: 6px 0; }
+  .degree-preview strong, .experience-preview strong { font-size: 10px; }
+  .degree-preview span, .experience-preview span, .experience-preview small { font-size: 9px; margin-top: 2px; }
+  .station-projects { gap: 5px; margin: 10px 0; }
+  .station-project { padding: 7px 9px; }
+  .station-project strong { font-size: 10px; }
+  .station-project small { display: none; }
+  .station-card > .tags { display: none; }
+  .flight-footer { bottom: 20px; padding-top: 10px; }
+  .flight-footer nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 12px; width: 100%; }
+  .flight-footer nav button { display: grid; grid-template-columns: 17px 1fr; gap: 5px; padding-top: 4px; }
+  .nav-label { min-height: 0; font-size: 9px; }
+  .nav-line { grid-column: 1 / -1; margin-top: 2px; }
+  .model-credit { left: 24px; bottom: 141px; max-width: calc(100% - 48px); font-size: 7px; }
+  .recap-facts { gap: 12px; margin: 12px 0; font-size: 9px; }
+  .recap-facts strong { font-size: 18px; }
+  .narrative-general .station-launchpad { margin: 12px 0; }
+  .launchpad-item small { font-size: 7px; line-height: 1.5; }
+}
 @media (max-height: 740px) and (max-width: 899px) {
-  .station-card[data-station=architecture] h1 { font-size: 31px; }
-  .station-card[data-station=architecture] .description { font-size: 11px; line-height: 1.5; }
-  .station-card[data-station=architecture] .tags { display: none; }
-  .station-card[data-station=architecture] .role { margin-bottom: 6px; }
-  .station-card[data-station=architecture] .eyebrow { margin-bottom: 8px; }
+  .station-card h1, .narrative-general h1 { font-size: 29px; margin-bottom: 10px; }
+  .station-card .description { font-size: 11px; line-height: 1.5; margin-bottom: 10px; }
+  .station-card .role { margin-bottom: 6px; }
+  .station-card .eyebrow { margin-bottom: 8px; }
+  .station-project { padding: 5px 8px; }
+  .optional-actions { margin-top: 8px; }
+}
+
+@media (max-height: 850px) and (min-width: 900px) {
+  .station-card h1 { font-size: 42px; margin-bottom: 16px; }
+  .station-card .description { font-size: 12px; line-height: 1.7; margin-bottom: 14px; }
+  .station-card .tags { margin-bottom: 14px; }
+  .station-context { margin: 10px 0; }
+  .station-project { padding: 7px 10px; }
+  .station-project small { font-size: 8px; }
+  .station-card .optional-actions { margin-top: 12px; }
 }

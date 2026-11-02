@@ -16,7 +16,7 @@ permissions:
 
 concurrency:
   group: pages-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -89,11 +89,11 @@ jobs:
           case "$BROWSER_GROUP" in
             ui*)
               shard="${BROWSER_GROUP#ui}"
-              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep-invert 'record the six-station|wheel reversals and dialog|profile three warmed|records steady-state' --shard="$shard/8"
+              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep-invert 'record the CV|wheel reversals and dialog|profile three warmed|records steady-state' --shard="$shard/8"
               ;;
             tour-*)
               direction="${BROWSER_GROUP#tour-}"
-              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep "record the six-station $direction"
+              npm run test:e2e -- --project="$BROWSER_PROJECT" --grep "record the CV $direction"
               ;;
             interruption)
               npm run test:e2e -- --project="$BROWSER_PROJECT" --grep 'wheel reversals and dialog'

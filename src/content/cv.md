@@ -229,7 +229,7 @@ Internship at Policlinico Umberto I: Developed a C++ image processing software f
 - color: peach
 - category: Personal
 - organization: Personal project
-- station: edge
+- station: personal
 - tags: Raspberry Pi | OpenCV | YOLO | VLM | FastAPI
 
 #### Summary

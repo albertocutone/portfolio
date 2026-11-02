@@ -290,7 +290,7 @@ This project has enhanced my skills in React Native development, backend integra
 - color: violet
 - category: Work
 - organization: Meta Reality Labs · via Qualitest
-- station: sensor
+- station: meta
 - tags: C++ | Android | OpenXR | Zero-copy IPC | rerun.io
 
 #### Summary
@@ -323,7 +323,7 @@ Helped the team iterate faster and debug with greater data fidelity, while minim
 - color: blue
 - category: Work
 - organization: Meta Reality Labs · via Qualitest
-- station: sensor
+- station: meta
 - tags: Ground truth | VRS | Computer vision | ML evaluation
 
 #### Summary
@@ -356,7 +356,7 @@ Established a foundation for quantitative evaluation and prototype readout. The 
 - color: mint
 - category: Work
 - organization: Meta Reality Labs · via Qualitest
-- station: sensor
+- station: meta
 - tags: Python | PyTorch | eBPF | Unity | CI/CD
 - experience: meta
 - cv: meta
@@ -374,7 +374,7 @@ Turn passthrough quality and system performance into repeatable release signals.
 - color: peach
 - category: Work
 - organization: Matica Technologies · Lugano
-- station: instrumentation
+- station: matica
 - tags: C++ | C# | Windows drivers | MySQL | RFID
 - experience: matica
 - cv: matica
@@ -392,7 +392,7 @@ The software connecting secure ID printing hardware to the people who use it.
 - color: mint
 - category: Work
 - organization: xFarm · Lugano
-- station: edge
+- station: xfarm
 - tags: C++ | ARM | MQTT | Altium Designer | IoT
 - experience: xfarm
 
@@ -407,7 +407,7 @@ From a sensor in the field to farm data in the cloud.
 - color: blue
 - category: Work
 - organization: HCL Technologies · Rome
-- station: architecture
+- station: hcl
 - tags: C++ | JavaScript | HTML / CSS | Python | Perl | CI/CD
 - experience: hcl
 
@@ -422,7 +422,7 @@ A simpler installation path for an enterprise endpoint-management platform.
 - color: blue
 - category: Research
 - organization: CERN · Master thesis
-- station: instrumentation
+- station: cern
 - tags: Raspberry Pi | Python | Altium Designer | Robotics | Cryogenics
 - experience: cern
 
@@ -437,7 +437,7 @@ A camera and electronics system designed to work in extreme cold.
 - color: peach
 - category: Research
 - organization: Policlinico Umberto I · Bachelor thesis
-- station: instrumentation
+- station: education
 - tags: C++ | DICOM | Qt | MATLAB | Image registration
 - experience: cardiac
 
@@ -452,7 +452,7 @@ Make cardiac tissue patterns easier to inspect with a color-coded image map.
 - color: violet
 - category: Personal
 - organization: Personal project
-- station: architecture
+- station: personal
 - tags: React Native | Expo | TypeScript | Firebase | Google Cloud
 - experience: budget
 
@@ -533,50 +533,74 @@ A scroll-driven Three.js journey from the ATLAS detector to a circuit board, wit
 
 ## Station introductions
 
-### Rome
+### Intro
 
-- id: rome
-
-#### Description
-
-My journey began at La Sapienza in Rome, with a Bachelor in Biomedical Engineering and a Master in Electronic Engineering. From cardiac MRI at Policlinico Umberto I to cryogenic electronics at CERN, I learned to connect software with the physical world.
-
-### ATLAS
-
-- id: atlas
+- id: intro
 
 #### Description
 
-Hi, I’m Alberto 👋 I build software that connects sensing, hardware, and perception. Explore my journey from cryogenic electronics at CERN to mixed reality at Meta.
+Hi, I’m Alberto. I build high-performance software where sensing, hardware, and perception meet. My work spans cryogenic electronics, connected devices, and mixed reality. Here’s the path from my engineering studies in Rome to Meta Reality Labs in Zurich.
 
-### Sensing
+### Education
 
-- id: sensor
-
-#### Description
-
-🥽 At Meta Reality Labs, via Qualitest, I build native sensor tools, ground-truth annotation frameworks, and automated quality benchmarks for mixed reality.
-
-### Instrumentation
-
-- id: instrumentation
+- id: education
 
 #### Description
 
-❄️ A cryogenic camera at CERN. 🪪 High-performance printing drivers at Matica. 🫀 Cardiac MRI tools in Rome. Software built for the physical world.
+At La Sapienza in Rome, I studied biomedical and electronic engineering. Cardiac MRI at Policlinico Umberto I gave me an early opportunity to turn C++ and image processing into tools for the physical world.
 
-### Edge Intelligence
+### CERN
 
-- id: edge
-
-#### Description
-
-🌱 Connected farm sensors at xFarm. 🐾 Pet activity tracking with PetLog. Bringing real-time processing and perception onto the devices that see the world.
-
-### Projects
-
-- id: architecture
+- id: cern
 
 #### Description
 
-Ten projects across work, research, and everyday curiosity. Open a window to explore what I built, the tools I used, and what happened next.
+My master thesis took me to CERN: a cryogenic camera, custom electronics, and real-time telemetry for robotic inspection in extreme conditions.
+
+### HCL
+
+- id: hcl
+
+#### Description
+
+At HCL Technologies in Rome, I developed C++ modules and deployment tools for BigFix, connecting enterprise software with automated delivery.
+
+### xFarm
+
+- id: xfarm
+
+#### Description
+
+At xFarm, I worked on sensor firmware, telemetry, and hardware validation. A connected device has to work from the electronics in the field to the data arriving in the cloud.
+
+### Matica
+
+- id: matica
+
+#### Description
+
+At Matica Technologies, I maintained EDIsecure and integrated printing hardware through native drivers, SDKs, and reverse engineering.
+
+### Meta
+
+- id: meta
+
+#### Description
+
+At Meta Reality Labs, via Qualitest, I build native sensor tools, ground-truth annotation frameworks, and automated quality benchmarks for mixed reality.
+
+### Personal
+
+- id: personal
+
+#### Description
+
+PetLog brings computer vision to a Raspberry Pi. Budget Tracker makes everyday finances easier to navigate. Personal projects give me room to connect a practical need with a working product.
+
+### Recap
+
+- id: recap
+
+#### Description
+
+From medical imaging in Rome to cryogenic systems at CERN and mixed reality at Meta, the thread is the same: software that helps people understand and use the physical world. Explore the work, browse the code, or get in touch.

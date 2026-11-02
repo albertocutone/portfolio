@@ -1,7 +1,6 @@
-import { shots } from './flight.helpers.js';
 import { test, expect } from '@playwright/test';
 import { motion } from '../../src/config/motion.js';
-import { ready } from './flight.helpers.js';
+import { ready, shots } from './flight.helpers.js';
 
 test('navigation motion is slow and bounded without jumping between shots', async ({ page }, testInfo) => {
   await ready(page);
@@ -15,8 +14,8 @@ test('navigation motion is slow and bounded without jumping between shots', asyn
     }
     requestAnimationFrame(frame);
   });
-  await page.getByRole('button', { name: 'Projects', exact: true }).click();
-  await expect(page.locator('.experience')).toHaveAttribute('data-offset', shots.find(([name]) => name === 'Projects')[1]);
+  await page.getByRole('button', { name: 'Recap', exact: true }).click();
+  await expect(page.locator('.experience')).toHaveAttribute('data-offset', shots.find(([name]) => name === 'Recap')[1]);
   const frames = await page.evaluate(() => { window.__motionCapture.running = false; return window.__motionCapture.frames; });
   const windows = [];
   for (let i = 1; i < frames.length; i++) {
