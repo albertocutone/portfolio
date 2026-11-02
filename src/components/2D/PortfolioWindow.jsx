@@ -44,7 +44,7 @@ export default function PortfolioWindow({ initialView = 'projects', initialProje
           <h3>{selected.title}</h3>
           <p className="project-organization">{selected.organization}</p>
           <p className="project-summary">{selected.summary}</p>
-          {selected.video && <a className="project-video-link" href={selected.video} target="_blank" rel="noreferrer">▶ DUNE experiment video ↗</a>}
+          {selected.video && <a className="project-video-link" href={selected.video} target="_blank" rel="noreferrer">▶ {selected.videoTitle} ↗</a>}
           <div className="project-chapters" aria-label="Project sections">{['Overview', 'What I built', 'Outcome'].map(item => <button type="button" key={item} aria-pressed={chapter === item} onClick={() => setChapter(item)}>{item === 'Overview' ? '💡' : item === 'What I built' ? '🛠️' : '✨'} {item}</button>)}</div>
           <section className="chapter-content" aria-label={chapter} key={`${selected.id}-${chapter}`}>
             {chapter === 'Overview' && <p>{selected.overview}</p>}

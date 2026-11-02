@@ -20,7 +20,7 @@ export default function StationDetails({ station, onOpenProject }) {
     {content.projects.length > 0 && <section className="station-detail-projects" aria-label="Related projects">
       <h3>Related projects</h3>{content.projects.map(project => <article className="project" key={project.id}>
         <span aria-hidden="true">{project.emoji}</span><div><h3>{project.title}</h3><p>{project.summary}</p>
-          {project.video && <a className="project-video-link" href={project.video} target="_blank" rel="noreferrer">▶ DUNE experiment video ↗</a>}
+          {project.video && <a className="project-video-link" href={project.video} target="_blank" rel="noreferrer">▶ {project.videoTitle} ↗</a>}
           <button type="button" className="project-detail-link" onClick={event => onOpenProject(project.id, event)}>What I built & outcomes ↗</button>
         </div>
       </article>)}

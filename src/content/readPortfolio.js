@@ -63,6 +63,7 @@ const field = (record, name) => {
   return record.fields[name];
 };
 const list = value => value.split('|').map(item => item.trim()).filter(Boolean);
+const youtubeWatchUrl = /^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/;
 
 export function readPortfolio(cvSource, experienceSource) {
   const cv = parseMarkdown(cvSource);
@@ -103,11 +104,12 @@ export function readPortfolio(cvSource, experienceSource) {
       built: [...((record.sections['What I built'] ?? source?.sections['Task & Action'])?.items ?? []), ...(cvExperience?.sections.Highlights?.items ?? [])],
       outcome: text(record.sections.Outcome ?? source?.sections.Result),
       video: record.fields.video,
+      videoTitle: record.fields.videotitle ?? `${record.title} video`,
     };
     if (!['Work', 'Research', 'Personal'].includes(project.category)) throw new Error(`Invalid category: ${project.id}`);
     if (!['violet', 'blue', 'mint', 'peach'].includes(project.color)) throw new Error(`Invalid color: ${project.id}`);
     if (!project.summary || !project.overview || !project.built.length || !project.outcome) throw new Error(`Incomplete project: ${project.id}`);
-    if (project.video && !/^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/.test(project.video)) throw new Error(`Invalid YouTube video: ${project.id}`);
+    if (project.video && !youtubeWatchUrl.test(project.video)) throw new Error(`Invalid YouTube video: ${project.id}`);
     return project;
   });
   const projectIds = new Set();
@@ -145,11 +147,16 @@ export function readPortfolio(cvSource, experienceSource) {
       location: field(record, 'location'), thesis: text(record.sections.Thesis),
       internship: text(record.sections.Internship), projectId };
   });
-  const stationDescriptions = Object.fromEntries(recordsIn(notes, 'Station introductions').map(record => [field(record, 'id'), text(record.sections.Description)]));
+  const introductions = recordsIn(notes, 'Station introductions');
+  const stationDescriptions = Object.fromEntries(introductions.map(record => [field(record, 'id'), text(record.sections.Description)]));
+  const stationVideos = Object.fromEntries(introductions.filter(record => record.fields.video).map(record => {
+    if (!youtubeWatchUrl.test(record.fields.video)) throw new Error(`Invalid YouTube video: ${record.fields.id}`);
+    return [field(record, 'id'), { url: record.fields.video, title: record.fields.videotitle ?? `${record.title} video` }];
+  }));
   const publicProjects = recordsIn(notes, 'Public projects').map(record => ({
     id: field(record, 'id'), title: record.title, emoji: field(record, 'emoji'),
     github: field(record, 'github'), demo: record.fields.demo,
     status: record.fields.status, description: text(record.sections.Description),
   }));
-  return { profile, projects, publicProjects, experiences, skills, education, stationDescriptions };
+  return { profile, projects, publicProjects, experiences, skills, education, stationDescriptions, stationVideos };
 }

@@ -67,8 +67,9 @@ test('intro opens, education shows the Colosseum, CERN and Meta link their work,
   expect(nativeOffset).toBeCloseTo(targetOffset, 3);
   await expect(page.locator('.experience')).toHaveAttribute('data-offset', nativeOffset.toFixed(5));
   await expect(page.locator('.station-card')).toHaveAttribute('data-station', 'meta');
-  await expect(video).toHaveCount(0);
   await expect(page.locator('.station-card')).toHaveCSS('opacity', '1');
+  await expect(video).toHaveAttribute('src', 'https://www.youtube-nocookie.com/embed/xyD_bmMy5nQ?autoplay=1&mute=1&playsinline=1&rel=0');
+  await expect(video).toHaveAttribute('title', 'Meta video');
   await expect(page.locator('.station-card')).toHaveAttribute('data-pose', 'meta');
   await expect(page.locator('.model-credit')).toContainText('Quest 3');
   await expect(page.locator('.model-credit')).toContainText('VR glasses: rogeressig');
@@ -77,6 +78,7 @@ test('intro opens, education shows the Colosseum, CERN and Meta link their work,
   await expect(page.locator('.station-project')).toHaveCount(3);
   await expect(page.locator('.scene-transition')).toHaveCSS('opacity', '0');
   await navigate(page, 'recap');
+  await expect(video).toHaveCount(0);
   await expect(page.locator('.recap-facts')).toContainText('10');
   await expect(page.locator('.station-launchpad')).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('recap.png') });

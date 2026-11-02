@@ -32,6 +32,7 @@ test('the converted documents supply complete projects, career, education, and s
   assert.match(content.projects.find(project => project.id === 'budget').outcome, /plans to include/);
   const cryo = content.projects.find(project => project.id === 'cryo');
   assert.equal(cryo.video, 'https://www.youtube.com/watch?v=nv13DswIKr8');
+  assert.deepEqual(content.stationVideos.meta, { url: 'https://www.youtube.com/watch?v=xyD_bmMy5nQ', title: 'Meta video' });
   assert.match(cryo.overview, /robot intended.*DUNE/);
   assert.match(cryo.overview, /PCB.*outside the cryostat.*level inside/);
 });
@@ -65,5 +66,6 @@ test('invalid authoring metadata and broken references fail with actionable erro
   assert.throws(() => readPortfolio(cv, notes.replace('- category: Work', '- category: Other')), /Invalid category/);
   assert.throws(() => readPortfolio(cv, notes.replace('- id: insight', '- id: petlog')), /Duplicate project ID: petlog/);
   assert.throws(() => readPortfolio(cv, notes.replace('https://www.youtube.com/watch?v=nv13DswIKr8', 'javascript:alert(1)')), /Invalid YouTube video: cryo/);
+  assert.throws(() => readPortfolio(cv, notes.replace('https://www.youtube.com/watch?v=xyD_bmMy5nQ', 'javascript:alert(1)')), /Invalid YouTube video: meta/);
   assert.throws(() => parseMarkdown('## Profile\n- name: A\n- name: B'), /Duplicate field/);
 });

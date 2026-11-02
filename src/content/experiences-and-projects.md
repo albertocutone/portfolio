@@ -426,6 +426,7 @@ A simpler installation path for an enterprise endpoint-management platform.
 - tags: Raspberry Pi | Python | Altium Designer | Robotics | Cryogenics | DUNE
 - experience: cern
 - video: https://www.youtube.com/watch?v=nv13DswIKr8
+- videotitle: DUNE experiment video
 
 #### Summary
 
@@ -585,6 +586,8 @@ At Matica Technologies, I maintained EDIsecure and integrated printing hardware 
 ### Meta
 
 - id: meta
+- video: https://www.youtube.com/watch?v=xyD_bmMy5nQ
+- videotitle: Meta video
 
 #### Description
 
